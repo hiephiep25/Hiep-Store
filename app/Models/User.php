@@ -10,6 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    const ROLE_ADMIN = "ADMIN";
+    const ROLE_MANAGER = "MANAGER";
+    const ROLE_CUSTOMER = "CUSTOMER";
+    const ROLE_SUPPLIER = "SUPPLIER";
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -21,6 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'role'
     ];
 
     /**
