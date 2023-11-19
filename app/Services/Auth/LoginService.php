@@ -13,7 +13,7 @@ class LoginService
     {
         $isAuth = Auth::attempt($data, $remember);
 
-        abort_if(!$isAuth, Response::HTTP_UNAUTHORIZED, 'IDまたはパスワードが異なります。');
+        abort_if(!$isAuth, Response::HTTP_UNAUTHORIZED, 'Your email or password is incorrect');
 
         return [
             'token' => Auth::user()->createToken('authToken')->plainTextToken,

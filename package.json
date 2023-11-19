@@ -6,8 +6,21 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "axios": "^1.6.1",
-        "laravel-vite-plugin": "^0.8.0",
-        "vite": "^4.0.0"
-    }
+        "@popperjs/core": "^2.11.6",
+        "@quasar/vite-plugin": "^1.4.1",
+        "@vitejs/plugin-vue": "^4.0.0",
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^0.7.2",
+        "postcss": "^8.1.14",
+        "sass": "^1.32.12",
+        "vite": "^4.0.0",
+        "vue": "^3.2.37"
+      },
+      "dependencies": {
+        "@quasar/extras": "^1.16.5",
+        "dayjs": "^1.11.9",
+        "pinia": "^2.1.4",
+        "quasar": "^2.12.2",
+        "vue-router": "^4.2.2"
+      }
 }
