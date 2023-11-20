@@ -34,8 +34,8 @@
             <div
                 class="bg-transparent row column items-center full-height full-width justify-center"
             >
-                <q-avatar size="96px">
-                    <img src="@/public/images/icon.jpg" />HiepStore
+                <q-avatar size="64px">
+                    <img src="@/public/images/icon.png" />HiepStore
                 </q-avatar>
             </div>
         </q-img>

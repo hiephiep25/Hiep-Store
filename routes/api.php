@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/change-password', [ProfileController::class, 'updatePassword']);
 
     //admin router
-    Route::middleware('check-role:admin')->group(function () {
+    Route::middleware('check-role:ADMIN')->group(function () {
         Route::get('/users', [UserController::class, 'index']);
         Route::post('/users/create', [UserController::class, 'create']);
         Route::get('/users/{id}', [UserController::class, 'show']);

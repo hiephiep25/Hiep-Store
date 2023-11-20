@@ -8,11 +8,11 @@
     <title>{{ env('APP_NAME', 'HiepStore') }}</title>
 
     {{-- favicon --}}
-    <link rel="shortcut icon" href="{{ asset('/images/icon.jpg') }}" />
-    <link rel="apple-touch-icon" sizes="128x128" href="{{ asset('/images/icon.jpg') }}">
-    <link rel="icon" type="image/jpg" sizes="128x128" href="{{ asset('/images/icon.jpg') }}">
+    <link rel="shortcut icon" href="{{ asset('/images/icon.png') }}" />
+    <link rel="apple-touch-icon" sizes="128x128" href="{{ asset('/images/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="128x128" href="{{ asset('/images/icon.png') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{ asset('/images/icon.jpg') }}">
+    <meta name="msapplication-TileImage" content="{{ asset('/images/icon.png') }}">
 
     <!-- Font Awesome -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
