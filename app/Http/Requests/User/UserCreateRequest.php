@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class UserCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => 'required', 'email', 'unique:users,email' . $this->id,
-            'password' => ['nullable', 'min:8'],
+            'password' => ['required', 'string', 'min:8'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'role' => ['required']
         ];
     }

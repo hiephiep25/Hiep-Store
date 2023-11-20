@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\User\UserCreateRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 
 class UserController extends Controller
 {
@@ -43,7 +43,7 @@ class UserController extends Controller
         return new JsonResource($user);
     }
 
-    public function update(string $id, UserUpdateRequest $request): JsonResource
+    public function update(int $id, UserUpdateRequest $request): JsonResource
     {
         $userData = $request->only(['name', 'email', 'password', 'role']);
         $user = $this->userService->update($id, $userData);

@@ -21,7 +21,7 @@ class UserService
             if (!empty($email)) {
                 $query->where('email', 'like', "%$email%");
             }
-        })->orderBy('created_at', 'desc')->paginate($perPage);
+        })->orderBy('id', 'asc')->paginate($perPage);
     }
 
     public function profile()

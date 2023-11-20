@@ -10,10 +10,6 @@
                                     <CommonInput v-model:model-value="name" type="text" width-common="col-12 q-ml-lg"
                                         width-label="col-1" label="Name" />
                                 </div>
-                                <div class="col-6">
-                                    <CommonInput v-model:model-value="email" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="Email" />
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -32,7 +28,7 @@
                         <q-markup-table :separator="separator" flat bordered>
                             <q-table flat bordered virtual-scroll no-data-label="no data available"
                                 class="header-table-custom" rows-per-page-label="Records per page"
-                                :pagination-label="getPaginationLabel" :rows="users" :columns="columns"
+                                :pagination-label="getPaginationLabel" :rows="categories" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
                                 @request="onRequest">
                                 <template v-slot:body-cell-actions="props">
@@ -54,7 +50,7 @@
         <q-dialog v-model="confirm" persistent>
             <q-card>
                 <q-card-section class="row items-center">
-                    <span class="q-ml-sm">Confirm delete user {{ userDelete.name }}?</span>
+                    <span class="q-ml-sm">Confirm delete category {{ categoryDelete.name }}?</span>
                 </q-card-section>
                 <q-card-actions align="right">
                     <q-btn flat label="Cancel" color="primary" v-close-popup />
@@ -69,17 +65,16 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import useNotify from "@/utils/notify";
-import { useUserStore } from "@/store/user";
+import { useCategoryStore } from "@/store/category";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
 
 const router = useRouter();
-const userStore = useUserStore();
+const categoryStore = useCategoryStore();
 const separator = ref("vertical");
-const email = ref("");
 const name = ref("");
-const { users, pagination } = storeToRefs(userStore);
-const userDelete = ref({});
+const { categories, pagination } = storeToRefs(categoryStore);
+const categoryDelete = ref({});
 const confirm = ref(false);
 const notify = useNotify();
 const columns = ref([
@@ -97,19 +92,6 @@ const columns = ref([
         label: "Name",
         field: "name",
         sortable: true,
-    },
-    {
-        name: "email",
-        align: "center",
-        label: "Email",
-        field: "email",
-        sortable: true,
-    },
-    {
-        name: "role",
-        align: "center",
-        label: "Role",
-        field: "role",
     },
     {
         name: "actions",
@@ -134,9 +116,8 @@ const columns = ref([
 ]);
 
 const onRequest = async ({ pagination }) => {
-    await userStore.getUsers({
+    await categoryStore.getCategories({
         name: name.value,
-        email: email.value,
         page: pagination.page,
         per_page: pagination.rowsPerPage,
     });
@@ -144,49 +125,47 @@ const onRequest = async ({ pagination }) => {
 
 const resetSearch = () => {
     name.value = "";
-    email.value = "";
-    userStore.getUsers();
+    categoryStore.getCategories();
 };
 
-const handleEdit = (user) => {
-    router.push(`/users/${user.id}`);
+const handleEdit = (category) => {
+    router.push(`/categories/${category.id}`);
 };
 
 const handleDelete = (evt) => {
     confirm.value = true;
-    userDelete.value = users.value.find(function (c) {
+    categoryDelete.value = categories.value.find(function (c) {
         return c.id == evt.id;
     });
 };
 
 const confirmed = async () => {
     try {
-        await userStore.deleteUser(userDelete.value.id);
+        await categoryStore.deleteUser(categoryDelete.value.id);
         notify.success("Data has been deleted.");
-        userStore.getUsers();
+        categoryStore.getCategories();
     } catch (error) {
         notify.error(error.response.data.message);
     }
 };
 
 const onSubmit = async () => {
-    await userStore.getUsers({
+    await categoryStore.getCategories({
         name: name.value,
-        email: email.value,
         page: pagination.value.page,
         per_page: pagination.value.rowsPerPage,
     });
 };
 
 const navigateToRegistrationPage = () => {
-    router.push("/users/create");
+    router.push("/categories/create");
 };
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
-userStore.getUsers({});
+categoryStore.getCategories({});
 </script>
 
 <style lang="scss" scoped>

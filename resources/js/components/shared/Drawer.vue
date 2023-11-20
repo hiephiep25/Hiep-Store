@@ -89,6 +89,13 @@ const drawerContent = computed(() => {
             show: user.value.role === "ADMIN",
         },
         {
+            label: "Category management",
+            icon: "category",
+            active: /category/g.test(route.name.toString()),
+            action: () => router.push({ name: "category.index" }),
+            show: true
+        },
+        {
             label: "Change password",
             icon: "key",
             active: /change-password/g.test(route.name.toString()),

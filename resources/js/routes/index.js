@@ -55,6 +55,33 @@ const router = createRouter({
                     component: () => import("@/pages/user/Edit.vue"),
                 },
                 {
+                    path: "categories",
+                    name: "category.index",
+                    meta: {
+                        title: "Category management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/category/Index.vue"),
+                },
+                {
+                    path: "categories/create",
+                    name: "category.create",
+                    meta: {
+                        title: "Category management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/category/Create.vue"),
+                },
+                {
+                    path: "categories/:id",
+                    name: "category.edit",
+                    meta: {
+                        title: "Category management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/category/Edit.vue"),
+                },
+                {
                     path: "change-password",
                     name: "change-password",
                     meta: {

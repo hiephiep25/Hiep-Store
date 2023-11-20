@@ -7,12 +7,6 @@
                         <div class="col-12">
                             <Input v-model:model-value="form" name="name" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Name" :errors="errors" />
-                            <Input v-model:model-value="form" name="email" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Email" :errors="errors" />
-                            <Input v-model:model-value="form" name="password" type="password" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Password" :errors="errors" />
-                            <SelectBox v-model:model-value="form" name="role" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Role" :option="UserRole" :errors="errors" />
                         </div>
                     </div>
                     <div class="row justify-center">
@@ -27,36 +21,25 @@
 <script setup>
 
 import { reactive, ref } from 'vue';
-import { useUserStore } from '@/store/user';
+import { useCategoryStore } from '@/store/category';
 import { useRouter } from 'vue-router';
 import useNotify from '@/utils/notify';
 import Input from '../../components/common/Input.vue';
-import SelectBox from '../../components/common/SelectBox.vue';
-
-const UserRole = [
-    { label: "ADMIN", value: "ADMIN" },
-    { label: "MANAGER", value: "MANAGER" },
-    { label: "CUSTOMER", value: "CUSTOMER" },
-    { label: "SUPPLIER", value: "SUPPLIER" },
-];
 
 const form = reactive({
     name: "",
-    email: "",
-    password: "",
-    role: "",
 });
 const errors = ref({});
 const router = useRouter();
-const userStore = useUserStore();
+const categoryStore = useCategoryStore();
 const notify = useNotify();
 
 const create = async () => {
     try {
-        await userStore.create(form);
+        await categoryStore.create(form);
         errors.value = {};
         notify.success('Added data successfully');
-        router.push({ name: 'user.index' });
+        router.push({ name: 'category.index' });
     } catch (error) {
         errors.value = error?.response?.data?.errors
         notify.error(error.response.data.message);
