@@ -24,6 +24,14 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('25052002'),
                 'role' => User::ROLE_ADMIN,
                 'remember_token' => Str::random(10),
+            ],
+            [
+                'name' =>  'Manager',
+                'email' => 'manager@gmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('25052002'),
+                'role' => User::ROLE_MANAGER,
+                'remember_token' => Str::random(10),
             ]
         ];
         DB::table('users')->insert($users);

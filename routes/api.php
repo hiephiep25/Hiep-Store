@@ -22,4 +22,14 @@ Route::post('login', [LoginController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [UserController::class, 'profile']);
     Route::get('/logout', [LoginController::class, 'logout']);
+    Route::post('/change-password', [ProfileController::class, 'updatePassword']);
+
+    //admin router
+    Route::middleware('check-role:admin')->group(function () {
+        Route::get('/users', [UserController::class, 'index']);
+        Route::post('/users/create', [UserController::class, 'create']);
+        Route::get('/users/{id}', [UserController::class, 'show']);
+        Route::post('/users/{id}', [UserController::class, 'update']);
+        Route::delete('users/{id}', [UserController::class, 'delete']);
+    });
 });

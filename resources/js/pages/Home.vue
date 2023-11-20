@@ -1,7 +1,7 @@
 <template>
     <q-page>
         <div>
-            Hello
+            Welcome to home page !
         </div>
     </q-page>
 

@@ -36,7 +36,7 @@
                   dense
                   label="Remember me!" /> -->
                         <div class="row justify-center q-mt-md">
-                            <q-btn no-caps class="col-12" :loading="isSubmitting" type="submit" color="secondary">
+                            <q-btn no-caps class="col-12" :loading="isSubmitting" type="submit" color="primary">
                                 {{ "Submit" }}
                             </q-btn>
                         </div>

@@ -27,6 +27,9 @@ export const useAuthStore = defineStore('auth', {
         const { data } = await request.get('/profile');
         console.log(data);
         this.user = data;
+        if(this.user.role === 'ADMIN'){
+            this.isAdmin = true;
+          }
       } catch (error) {
         throw error;
       }
@@ -47,7 +50,7 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     async logout() {
-      await request.get("/logout");
+      await request.get('/logout');
       this.user = null;
       this.isAuth = false;
       this.isCalled = false;
