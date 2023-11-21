@@ -27,6 +27,7 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/Home.vue"),
                 },
+                //user
                 {
                     path: "users",
                     name: "user.index",
@@ -54,6 +55,7 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/user/Edit.vue"),
                 },
+                //category
                 {
                     path: "categories",
                     name: "category.index",
@@ -81,6 +83,35 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/category/Edit.vue"),
                 },
+                //discount
+                {
+                    path: "discounts",
+                    name: "discount.index",
+                    meta: {
+                        title: "Discount management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/discount/Index.vue"),
+                },
+                {
+                    path: "discounts/create",
+                    name: "discount.create",
+                    meta: {
+                        title: "Discount management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/discount/Create.vue"),
+                },
+                {
+                    path: "discounts/:id",
+                    name: "discount.edit",
+                    meta: {
+                        title: "Discount management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/discount/Edit.vue"),
+                },
+                //change-password
                 {
                     path: "change-password",
                     name: "change-password",

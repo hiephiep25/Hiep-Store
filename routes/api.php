@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,19 +29,31 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
     //admin router
     Route::middleware('check-role:ADMIN')->group(function () {
-        Route::get('/users', [UserController::class, 'index']);
-        Route::post('/users/create', [UserController::class, 'create']);
-        Route::get('/users/{id}', [UserController::class, 'show']);
-        Route::post('/users/{id}', [UserController::class, 'update']);
-        Route::delete('users/{id}', [UserController::class, 'delete']);
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class, 'index']);
+            Route::post('/create', [UserController::class, 'create']);
+            Route::get('/{id}', [UserController::class, 'show']);
+            Route::post('/{id}', [UserController::class, 'update']);
+            Route::delete('{id}', [UserController::class, 'delete']);
+        });
     });
 
     // manager router
     Route::middleware('check-role:MANAGER')->group(function () {
-        Route::get('/categories', [CategoryController::class, 'index']);
-        Route::post('/categories/create', [CategoryController::class, 'create']);
-        Route::get('/categories/{id}', [CategoryController::class, 'show']);
-        Route::post('/categories/{id}', [CategoryController::class, 'update']);
-        Route::delete('categories/{id}', [CategoryController::class, 'delete']);
+        Route::prefix('categories')->group(function () {
+            Route::get('/', [CategoryController::class, 'index']);
+            Route::post('/create', [CategoryController::class, 'create']);
+            Route::get('/{id}', [CategoryController::class, 'show']);
+            Route::post('/{id}', [CategoryController::class, 'update']);
+            Route::delete('/{id}', [CategoryController::class, 'delete']);
+        });
+
+        Route::prefix('discounts')->group(function () {
+            Route::get('/', [DiscountController::class, 'index']);
+            Route::post('/create', [DiscountController::class, 'create']);
+            Route::get('/{id}', [DiscountController::class, 'show']);
+            Route::post('/{id}', [DiscountController::class, 'update']);
+            Route::delete('/{id}', [DiscountController::class, 'delete']);
+        });
     });
 });

@@ -6,7 +6,7 @@
                     <div class="row justify-center">
                         <div class="col-12">
                             <Input v-model:model-value="form" name="name" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Name" :errors="errors" />
+                                width-label="col-2" label="Category's name" :errors="errors" />
                         </div>
                     </div>
                     <div class="row justify-center">

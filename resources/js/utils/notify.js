@@ -9,7 +9,7 @@ export default function () {
       type: 'notify',
       position: 'top-right',
       progress: true,
-      timeout: 5000,
+      timeout: 3000,
       ...options,
     });
   };

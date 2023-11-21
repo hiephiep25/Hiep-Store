@@ -93,7 +93,14 @@ const drawerContent = computed(() => {
             icon: "category",
             active: /category/g.test(route.name.toString()),
             action: () => router.push({ name: "category.index" }),
-            show: true
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+        },
+        {
+            label: "Discount management",
+            icon: "discount",
+            active: /discount/g.test(route.name.toString()),
+            action: () => router.push({ name: "discount.index" }),
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
         },
         {
             label: "Change password",
