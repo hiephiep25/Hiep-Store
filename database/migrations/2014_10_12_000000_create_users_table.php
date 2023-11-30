@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('role', [User::ROLE_ADMIN, User::ROLE_MANAGER, User::ROLE_CUSTOMER, User::ROLE_SUPPLIER])->default(User::ROLE_CUSTOMER);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

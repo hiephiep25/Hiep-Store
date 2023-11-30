@@ -24,9 +24,9 @@ class DiscountCreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'code' => ['required', 'string', 'max:32', 'unique:discounts,name'],
+            'code' => ['required', 'string', 'max:32', 'unique:discounts,code'],
             'value' => ['required', 'string', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'quantity' => ['required', 'integer', 'min:0'],
+            'quantity' => ['required', 'numeric', 'min:0'],
             'expiration_date' => ['required', 'date', 'after_or_equal:today' ],
         ];
     }

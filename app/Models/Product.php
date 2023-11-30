@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
-class Discount extends Model
+class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'code', 'name', 'value', 'description', 'quantity', 'expiration_date'
+        'code', 'name', 'brand', 'category', 'description', 'qty', 'price_per_qty',
+        'manufacture_day', 'expiry_day', 'image'
     ];
 
     protected $appends = ['availability'];
@@ -21,13 +22,8 @@ class Discount extends Model
     {
         $today = Carbon::now();
 
-        $quantity = (int)$this->quantity;
+        $qty = (int)$this->qty;
 
-        return $this->expiration_date > $today && $quantity > 0;
-    }
-
-    public function category()
-    {
-        return $this->belongsToMany(Category::class);
+        return $this->expiry_day > $today && $qty > 0;
     }
 }

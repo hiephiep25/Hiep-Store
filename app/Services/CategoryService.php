@@ -17,6 +17,7 @@ class CategoryService
             }
         })->orderBy('id', 'asc')->paginate($perPage);
     }
+    
     public function create(array $data): Category
     {
         $category = Category::create([

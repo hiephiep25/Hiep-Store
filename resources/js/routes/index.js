@@ -111,6 +111,34 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/discount/Edit.vue"),
                 },
+                //product
+                {
+                    path: "products",
+                    name: "product.index",
+                    meta: {
+                        title: "Product management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/product/Index.vue"),
+                },
+                {
+                    path: "products/create",
+                    name: "product.create",
+                    meta: {
+                        title: "Product management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/product/Create.vue"),
+                },
+                {
+                    path: "products/:id",
+                    name: "product.edit",
+                    meta: {
+                        title: "Product management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/product/Edit.vue"),
+                },
                 //change-password
                 {
                     path: "change-password",
@@ -138,6 +166,10 @@ const router = createRouter({
                 },
             ],
         },
+        {
+            path: "/:catchAll(.*)",
+            component: () => import("@/pages/Error404.vue")
+        }
     ],
 });
 

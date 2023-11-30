@@ -6,9 +6,17 @@
                 <span v-if="required" class="required">*</span>
             </div>
             <div :class="widthInput" class="q-pl-sm self-center">
-                <q-input outlined v-model="inputValue" :type="type" :placeholder="placeholder" :disable="disable"
-                    :dense="true" clearable hide-bottom-space @update:model-value="$emit('updateModel')">
-                </q-input>
+                <q-select
+                    outlined
+                    v-model="selectedValue"
+                    :options="selectOptions"
+                    :placeholder="placeholder"
+                    :disable="disable"
+                    :dense="true"
+                    clearable
+                    hide-bottom-space
+                    @update:model-value="$emit('updateModel')"
+                ></q-select>
             </div>
         </div>
     </div>
@@ -25,10 +33,6 @@ const props = defineProps({
     required: {
         type: Boolean,
         default: false,
-    },
-    type: {
-        type: String,
-        default: "text",
     },
     modelValue: {
         type: [String, Number],
@@ -54,10 +58,15 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    selectOptions: {
+        type: Array,
+        default: () => [],
+    },
 });
+
 const emit = defineEmits(["update:modelValue"]);
 
-const inputValue = computed({
+const selectedValue = computed({
     get: () => props.modelValue,
     set: (value) => {
         return emit("update:modelValue", value);

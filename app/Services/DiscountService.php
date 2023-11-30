@@ -25,6 +25,7 @@ class DiscountService
             }
         })->orderBy('id', 'asc')->paginate($perPage);
     }
+    
     public function create(array $data): Discount
     {
         $discount = Discount::create([

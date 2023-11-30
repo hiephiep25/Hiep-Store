@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,15 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/{id}', [DiscountController::class, 'show']);
             Route::post('/{id}', [DiscountController::class, 'update']);
             Route::delete('/{id}', [DiscountController::class, 'delete']);
+        });
+
+        Route::prefix('products')->group(function () {
+            Route::get('/', [ProductController::class, 'index']);
+            Route::get('/categories', [ProductController::class, 'getCategories']);
+            Route::post('/create', [ProductController::class, 'create']);
+            Route::get('/{id}', [ProductController::class, 'show']);
+            Route::post('/{id}', [ProductController::class, 'update']);
+            Route::delete('/{id}', [ProductController::class, 'delete']);
         });
     });
 });

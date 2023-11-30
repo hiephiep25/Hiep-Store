@@ -8,11 +8,11 @@
                             <div class="row">
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="name" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="Name" />
+                                        width-label="col-2" label="Name" />
                                 </div>
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="code" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="Code" />
+                                        width-label="col-2" label="Code" />
                                 </div>
                             </div>
                         </div>
@@ -21,8 +21,12 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col-6">
-                                    <CommonInput v-model:model-value="value" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="Value" />
+                                    <CommonInput v-model:model-value="brand" type="text" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Brand" />
+                                </div>
+                                <div class="col-6">
+                                    <CommonSelectBox v-model:model-value="category" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Category" :select-options="categoryOptions" />
                                 </div>
                             </div>
                         </div>
@@ -42,9 +46,15 @@
                         <q-markup-table :separator="separator" flat bordered>
                             <q-table flat bordered virtual-scroll no-data-label="no data available"
                                 class="header-table-custom" rows-per-page-label="Records per page"
-                                :pagination-label="getPaginationLabel" :rows="discounts" :columns="columns"
+                                :pagination-label="getPaginationLabel" :rows="products" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
                                 @request="onRequest">
+                                <template v-slot:body-cell-image="props">
+                                    <q-td :props="props">
+                                        <img :src="props.row.image" alt="Product Image"
+                                            style="width: 50px; height: auto;" />
+                                    </q-td>
+                                </template>
                                 <template v-slot:body-cell-actions="props">
                                     <q-td :props="props">
                                         <q-btn class="q-ml-sm" icon="edit" color="primary" size="sm"
@@ -64,7 +74,7 @@
         <q-dialog v-model="confirm" persistent>
             <q-card>
                 <q-card-section class="row items-center">
-                    <span class="q-ml-sm">Confirm delete discount {{ discountDelete.name }}?</span>
+                    <span class="q-ml-sm">Confirm delete product {{ productDelete.name }}?</span>
                 </q-card-section>
                 <q-card-actions align="right">
                     <q-btn flat label="Cancel" color="primary" v-close-popup />
@@ -76,21 +86,23 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import useNotify from "@/utils/notify";
-import { useDiscountStore } from "@/store/discount";
+import { useProductStore } from "@/store/product";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
+import CommonSelectBox from "../../components/common/CommonSelectBox.vue"
 
 const router = useRouter();
-const discountStore = useDiscountStore();
+const productStore = useProductStore();
 const separator = ref("vertical");
 const name = ref("");
 const code = ref("");
-const value = ref("");
-const { discounts, pagination } = storeToRefs(discountStore);
-const discountDelete = ref({});
+const brand = ref("");
+const category = ref("");
+const { products, pagination } = storeToRefs(productStore);
+const productDelete = ref({});
 const confirm = ref(false);
 const notify = useNotify();
 const columns = ref([
@@ -117,18 +129,36 @@ const columns = ref([
         sortable: true,
     },
     {
-        name: "value",
+        name: "brand",
         align: "center",
-        label: "Value (%)",
-        field: "value",
+        label: "Brand",
+        field: "brand",
         sortable: true,
     },
     {
-        name: "quantity",
+        name: "category",
         align: "center",
-        label: "Quantity",
-        field: "quantity",
+        label: "Category",
+        field: "category",
         sortable: true,
+    },
+    {
+        name: "qty",
+        align: "center",
+        label: "Qty",
+        field: "qty",
+    },
+    {
+        name: "price_per_qty",
+        align: "center",
+        label: "Price",
+        field: "price_per_qty",
+    },
+    {
+        name: "image",
+        align: "center",
+        label: "Image",
+        field: "image",
     },
     {
         name: "availability",
@@ -158,11 +188,32 @@ const columns = ref([
     },
 ]);
 
+const categories = ref([]);
+const categoryOptions = computed(() => {
+    return categories.value.map((category) => ({
+        value: category.id,
+        label: category.name,
+    }));
+});
+
+async function getCategoryOptions() {
+    try {
+        const response = await productStore.getCategories();
+
+        if (response.data) {
+            categories.value = response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const onRequest = async ({ pagination }) => {
-    await discountStore.getDiscounts({
+    await productStore.getProducts({
         name: name.value,
         code: code.value,
-        value: value.value,
+        brand: brand.value,
+        category: category.value.label,
         page: pagination.page,
         per_page: pagination.rowsPerPage,
     });
@@ -171,50 +222,55 @@ const onRequest = async ({ pagination }) => {
 const resetSearch = () => {
     name.value = "";
     code.value = "";
-    value.value = "";
-    discountStore.getDiscounts();
+    brand.value = "";
+    category.value = ""
+    productStore.getProducts();
 };
 
-const handleEdit = (discount) => {
-    router.push(`/discounts/${discount.id}`);
+const handleEdit = (product) => {
+    router.push(`/products/${product.id}`);
 };
 
 const handleDelete = (evt) => {
     confirm.value = true;
-    discountDelete.value = discounts.value.find(function (c) {
+    productDelete.value = products.value.find(function (c) {
         return c.id == evt.id;
     });
 };
 
 const confirmed = async () => {
     try {
-        await discountStore.deleteDiscount(discountDelete.value.id);
+        await productStore.deleteProduct(productDelete.value.id);
         notify.success("Data has been deleted.");
-        discountStore.getDiscounts();
+        productStore.getProducts();
     } catch (error) {
         notify.error(error.response.data.message);
     }
 };
 
 const onSubmit = async () => {
-    await discountStore.getDiscounts({
+    await productStore.getProducts({
         name: name.value,
         code: code.value,
-        value: value.value,
+        brand: brand.value,
+        category: category.value.label,
         page: pagination.value.page,
         per_page: pagination.value.rowsPerPage,
     });
 };
 
 const navigateToRegistrationPage = () => {
-    router.push("/discounts/create");
+    router.push("/products/create");
 };
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
-discountStore.getDiscounts({});
+onMounted(async () => {
+    await getCategoryOptions();
+    productStore.getProducts({});
+});
 </script>
 
 <style lang="scss" scoped>
