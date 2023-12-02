@@ -104,7 +104,7 @@ const drawerContent = computed(() => {
         },
         {
             label: "Product management",
-            icon: "storage",
+            icon: "fastfood",
             active: /product/g.test(route.name.toString()),
             action: () => router.push({ name: "product.index" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER"

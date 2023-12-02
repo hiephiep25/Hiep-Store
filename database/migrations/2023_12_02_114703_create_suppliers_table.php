@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('process_options', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id');
-            $table->string('qty');
-            $table->string('process');
-            $table->text('description');
-            $table->timestamps();
+            $table->integer('user_id');
+            $table->string('company_name');
+            $table->string('company_address');
+            $table->string('company_contact');
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('process_options');
+        Schema::dropIfExists('suppliers');
     }
 };

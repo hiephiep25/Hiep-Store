@@ -35,5 +35,16 @@ class UserSeeder extends Seeder
             ]
         ];
         DB::table('users')->insert($users);
+
+        DB::table('managers')->truncate();
+        $manager  = [
+            [
+                'user_id' =>  2,
+                'store_name' => 'Hiephiep',
+                'store_address' => 'Ha Noi, Viet Nam',
+                'store_contact' => '0366125502',
+            ],
+        ];
+        DB::table('managers')->insert($manager);
     }
 }
