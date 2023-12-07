@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StorageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,11 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/{id}', [ProductController::class, 'show']);
             Route::post('/{id}', [ProductController::class, 'update']);
             Route::delete('/{id}', [ProductController::class, 'delete']);
+        });
+
+        Route::prefix('storages')->group(function () {
+            Route::get('/', [StorageController::class, 'getStorages']);
+            Route::post('/store', [StorageController::class, 'store']);
         });
     });
 });

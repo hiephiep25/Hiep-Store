@@ -19,7 +19,7 @@ class DiscountSeeder extends Seeder
                 'name' =>  'Black Friday',
                 'value' => '50',
                 'description' => 'Black Friday săn sale ngập tràn!',
-                'quantity' => '',
+                'quantity' => null,
             ],
         ];
         DB::table('discounts')->insert($discounts);

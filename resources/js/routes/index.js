@@ -139,6 +139,16 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/product/Edit.vue"),
                 },
+                //storage
+                {
+                    path: "storages",
+                    name: "storage",
+                    meta: {
+                        title: "Storages management",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/Storage.vue"),
+                },
                 //change-password
                 {
                     path: "change-password",

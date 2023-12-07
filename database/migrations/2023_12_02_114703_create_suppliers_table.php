@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('company_address');
             $table->string('company_contact');
-            $table->softDeletes();
         });
     }
 

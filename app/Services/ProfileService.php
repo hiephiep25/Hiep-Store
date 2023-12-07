@@ -14,4 +14,9 @@ class ProfileService
             'password' => Hash::make($password)
         ]);
     }
+
+    public function updateProfile($userData)
+    {
+        $user = Auth::user();
+    }
 }

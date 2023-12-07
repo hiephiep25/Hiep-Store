@@ -19,13 +19,12 @@ return new class extends Migration
             $table->string('brand');
             $table->string('category');
             $table->text('description')->nullable();
-            $table->string('qty');
+            $table->integer('qty');
             $table->string('price_per_qty');
             $table->datetime('manufacture_day')->nullable();
             $table->datetime('expiry_day')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

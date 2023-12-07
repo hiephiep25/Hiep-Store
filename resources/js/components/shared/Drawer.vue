@@ -89,6 +89,13 @@ const drawerContent = computed(() => {
             show: user.value.role === "ADMIN",
         },
         {
+            label: "Storages management",
+            icon: "storage",
+            active: /storage/g.test(route.name.toString()),
+            action: () => router.push({ name: "storage" }),
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+        },
+        {
             label: "Category management",
             icon: "category",
             active: /category/g.test(route.name.toString()),
