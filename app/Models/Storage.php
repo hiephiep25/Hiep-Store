@@ -12,4 +12,16 @@ class Storage extends Model
     protected $fillable = [
         'storage', 'product_code', 'quantity'
     ];
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'code', 'product_code');
+    }
+
+    protected $appends = ['product_name'];
+
+    public function getProductNameAttribute()
+    {
+        return $this->product->name;
+    }
 }

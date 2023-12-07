@@ -17,12 +17,15 @@ class Product extends Model
 
     protected $appends = ['availability'];
 
+    public function category()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
     public function getAvailabilityAttribute(): bool
     {
         $today = Carbon::now();
 
-        $qty = (int)$this->qty;
-
-        return $this->expiry_day > $today && $qty > 0;
+        return $this->expiry_day > $today && $this->qty > 0;
     }
 }

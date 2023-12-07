@@ -1,6 +1,44 @@
 <template>
     <q-page>
         <div class="q-pa-md">
+            <q-card class="my-card bg-white text-white q-pa-md">
+                <q-form @submit="onSubmit">
+                    <div class="row justify-center">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-6">
+                                    <CommonSelectBox v-model:model-value="storage" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Storage" :select-options="storageOptions" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-center q-mt-md">
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Search" />
+                    </div>
+                </q-form>
+            </q-card>
+            <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
+                <q-form @submit="onUpdate">
+                    <div class="row justify-center">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-6">
+                                    <CommonInput v-model:model-value="form.product_code" type="text" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Product's code" />
+                                </div>
+                                <div class="col-6">
+                                    <CommonInput v-model:model-value="form.quantity" type="text" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Quantity" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-center q-mt-md">
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Export to store" />
+                    </div>
+                </q-form>
+            </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
                     <div class="col-12 q-mt-md">
@@ -20,15 +58,29 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import { useStorageStore } from "@/store/storage";
 import { storeToRefs } from "pinia";
 import CommonSelectBox from "../components/common/CommonSelectBox.vue";
+import CommonInput from "../components/common/CommonInput.vue";
+import useNotify from '@/utils/notify';
 
+const notify = useNotify();
+const errors = ref({});
 const storageStore = useStorageStore();
 const separator = ref("vertical");
 const { storages, pagination } = storeToRefs(storageStore);
+const storage = ref({ value: 1, label: 1 });
+const storageOptions = ref([
+  { value: 1, label: 1 },
+  { value: 2, label: 2 },
+]);
 
+const form = reactive({
+    storage : storage.value.value,
+    product_code: "",
+    quantity: null,
+});
 const columns = ref([
     {
         name: "code",
@@ -41,7 +93,7 @@ const columns = ref([
         name: "name",
         align: "center",
         label: "Product's name",
-        field: "name",
+        field: "product_name",
         sortable: true,
     },
     {
@@ -53,24 +105,42 @@ const columns = ref([
     }
 ]);
 
-const getStorages = async () => {
-    try {
-        const response = await storageStore.getStorages();
-
-        if (response.data) {
-            storages.value = response.data;
-        }
-    } catch (error) {
-        console.log(error);
-    }
+const onSubmit = async () => {
+    await storageStore.getStorages({
+        storage: storage.value.value,
+        page: pagination.value.page,
+        per_page: pagination.value.rowsPerPage,
+    });
 };
+
+const onRequest = async ({ pagination }) => {
+    await storageStore.getStorages({
+        storage: storage.value.value,
+        page: pagination.page,
+        per_page: pagination.rowsPerPage,
+    });
+};
+
+const onUpdate = async () => {
+    try {
+        await storageStore.updateStorages(form)
+        errors.value = {};
+        form.product_code = "";
+        form.quantity = null;
+        notify.success('Export to store successfully');
+        storageStore.getStorages({ storage: storage.value.value });
+    } catch (error) {
+        errors.value = error?.response?.data?.errors
+        notify.error(error.response.data.message);
+    }
+}
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
 onMounted(async () => {
-    await getStorages();
+    storageStore.getStorages({ storage: storage.value.value });
 });
 </script>
 

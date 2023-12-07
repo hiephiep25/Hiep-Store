@@ -24,9 +24,4 @@ class Discount extends Model
 
         return $this->expiration_date > $today && $quantity > 0;
     }
-
-    public function category()
-    {
-        return $this->belongsToMany(Category::class);
-    }
 }

@@ -11,11 +11,17 @@ export const useStorageStore = defineStore('storage', {
   getters: {
   },
   actions: {
-    async getStorages() {
+    async getStorages(params) {
       try {
         const { data } = await request.get('/storages', {
+            params: params
         })
         this.storages = data.data
+        this.pagination = {
+            page: data.meta.current_page,
+            rowsPerPage: data.meta.per_page,
+            rowsNumber: data.meta.total,
+          };
       } catch (error) {
         throw error
       }

@@ -13,7 +13,6 @@
                     :placeholder="placeholder"
                     :disable="disable"
                     :dense="true"
-                    clearable
                     hide-bottom-space
                     @update:model-value="$emit('updateModel')"
                 ></q-select>

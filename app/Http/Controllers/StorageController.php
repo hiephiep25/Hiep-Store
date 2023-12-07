@@ -16,9 +16,10 @@ class StorageController extends Controller
         $this->storageService = $storageService;
     }
 
-    public function getStorages()
+    public function getStorages(Request $request)
     {
-        $storages = $this->storageService->getStorages();
+        $params = $request->only(['storage', 'per_page']);
+        $storages = $this->storageService->getStorages($params);
         return JsonResource::collection($storages);
     }
 
