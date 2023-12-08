@@ -27,9 +27,19 @@
                                     <CommonInput v-model:model-value="form.product_code" type="text" width-common="col-12 q-ml-lg"
                                         width-label="col-2" label="Product's code" />
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-center">
+                        <div class="col">
+                            <div class="row">
                                 <div class="col-6">
-                                    <CommonInput v-model:model-value="form.quantity" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Quantity" />
+                                    <CommonInput v-model:model-value="form.add_quantity" type="text" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Add quantity" />
+                                </div>
+                                <div class="col-6">
+                                    <CommonInput v-model:model-value="form.sub_quantity" type="text" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Sub quantity" />
                                 </div>
                             </div>
                         </div>
@@ -79,7 +89,8 @@ const storageOptions = ref([
 const form = reactive({
     storage : storage.value.value,
     product_code: "",
-    quantity: null,
+    add_quantity: null,
+    sub_quantity: null,
 });
 const columns = ref([
     {
@@ -123,6 +134,7 @@ const onRequest = async ({ pagination }) => {
 
 const onUpdate = async () => {
     try {
+        form.storage = storage.value.value;
         await storageStore.updateStorages(form)
         errors.value = {};
         form.product_code = "";

@@ -22,6 +22,11 @@ class Product extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function storages()
+    {
+        return $this->hasOne(Storage::class, 'product_code', 'code');
+    }
+
     public function getAvailabilityAttribute(): bool
     {
         $today = Carbon::now();

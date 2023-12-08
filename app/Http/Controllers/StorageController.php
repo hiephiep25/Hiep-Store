@@ -27,11 +27,12 @@ class StorageController extends Controller
     {
         $request->validate([
             'product_code' => 'required|exists:products,code',
-            'quantity' => 'required|integer|min:0',
+            'add_quantity' => 'nullable|integer|min:0',
+            'sub_quantity' => 'nullable|integer|min:0',
             'storage' => 'required',
         ]);
 
-        $data = $request->only(['product_code', 'quantity', 'storage']);
+        $data = $request->only(['product_code', 'add_quantity', 'sub_quantity', 'storage']);
 
         $this->storageService->storeProductInStorage($data);
 
