@@ -35,7 +35,7 @@
                 class="bg-transparent row column items-center full-height full-width justify-center"
             >
                 <q-avatar size="64px">
-                    <img src="@/public/images/icon.png" />HiepStore
+                    <img :src=user.avatar />HiepStore
                 </q-avatar>
             </div>
         </q-img>
@@ -115,13 +115,6 @@ const drawerContent = computed(() => {
             active: /product/g.test(route.name.toString()),
             action: () => router.push({ name: "product.index" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
-        },
-        {
-            label: "Change password",
-            icon: "key",
-            active: /change-password/g.test(route.name.toString()),
-            action: () => router.push({ name: "change-password" }),
-            show: true,
         },
     ];
 });

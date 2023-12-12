@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('address');
             $table->dateTime('dob');
+            $table->timestamps();
         });
     }
 

@@ -58,6 +58,12 @@
                                 :pagination-label="getPaginationLabel" :rows="storages" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
                                 @request="onRequest">
+                                <template v-slot:body-cell-image="props">
+                                    <q-td :props="props">
+                                        <img :src="props.row.image" alt="Product Image"
+                                            style="width: 50px; height: auto;" />
+                                    </q-td>
+                                </template>
                             </q-table>
                         </q-markup-table>
                     </div>
@@ -105,7 +111,12 @@ const columns = ref([
         align: "center",
         label: "Product's name",
         field: "product_name",
-        sortable: true,
+    },
+    {
+        name: "image",
+        align: "center",
+        label: "Product's image",
+        field: "image",
     },
     {
         name: "quantity",

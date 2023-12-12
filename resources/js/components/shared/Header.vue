@@ -46,6 +46,12 @@ const router = useRouter();
 
 const dropdownItems = [
     {
+        label: "Profile",
+        onClick: () => {
+            router.push({ name: "profile" });
+        },
+    },
+    {
         label: "Change password",
         onClick: () => {
             router.push({ name: "change-password" });

@@ -159,6 +159,16 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/ChangePassword.vue"),
                 },
+                //profile
+                {
+                    path: "profile",
+                    name: "profile",
+                    meta: {
+                        title: "Profile",
+                        isAuth: true,
+                    },
+                    component: () => import("@/pages/Profile.vue"),
+                },
             ],
         },
         {

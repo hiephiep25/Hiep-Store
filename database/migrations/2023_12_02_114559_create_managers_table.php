@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('store_name');
             $table->string('store_address');
             $table->string('store_contact');
+            $table->timestamps();
         });
     }
 

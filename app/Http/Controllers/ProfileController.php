@@ -7,6 +7,7 @@ use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Services\ProfileService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileController extends Controller
 {
@@ -17,6 +18,11 @@ class ProfileController extends Controller
         $this->profileService = $profileService;
     }
 
+    public function profile()
+    {
+        return new JsonResource($this->profileService->profile());
+    }
+
     public function updatePassword(PasswordRequest $request)
     {
         $this->profileService->updatePassword($request->password);
@@ -25,8 +31,11 @@ class ProfileController extends Controller
 
     public function updateProfile(UpdateProfileRequest $request)
     {
-        $user = $request->hasFile('avatar') ? $request->only(['name', 'avatar']) : $request->only(['name']);
-        $this->profileService->updateProfile($user);
+        $userData = $request->hasFile('avatar') ? $request->only(['name', 'avatar']) : $request->only(['name']);
+        $managerData = $request->only(['store_name', 'store_address', 'store_contact']);
+        $supplierData = $request->only(['company_name', 'company_address', 'company_contact']);
+
+        $this->profileService->updateProfile($userData, $managerData, $supplierData);
         return $this->success();
     }
 }

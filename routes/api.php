@@ -25,9 +25,10 @@ Route::get('verify', [LoginController::class, 'verify']);
 Route::post('login', [LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum', 'have-permission')->group(function () {
-    Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('/profile', [ProfileController::class, 'profile']);
     Route::get('/logout', [LoginController::class, 'logout']);
     Route::post('/change-password', [ProfileController::class, 'updatePassword']);
+    Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
 
     //admin router
     Route::middleware('check-role:ADMIN')->group(function () {

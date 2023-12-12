@@ -24,11 +24,6 @@ class UserService
         })->orderBy('id', 'asc')->paginate($perPage);
     }
 
-    public function profile()
-    {
-        return Auth::user();
-    }
-
     public function create(array $data): User
     {
         $user = User::create([

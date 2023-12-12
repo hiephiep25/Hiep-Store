@@ -25,11 +25,6 @@ class UserController extends Controller
         return JsonResource::collection($users);
     }
 
-    public function profile()
-    {
-        return new JsonResource($this->userService->profile());
-    }
-
     public function create(UserCreateRequest $request): JsonResource
     {
         $userData = $request->only(['name', 'email', 'password', 'role']);
