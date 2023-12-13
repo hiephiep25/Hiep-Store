@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Product;
+use App\Models\Document;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,18 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('name');
-            $table->string('brand');
-            $table->string('category');
-            $table->text('description')->nullable();
+            $table->integer('supplier_id');
+            $table->string('product_name');
             $table->integer('qty');
-            $table->string('price_per_qty')->nullable();
+            $table->string('category');
+            $table->text('description');
+            $table->string('price');
             $table->datetime('manufacture_day')->nullable();
             $table->datetime('expiry_day')->nullable();
             $table->string('image')->nullable();
+            $table->string('license_company');
+            $table->string('license_product');
+            $table->enum('status', [Document::AWAIT_APPROVAL, Document::APPROVED, Document::DENIED])->default(Document::AWAIT_APPROVAL);
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('documents');
     }
 };

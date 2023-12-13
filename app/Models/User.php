@@ -13,6 +13,7 @@ class User extends Authenticatable
     const ROLE_ADMIN = "ADMIN";
     const ROLE_MANAGER = "MANAGER";
     const ROLE_CUSTOMER = "CUSTOMER";
+    const ROLE_STAFF = "STAFF";
     const ROLE_SUPPLIER = "SUPPLIER";
 
     use HasApiTokens, HasFactory, Notifiable;
@@ -59,6 +60,11 @@ class User extends Authenticatable
     public function supplier()
     {
         return $this->hasOne(Supplier::class);
+    }
+
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
     }
 
 }

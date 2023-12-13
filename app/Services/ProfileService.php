@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Manager;
+use App\Models\Staff;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,9 @@ class ProfileService
         } elseif ($user->role === User::ROLE_SUPPLIER) {
             $supplier = User::with('supplier')->find($user->id);
             return $supplier;
+        } elseif ($user->role === User::ROLE_STAFF) {
+            $staff = User::with('staff')->find($user->id);
+            return $staff;
         } else {
             return $user;
         }
@@ -32,7 +36,7 @@ class ProfileService
         ]);
     }
 
-    public function updateProfile($userData, $managerData, $supplierData)
+    public function updateProfile($userData, $managerData, $supplierData, $staffData)
     {
         $user = Auth::user();
         if (!empty($userData['avatar'])) {
@@ -47,7 +51,7 @@ class ProfileService
         }
         $user->update($userData);
 
-        if($user->role === User::ROLE_MANAGER){
+        if ($user->role === User::ROLE_MANAGER) {
             Manager::updateOrCreate(
                 ['user_id' => $user->id],
                 [
@@ -58,7 +62,18 @@ class ProfileService
             );
         }
 
-        if($user->role === User::ROLE_SUPPLIER){
+        if ($user->role === User::ROLE_STAFF) {
+            Staff::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'phone' => $staffData['phone'],
+                    'address' => $staffData['address'],
+                    'dob' => $staffData['store_contact'],
+                ]
+            );
+        }
+
+        if ($user->role === User::ROLE_SUPPLIER) {
             Supplier::updateOrCreate(
                 ['user_id' => $user->id],
                 [

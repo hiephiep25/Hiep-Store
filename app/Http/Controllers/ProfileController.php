@@ -31,11 +31,11 @@ class ProfileController extends Controller
 
     public function updateProfile(UpdateProfileRequest $request)
     {
-        $userData = $request->hasFile('avatar') ? $request->only(['name', 'avatar']) : $request->only(['name']);
+        $userData = $request->hasFile('avatar') ? $request->only(['name', 'email', 'avatar']) : $request->only(['name', 'email']);
         $managerData = $request->only(['store_name', 'store_address', 'store_contact']);
         $supplierData = $request->only(['company_name', 'company_address', 'company_contact']);
-
-        $this->profileService->updateProfile($userData, $managerData, $supplierData);
+        $staffData = $request->only(['phone', 'address', 'dob']);
+        $this->profileService->updateProfile($userData, $managerData, $supplierData, $staffData);
         return $this->success();
     }
 }

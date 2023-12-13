@@ -16,6 +16,16 @@
                     </div>
                     <div class="row justify-center">
                         <div class="col-12 col-md-6">
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.user.email" label="Email" :rules="[
+                                (val) => !!val.trim() || 'Please enter email!',
+                                (val) =>
+                                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) ||
+                                    'Email is invalid',
+                            ]" />
+                        </div>
+                    </div>
+                    <div class="row justify-center">
+                        <div class="col-12 col-md-6">
                             <q-input class="q-ma-md" outlined dense v-model="authStore.user.name" label="Name" :rules="[
                                 (val) => !!val.trim() || 'Please enter name!',
                                 (val) =>
@@ -26,50 +36,87 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_name" label="Store name" :rules="[
-                                (val) => !!val.trim() || 'Please enter store name!',
-                                (val) =>
-                                    (val && val.length <= 256) ||
-                                    'Store name can not have more than 255 characters',
-                            ]" />
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_name"
+                                label="Store name" :rules="[
+                                    (val) => !!val.trim() || 'Please enter store name!',
+                                    (val) =>
+                                        (val && val.length <= 256) ||
+                                        'Store name can not have more than 255 characters',
+                                ]" />
                         </div>
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_address" label="Store address" :rules="[
-                                (val) => !!val.trim() || 'Please enter store address!',
-                            ]" />
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_address"
+                                label="Store address" :rules="[
+                                    (val) => !!val.trim() || 'Please enter store address!',
+                                ]" />
                         </div>
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_contact" label="Store address" :rules="[
-                                (val) => !!val.trim() || 'Please enter store contact!',
-                            ]" />
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_contact"
+                                label="Store address" :rules="[
+                                    (val) => !!val.trim() || 'Please enter store contact!',
+                                ]" />
                         </div>
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_name" label="Company name" :rules="[
-                                (val) => !!val.trim() || 'Please enter company name!',
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_name"
+                                label="Company name" :rules="[
+                                    (val) => !!val.trim() || 'Please enter company name!',
+                                    (val) =>
+                                        (val && val.length <= 256) ||
+                                        'Company name can not have more than 255 characters',
+                                ]" />
+                        </div>
+                    </div>
+                    <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
+                        <div class="col-12 col-md-6">
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_address"
+                                label="Company address" :rules="[
+                                    (val) => !!val.trim() || 'Please enter company address!',
+                                ]" />
+                        </div>
+                    </div>
+                    <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
+                        <div class="col-12 col-md-6">
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_contact"
+                                label="Store address" :rules="[
+                                    (val) => !!val.trim() || 'Please enter company contact!',
+                                ]" />
+                        </div>
+                    </div>
+                    <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
+                        <div class="col-12 col-md-6">
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.staff.phone" label="Phone" :rules="[
+                                (val) => !!val.trim() || 'Please enter phone!',
                                 (val) =>
-                                    (val && val.length <= 256) ||
-                                    'Company name can not have more than 255 characters',
+                                    val === null ||
+                                    val === '' ||
+                                    /^[0-9]*$/.test(val) ||
+                                    'Phone is invalid',
                             ]" />
                         </div>
                     </div>
-                    <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
+                    <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_address" label="Company address" :rules="[
-                                (val) => !!val.trim() || 'Please enter company address!',
-                            ]" />
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.staff.address" label="Address"
+                                :rules="[
+                                    (val) => !!val.trim() || 'Please enter address!',
+                                ]" />
                         </div>
                     </div>
-                    <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
+                    <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_contact" label="Store address" :rules="[
-                                (val) => !!val.trim() || 'Please enter company contact!',
-                            ]" />
+                            <q-input class="q-ma-md" outlined type="date" dense v-model="authStore.staff.dob"
+                                label="Birthday" :rules="[
+                                    (val) => !!val.trim() || 'Please enter birthday',
+                                    (val) =>
+                                        new Date(val) <= new Date() ||
+                                        'Birthday is invalid',
+                                ]" />
                         </div>
                     </div>
                     <div class="column items-center">
@@ -93,27 +140,33 @@ const errors = ref({});
 const file = ref(null);
 
 const imageSrc = computed(() => {
-  if (file.value) {
-    return URL.createObjectURL(file.value);
-  }
-  return authStore.user.avatar;
+    if (file.value) {
+        return URL.createObjectURL(file.value);
+    }
+    return authStore.user.avatar;
 });
 
 async function updateProfile() {
     try {
         const formData = new FormData();
+        formData.append('email', authStore.user.email);
         formData.append('name', authStore.user.name);
         formData.append('avatar', file.value);
         formData.append('role', authStore.user.role);
-        if(authStore.user.role == 'MANAGER') {
+        if (authStore.user.role == 'MANAGER') {
             formData.append('store_name', authStore.manager.store_name);
             formData.append('store_address', authStore.manager.store_address);
             formData.append('store_contact', authStore.manager.store_contact);
         }
-        if(authStore.user.role == 'SUPPLIER') {
+        if (authStore.user.role == 'SUPPLIER') {
             formData.append('company_name', authStore.supplier.company_name);
             formData.append('company_address', authStore.supplier.company_address);
             formData.append('company_contact', authStore.supplier.company_contact);
+        }
+        if (authStore.user.role == 'STAFF') {
+            formData.append('phone', authStore.staff.phone);
+            formData.append('address', authStore.staff.address);
+            formData.append('dob', authStore.supplier.dob);
         }
         await authStore.updateProfile(formData);
         errors.value = {};

@@ -6,6 +6,7 @@ export const useAuthStore = defineStore("auth", {
         user: null,
         manager: null,
         supplier: null,
+        staff: null,
         isAuth: false,
         isCalled: false,
         isAdmin: false,
@@ -36,6 +37,9 @@ export const useAuthStore = defineStore("auth", {
                 }
                 if (this.user.role === "SUPPLIER") {
                     this.supplier = data.supplier;
+                }
+                if (this.user.role === "STAFF") {
+                    this.staff = data.staff;
                 }
             } catch (error) {
                 throw error;
