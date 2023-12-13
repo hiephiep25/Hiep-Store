@@ -35,7 +35,7 @@
                 class="bg-transparent row column items-center full-height full-width justify-center"
             >
                 <q-avatar size="64px">
-                    <img :src=user.avatar />HiepStore
+                    <img :src="user.avatar || required('@/public/images/icon.png')" />HiepStore
                 </q-avatar>
             </div>
         </q-img>

@@ -83,6 +83,11 @@ class ProductService
     public function delete(int $id)
     {
         $product = $this->findProductById($id);
+        $imagePath = str_replace(url('/storage'), '', $product->image);
+        $image = public_path('storage' . $imagePath);
+        if (file_exists($image)) {
+            unlink($image);
+        }
         $product->delete();
     }
 }
