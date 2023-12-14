@@ -25,7 +25,7 @@
                         <img :src="user.avatar" alt="User Avatar" />
                     </template>
                     <template v-else>
-                        <img src="@/public/images/icon.png" alt="Default Avatar" />
+                        <img src="@/public/images/avatar.jpg" alt="Default Avatar" />
                     </template>
                     {{ user.name }}
                 </q-avatar>

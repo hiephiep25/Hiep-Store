@@ -34,6 +34,7 @@ const router = createRouter({
                     meta: {
                         title: "User management",
                         isAuth: true,
+                        requiredRole: "ADMIN",
                     },
                     component: () => import("@/pages/user/Index.vue"),
                 },
@@ -43,6 +44,7 @@ const router = createRouter({
                     meta: {
                         title: "User management",
                         isAuth: true,
+                        requiredRole: "ADMIN",
                     },
                     component: () => import("@/pages/user/Create.vue"),
                 },
@@ -52,6 +54,7 @@ const router = createRouter({
                     meta: {
                         title: "User management",
                         isAuth: true,
+                        requiredRole: "ADMIN",
                     },
                     component: () => import("@/pages/user/Edit.vue"),
                 },
@@ -62,6 +65,7 @@ const router = createRouter({
                     meta: {
                         title: "Category management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/category/Index.vue"),
                 },
@@ -71,6 +75,7 @@ const router = createRouter({
                     meta: {
                         title: "Category management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/category/Create.vue"),
                 },
@@ -80,6 +85,7 @@ const router = createRouter({
                     meta: {
                         title: "Category management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/category/Edit.vue"),
                 },
@@ -90,6 +96,7 @@ const router = createRouter({
                     meta: {
                         title: "Discount management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/discount/Index.vue"),
                 },
@@ -99,6 +106,7 @@ const router = createRouter({
                     meta: {
                         title: "Discount management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/discount/Create.vue"),
                 },
@@ -108,6 +116,7 @@ const router = createRouter({
                     meta: {
                         title: "Discount management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/discount/Edit.vue"),
                 },
@@ -118,6 +127,7 @@ const router = createRouter({
                     meta: {
                         title: "Product management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/product/Index.vue"),
                 },
@@ -127,6 +137,7 @@ const router = createRouter({
                     meta: {
                         title: "Product management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/product/Create.vue"),
                 },
@@ -136,6 +147,7 @@ const router = createRouter({
                     meta: {
                         title: "Product management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/product/Edit.vue"),
                 },
@@ -146,6 +158,7 @@ const router = createRouter({
                     meta: {
                         title: "Storages management",
                         isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
                     },
                     component: () => import("@/pages/Storage.vue"),
                 },
@@ -200,6 +213,11 @@ router.beforeEach(async (to, from, next) => {
 
     if (to.meta?.isAuth && !authStore.isAuth && to.name !== "login") {
         window.location.replace("/login");
+        return;
+    }
+
+    if (to.meta?.requiredRole && authStore.user.role !== to.meta.requiredRole) {
+        window.location.replace("/permission-denied");
         return;
     }
 
