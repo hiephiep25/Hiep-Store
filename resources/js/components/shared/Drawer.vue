@@ -1,21 +1,13 @@
 <template>
     <q-drawer show-if-above v-model="drawer" side="left" bordered>
-        <q-scroll-area
-            :style="{
-                height: `calc(100% - ${headerHeight})`,
-                marginTop: headerHeight,
-            }"
-        >
+        <q-scroll-area :style="{
+            height: `calc(100% - ${headerHeight})`,
+            marginTop: headerHeight,
+        }">
             <q-list padding>
-                <q-item
-                    v-for="content in drawerContent.filter((d) => d.show)"
-                    :class="{ 'bg-primary text-white': content.active }"
-                    :active="content.active"
-                    :key="content.label"
-                    v-ripple
-                    clickable
-                    @click="content.action"
-                >
+                <q-item v-for="content in drawerContent.filter((d) => d.show)"
+                    :class="{ 'bg-primary text-white': content.active }" :active="content.active" :key="content.label"
+                    v-ripple clickable @click="content.action">
                     <q-item-section avatar>
                         <q-icon :name="content.icon" />
                     </q-item-section>
@@ -24,18 +16,18 @@
                 </q-item>
             </q-list>
         </q-scroll-area>
-        <q-img
-            class="absolute-top cursor-pointer"
-            :style="{
-                height: headerHeight,
-            }"
-            @click="redirectLandingPage"
-        >
-            <div
-                class="bg-transparent row column items-center full-height full-width justify-center"
-            >
+        <q-img class="absolute-top cursor-pointer" :style="{
+            height: headerHeight,
+        }" @click="redirectLandingPage">
+            <div class="bg-transparent row column items-center full-height full-width justify-center">
                 <q-avatar size="64px">
-                    <img :src="user.avatar || required('@/public/images/icon.png')" />HiepStore
+                    <template v-if="user.avatar">
+                        <img :src="user.avatar" alt="User Avatar" />
+                    </template>
+                    <template v-else>
+                        <img src="@/public/images/icon.png" alt="Default Avatar" />
+                    </template>
+                    {{ user.name }}
                 </q-avatar>
             </div>
         </q-img>

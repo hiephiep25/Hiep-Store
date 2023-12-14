@@ -36,7 +36,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_name"
+                            <q-input class="q-ma-md" outlined dense v-model="storeNameModel.value"
                                 label="Store name" :rules="[
                                     (val) => !!val.trim() || 'Please enter store name!',
                                     (val) =>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_address"
+                            <q-input class="q-ma-md" outlined dense v-model="storeAddressModel.value"
                                 label="Store address" :rules="[
                                     (val) => !!val.trim() || 'Please enter store address!',
                                 ]" />
@@ -55,7 +55,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.manager.store_contact"
+                            <q-input class="q-ma-md" outlined dense v-model="storeContactModel.value"
                                 label="Store address" :rules="[
                                     (val) => !!val.trim() || 'Please enter store contact!',
                                 ]" />
@@ -63,7 +63,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_name"
+                            <q-input class="q-ma-md" outlined dense v-model="companyNameModel"
                                 label="Company name" :rules="[
                                     (val) => !!val.trim() || 'Please enter company name!',
                                     (val) =>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_address"
+                            <q-input class="q-ma-md" outlined dense v-model="companyAddressModel"
                                 label="Company address" :rules="[
                                     (val) => !!val.trim() || 'Please enter company address!',
                                 ]" />
@@ -82,15 +82,15 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.supplier.company_contact"
-                                label="Store address" :rules="[
+                            <q-input class="q-ma-md" outlined dense v-model="companyContactModel"
+                                label="Company contact" :rules="[
                                     (val) => !!val.trim() || 'Please enter company contact!',
                                 ]" />
                         </div>
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.staff.phone" label="Phone" :rules="[
+                            <q-input class="q-ma-md" outlined dense v-model="phoneModel.value" label="Phone" :rules="[
                                 (val) => !!val.trim() || 'Please enter phone!',
                                 (val) =>
                                     val === null ||
@@ -102,7 +102,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.staff.address" label="Address"
+                            <q-input class="q-ma-md" outlined dense v-model="addressModel.value" label="Address"
                                 :rules="[
                                     (val) => !!val.trim() || 'Please enter address!',
                                 ]" />
@@ -110,7 +110,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined type="date" dense v-model="authStore.staff.dob"
+                            <q-input class="q-ma-md" outlined type="date" dense v-model="dobModel.value"
                                 label="Birthday" :rules="[
                                     (val) => !!val.trim() || 'Please enter birthday',
                                     (val) =>
@@ -130,7 +130,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from "vue";
+import { ref, computed, watch } from "vue";
 import useNotify from "@/utils/notify";
 import { useAuthStore } from "@/store/auth";
 
@@ -138,6 +138,18 @@ const authStore = useAuthStore();
 const notify = useNotify();
 const errors = ref({});
 const file = ref(null);
+
+const storeNameModel = ref(authStore.manager?.store_name || "");
+const storeAddressModel = ref(authStore.manager?.store_address || "");
+const storeContactModel = ref(authStore.manager?.store_contact || "");
+
+const companyNameModel = ref(authStore.supplier?.company_name || "");
+const companyAddressModel = ref(authStore.supplier?.company_address || "");
+const companyContactModel = ref(authStore.supplier?.company_contact || "");
+
+const phoneModel = ref(authStore.staff?.phone || "");
+const addressModel = ref(authStore.staff?.address || "");
+const dobModel = ref(authStore.staff?.dob || "");
 
 const imageSrc = computed(() => {
     if (file.value) {
@@ -149,31 +161,49 @@ const imageSrc = computed(() => {
 async function updateProfile() {
     try {
         const formData = new FormData();
+        formData.append('id', authStore.user.id);
         formData.append('email', authStore.user.email);
         formData.append('name', authStore.user.name);
-        formData.append('avatar', file.value);
+        if (file.value) {
+            formData.append('avatar', file.value);
+        }
         formData.append('role', authStore.user.role);
         if (authStore.user.role == 'MANAGER') {
-            formData.append('store_name', authStore.manager.store_name);
-            formData.append('store_address', authStore.manager.store_address);
-            formData.append('store_contact', authStore.manager.store_contact);
+            formData.append('store_name', storeNameModel.value);
+            formData.append('store_address', storeContactModel.value);
+            formData.append('store_contact', storeAddressModel.value);
         }
         if (authStore.user.role == 'SUPPLIER') {
-            formData.append('company_name', authStore.supplier.company_name);
-            formData.append('company_address', authStore.supplier.company_address);
-            formData.append('company_contact', authStore.supplier.company_contact);
+            formData.append('company_name', companyNameModel.value);
+            formData.append('company_address', companyAddressModel.value);
+            formData.append('company_contact', companyContactModel.value);
         }
         if (authStore.user.role == 'STAFF') {
-            formData.append('phone', authStore.staff.phone);
-            formData.append('address', authStore.staff.address);
-            formData.append('dob', authStore.supplier.dob);
+            formData.append('phone', phoneModel.value);
+            formData.append('address', addressModel.value);
+            formData.append('dob', dobModel.value);
         }
         await authStore.updateProfile(formData);
         errors.value = {};
         notify.success('Update profile successfully');
+        window.location.reload();
     } catch (error) {
         errors.value = error?.response?.data?.errors
         notify.error(error.response.data.message);
     }
 }
+
+watch(() => {
+    storeNameModel.value = authStore.manager?.store_name || "";
+    storeContactModel.value = authStore.manager?.store_contact || "";
+    storeAddressModel.value = authStore.manager?.store_address || "";
+
+    companyNameModel.value = authStore.supplier?.company_name || "";
+    companyContactModel.value = authStore.supplier?.company_contact || "";
+    companyAddressModel.value = authStore.supplier?.company_address || "";
+
+    phoneModel.value = authStore.staff?.phone || "";
+    addressModel.value = authStore.staff?.address || "";
+    dobModel.value = authStore.staff?.dob || "";
+}, { immediate: true });
 </script>

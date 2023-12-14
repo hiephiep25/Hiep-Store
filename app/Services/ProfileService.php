@@ -41,7 +41,7 @@ class ProfileService
         $user = Auth::user();
         if (!empty($userData['avatar'])) {
             if ($user->avatar) {
-                $avatarPath = public_path($user->avatar);
+                $avatarPath = public_path(str_replace(url('/'), '', $user->avatar));
                 if (file_exists($avatarPath)) {
                     unlink($avatarPath);
                 }
@@ -68,7 +68,7 @@ class ProfileService
                 [
                     'phone' => $staffData['phone'],
                     'address' => $staffData['address'],
-                    'dob' => $staffData['store_contact'],
+                    'dob' => $staffData['dob'],
                 ]
             );
         }
