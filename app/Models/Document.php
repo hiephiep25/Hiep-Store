@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,7 @@ class Document extends Model
     const AWAIT_APPROVAL = 'AWAIT_APPROVAL';
     const APPROVED = 'APPROVED';
     const DENIED = 'DENIED';
-    
+
     use HasFactory;
 
     protected $fillable = [
@@ -32,8 +33,18 @@ class Document extends Model
         'expiry_day',
     ];
 
+    protected $appends = ['createdAtDiff'];
+
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
+    }
+
+    public function getCreatedAtDiffAttribute()
+    {
+        $now = Carbon::now();
+        $diff = $now->diffForHumans($this->created_at);
+
+        return $diff;
     }
 }

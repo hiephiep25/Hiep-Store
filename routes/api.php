@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StorageController;
+use App\Http\Controllers\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,21 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::prefix('storages')->group(function () {
             Route::get('/', [StorageController::class, 'getStorages']);
             Route::post('/store', [StorageController::class, 'store']);
+        });
+
+        Route::prefix('documents')->group(function () {
+            Route::get('/all', [DocumentController::class, 'getAllDocuments']);
+            Route::get('/{id}', [DocumentController::class, 'show']);
+        });
+    });
+
+    // supplier-route
+    Route::middleware('check-role:SUPPLIER')->group(function () {
+        Route::prefix('documents')->group(function () {
+            Route::get('/', [DocumentController::class, 'getMyDocuments']);
+            Route::get('/my/{id}', [DocumentController::class, 'showMyDocuments']);
+            Route::post('/{id}', [DocumentController::class, 'update']);
+            Route::delete('/{id}', [DocumentController::class, 'delete']);
         });
     });
 });
