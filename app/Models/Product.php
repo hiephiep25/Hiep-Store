@@ -27,6 +27,13 @@ class Product extends Model
         return $this->hasOne(Storage::class, 'product_code', 'code');
     }
 
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_products', 'product_id', 'order_id')
+            ->withPivot('qty')
+            ->withTimestamps();
+    }
+
     public function getAvailabilityAttribute(): bool
     {
         $today = Carbon::now();
