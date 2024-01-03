@@ -74,35 +74,35 @@ const drawerContent = computed(() => {
             show: true,
         },
         {
-            label: "User management",
+            label: "User",
             icon: "group",
             active: /user/g.test(route.name.toString()),
             action: () => router.push({ name: "user.index" }),
             show: user.value.role === "ADMIN",
         },
         {
-            label: "Storages management",
+            label: "Storages",
             icon: "storage",
             active: /storage/g.test(route.name.toString()),
             action: () => router.push({ name: "storage" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
         },
         {
-            label: "Category management",
+            label: "Category",
             icon: "category",
             active: /category/g.test(route.name.toString()),
             action: () => router.push({ name: "category.index" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
         },
         {
-            label: "Discount management",
+            label: "Discount",
             icon: "discount",
             active: /discount/g.test(route.name.toString()),
             action: () => router.push({ name: "discount.index" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
         },
         {
-            label: "Product management",
+            label: "Product",
             icon: "fastfood",
             active: /product/g.test(route.name.toString()),
             action: () => router.push({ name: "product.index" }),
@@ -113,7 +113,14 @@ const drawerContent = computed(() => {
             icon: "description",
             active: /document/g.test(route.name.toString()),
             action: () => router.push({ name: "document.index" }),
-            show: true,
+            show: user.value.role === "SUPPLIER",
+        },
+        {
+            label: "Document approval",
+            icon: "description",
+            active: /document/g.test(route.name.toString()),
+            action: () => router.push({ name: "document-approval.index" }),
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
         },
     ];
 });

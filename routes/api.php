@@ -75,8 +75,11 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         });
 
         Route::prefix('documents')->group(function () {
+            Route::get('/suppliers', [DocumentController::class, 'getSuppliers']);
             Route::get('/all', [DocumentController::class, 'getAllDocuments']);
             Route::get('/{id}', [DocumentController::class, 'show']);
+            Route::post('/approve/{id}', [DocumentController::class, 'approve']);
+            Route::post('/deny/{id}', [DocumentController::class, 'deny']);
         });
     });
 

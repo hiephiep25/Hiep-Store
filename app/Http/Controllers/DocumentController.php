@@ -24,6 +24,12 @@ class DocumentController extends Controller
         return JsonResource::collection($documents);
     }
 
+    public function getSuppliers(Request $request)
+    {
+        $suppliers = $this->documentService->getSuppliers();
+        return new JsonResource($suppliers);
+    }
+
     public function getAllDocuments(Request $request)
     {
         $params = $request->only(['per_page', 'status', 'supplier_id']);
@@ -57,6 +63,20 @@ class DocumentController extends Controller
                                 'manufacture_day', 'expiry_day', 'image', 'license_company', 'license_product']);
         $document = $this->documentService->update($documentData, $id);
         return new JsonResource($document);
+    }
+
+    public function approve(int $id)
+    {
+        $this->documentService->approve($id);
+
+        return $this->success();
+    }
+
+    public function deny(int $id)
+    {
+        $this->documentService->deny($id);
+
+        return $this->success();
     }
 
     public function delete(int $id)

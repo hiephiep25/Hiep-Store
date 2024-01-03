@@ -10,6 +10,10 @@
                                     <CommonSelectBox v-model:model-value="status" width-common="col-12 q-ml-lg"
                                         width-label="col-2" label="Status" :select-options="statusOptions" />
                                 </div>
+                                <div class="col-6">
+                                    <CommonSelectBox v-model:model-value="supplier_id" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Supplier" :select-options="supplierOptions" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -20,9 +24,6 @@
                 </q-form>
             </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
-                <div class="row">
-                    <q-btn class="btn" color="primary" label="Create" @click="navigateToRegistrationPage" />
-                </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
                         <q-markup-table :separator="separator" flat bordered>
@@ -39,10 +40,8 @@
                                 </template>
                                 <template v-slot:body-cell-actions="props">
                                     <q-td :props="props">
-                                        <q-btn class="q-ml-sm" icon="edit" color="primary" size="sm"
-                                            @click="handleEdit(props.row)" />
-                                        <q-btn class="q-ml-sm" icon="delete" color="red" size="sm"
-                                            @click="handleDelete(props.row)" />
+                                        <q-btn class="q-ml-sm" icon="info" color="green" size="sm"
+                                            @click="handleDetail(props.row)" />
                                     </q-td>
                                 </template>
                             </q-table>
@@ -52,39 +51,54 @@
             </q-card>
         </div>
     </q-page>
-    <div class="q-pa-md">
-        <q-dialog v-model="confirm" persistent>
-            <q-card>
-                <q-card-section class="row items-center">
-                    <span class="q-ml-sm">Confirm delete document {{ documentDelete.name }}?</span>
-                </q-card-section>
-                <q-card-actions align="right">
-                    <q-btn flat label="Cancel" color="primary" v-close-popup />
-                    <q-btn flat label="OK" color="negative" v-close-popup @click="confirmed()" />
-                </q-card-actions>
-            </q-card>
-        </q-dialog>
-    </div>
+    <q-dialog v-model="dialogVisible">
+        <q-card style="width: 700px;">
+            <div class="q-dialog__content q-pa-md" style="height: 100%; width: 100%;">
+                <h4 class="text-h6">Document Details</h4>
+                <div class="document-info">
+                    <p><strong>Product Name:</strong> {{ selectedDocument.product_name }}</p>
+                    <p><strong>Category:</strong> {{ selectedDocument.category }}</p>
+                    <p><strong>Quantity:</strong> {{ selectedDocument.qty }}</p>
+                    <p><strong>Price:</strong> {{ selectedDocument.price }}</p>
+                    <p><strong>Manufacture Day:</strong> {{ selectedDocument.manufacture_day }}</p>
+                    <p><strong>Expiry Day:</strong> {{ selectedDocument.expiry_day }}</p>
+                </div>
+                <div class="document-images">
+                    <img :src="selectedDocument.image" alt="Product Image" />
+                    <img :src="selectedDocument.license_company" alt="License Company" />
+                    <img :src="selectedDocument.license_product" alt="License Product" />
+                </div>
+                <p></p>
+                <p><strong>Status:</strong> <strong>{{ selectedDocument.status }}</strong></p>
+            </div>
+            <q-card-actions align="center" v-if="selectedDocument.status == 'AWAIT_APPROVAL'">
+                <q-btn label="Approval" color="green" @click="approve" />
+                <q-btn label="Denied" color="red" @click="deny" />
+            </q-card-actions>
+            <q-card-actions align="right">
+                <q-btn label="Close" color="primary" @click="closeDialog" />
+            </q-card-actions>
+        </q-card>
+    </q-dialog>
 </template>
 
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import useNotify from "@/utils/notify";
-import { useDocumentStore } from "@/store/document";
+import { useDocumentApprovalStore } from "@/store/document-approval";
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import CommonSelectBox from "../../components/common/CommonSelectBox.vue"
 
 const router = useRouter();
-const documentStore = useDocumentStore();
+const documentStore = useDocumentApprovalStore();
 const authStore = useAuthStore();
 const separator = ref("vertical");
 const { documents, pagination } = storeToRefs(documentStore);
 const { user } = storeToRefs(authStore);
 const status = ref("");
-const documentDelete = ref({});
-const confirm = ref(false);
+const supplier_id = ref("");
 const notify = useNotify();
 const columns = ref([
     {
@@ -156,14 +170,25 @@ const columns = ref([
 ]);
 
 const statusOptions = [
-  { label: 'APPROVED', value: 'APPROVED' },
-  { label: 'AWAIT_APPROVAL', value: 'AWAIT_APPROVAL' },
-  { label: 'DENIED', value: 'DENIED' },
+    { label: 'APPROVED', value: 'APPROVED' },
+    { label: 'AWAIT_APPROVAL', value: 'AWAIT_APPROVAL' },
+    { label: 'DENIED', value: 'DENIED' },
 ];
 
+const suppliers = ref([]);
+const supplierOptions = computed(() => {
+    return suppliers.value.map((supplier) => ({
+        value: supplier.id,
+        label: supplier.name,
+    }));
+});
+const dialogVisible = ref(false);
+const selectedDocument = ref(null);
+
 const onRequest = async ({ pagination }) => {
-    await documentStore.getMyDocuments({
+    await documentStore.getDocuments({
         status: status.value.label,
+        supplier_id: supplier_id.value.value,
         page: pagination.page,
         per_page: pagination.rowsPerPage,
     });
@@ -171,48 +196,66 @@ const onRequest = async ({ pagination }) => {
 
 const resetSearch = () => {
     status.value = "";
-    documentStore.getMyDocuments();
+    documentStore.getDocuments();
 };
 
-const handleEdit = (document) => {
-    router.push(`/documents/${document.id}`);
+const handleDetail = (document) => {
+    selectedDocument.value = document;
+    dialogVisible.value = true;
 };
 
-const handleDelete = (evt) => {
-    confirm.value = true;
-    documentDelete.value = documents.value.find(function (c) {
-        return c.id == evt.id;
-    });
+const closeDialog = () => {
+    dialogVisible.value = false;
 };
 
-const confirmed = async () => {
+const approve = async () => {
     try {
-        await documentStore.deleteDocument(documentDelete.value.id);
-        notify.success("Data has been deleted.");
-        documentStore.getMyDocuments();
-    } catch (error) {
-        notify.error(error.response.data.message);
+        await documentStore.approve(selectedDocument.value.id);
+        notify.success('Success');
+        router.push({ name: 'document-approval.index' });
+    } catch( error ) {
+        console.log(error);
     }
 };
 
+const deny = async () => {
+    try {
+        await documentStore.deny(selectedDocument.value.id);
+        notify.success('Success');
+        router.push({ name: 'document-approval.index' });
+    } catch( error ) {
+        console.log(error);
+    }
+};
+
+
 const onSubmit = async () => {
-    await documentStore.getMyDocuments({
+    await documentStore.getDocuments({
         status: status.value.label,
+        supplier_id: supplier_id.value.value,
         page: pagination.value.page,
         per_page: pagination.value.rowsPerPage,
     });
-};
-
-const navigateToRegistrationPage = () => {
-    router.push("/documents/create");
 };
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
+async function getSupplierOptions() {
+    try {
+        const response = await documentStore.getSuppliers();
+        if (response.data) {
+            suppliers.value = response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 onMounted(async () => {
-    documentStore.getMyDocuments({});
+    await getSupplierOptions();
+    documentStore.getDocuments({});
 });
 </script>
 
@@ -227,5 +270,35 @@ onMounted(async () => {
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
+}
+
+.q-dialog__content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.document-info {
+    margin-bottom: 20px;
+
+    p {
+        margin: 5px 0;
+    }
+
+    strong {
+        margin-right: 5px;
+    }
+}
+
+.document-images {
+    display: flex;
+    justify-content: space-between;
+
+    img {
+        max-height: 100px;
+        margin-top: 10px;
+    }
 }
 </style>

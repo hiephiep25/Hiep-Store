@@ -189,7 +189,7 @@ const router = createRouter({
                     meta: {
                         title: "Document management",
                         isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER", "SUPPLIER"],
+                        requiredRole: ["SUPPLIER"],
                     },
                     component: () => import("@/pages/document/Index.vue"),
                 },
@@ -199,7 +199,7 @@ const router = createRouter({
                     meta: {
                         title: "Document management",
                         isAuth: true,
-                        requiredRole: ["ADMIN", "SUPPLIER"],
+                        requiredRole: ["SUPPLIER"],
                     },
                     component: () => import("@/pages/document/Create.vue"),
                 },
@@ -209,9 +209,20 @@ const router = createRouter({
                     meta: {
                         title: "Document management",
                         isAuth: true,
-                        requiredRole: ["ADMIN", "SUPPLIER"],
+                        requiredRole: ["SUPPLIER"],
                     },
                     component: () => import("@/pages/document/Edit.vue"),
+                },
+                // document-approval
+                {
+                    path: "documents-approval",
+                    name: "document-approval.index",
+                    meta: {
+                        title: "Document management",
+                        isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER"],
+                    },
+                    component: () => import("@/pages/document-approval/Index.vue"),
                 },
             ],
         },

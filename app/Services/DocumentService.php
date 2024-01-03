@@ -27,6 +27,11 @@ class DocumentService
             ->paginate($perPage);
     }
 
+    public function getSuppliers()
+    {
+        return User::where('role', User::ROLE_SUPPLIER)->get();
+    }
+
     public function getAllDocuments(array $params): LengthAwarePaginator
     {
         $status = $params['status'] ?? '';
@@ -136,5 +141,28 @@ class DocumentService
         $this->deleteImage($document->license_company);
         $this->deleteImage($document->license_product);
         $document->delete();
+    }
+
+    public function approve(int $id)
+    {
+        $document = $this->findDocumentById($id);
+        if ($document->status === Document::AWAIT_APPROVAL) {
+            $document->status = Document::APPROVED;
+            $document->save();
+        } else {
+            abort(422, 'Cannot approve a document that is not in AWAIT_APPROVAL status.');
+        }
+    }
+
+    public function deny(int $id)
+    {
+        $document = $this->findDocumentById($id);
+        if ($document->status === Document::AWAIT_APPROVAL) {
+            $document->status = Document::DENIED;
+            $document->save();
+        } else {
+
+            abort(422, 'Cannot deny a document that is not in AWAIT_APPROVAL status.');
+        }
     }
 }
