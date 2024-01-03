@@ -16,8 +16,15 @@ class DocumentService
     public function get(array $params): LengthAwarePaginator
     {
         $user = Auth::user();
+        $status = $params['status'] ?? '';
         $perPage = $params['per_page'] ?? PER_PAGE;
-        return Document::where('supplier_id', $user->id)->orderBy('id', 'asc')->paginate($perPage);
+
+        return Document::where('supplier_id', $user->id)
+            ->when(!empty($status), function ($query) use ($status) {
+                $query->where('status', $status);
+            })
+            ->orderBy('id', 'asc')
+            ->paginate($perPage);
     }
 
     public function getAllDocuments(array $params): LengthAwarePaginator
@@ -38,6 +45,11 @@ class DocumentService
     public function create(array $data): Document
     {
         $user = Auth::user();
+
+        $image = '/public/documents/product_image/' . Str::slug($user->id);
+        $name1 = $data['image']->getClientOriginalName();
+        $path1 = Storage::putFileAs($image, $data['image'], $name1);
+        $data['image'] = url(Storage::url($path1));
 
         $licenseCompany = '/public/documents/license_company/' . Str::slug($user->id);
         $name = $data['license_company']->getClientOriginalName();
@@ -118,6 +130,9 @@ class DocumentService
     public function delete(int $id)
     {
         $document = $this->findMyDocumentById($id);
+        if ($document->status == Document::APPROVED) {
+            throw new Exception("Cannot delete a document that has been approved");
+        }
         $this->deleteImage($document->license_company);
         $this->deleteImage($document->license_product);
         $document->delete();

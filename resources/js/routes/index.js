@@ -182,6 +182,37 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/Profile.vue"),
                 },
+                //document
+                {
+                    path: "documents",
+                    name: "document.index",
+                    meta: {
+                        title: "Document management",
+                        isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER", "SUPPLIER"],
+                    },
+                    component: () => import("@/pages/document/Index.vue"),
+                },
+                {
+                    path: "documents/create",
+                    name: "document.create",
+                    meta: {
+                        title: "Document management",
+                        isAuth: true,
+                        requiredRole: ["ADMIN", "SUPPLIER"],
+                    },
+                    component: () => import("@/pages/document/Create.vue"),
+                },
+                {
+                    path: "documents/:id",
+                    name: "document.edit",
+                    meta: {
+                        title: "Document management",
+                        isAuth: true,
+                        requiredRole: ["ADMIN", "SUPPLIER"],
+                    },
+                    component: () => import("@/pages/document/Edit.vue"),
+                },
             ],
         },
         {
@@ -216,7 +247,7 @@ router.beforeEach(async (to, from, next) => {
         return;
     }
 
-    if (to.meta?.requiredRole && authStore.user.role !== to.meta.requiredRole) {
+    if (to.meta?.requiredRole && !to.meta.requiredRole.includes(authStore.user.role)) {
         window.location.replace("/permission-denied");
         return;
     }

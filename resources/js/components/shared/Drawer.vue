@@ -108,6 +108,13 @@ const drawerContent = computed(() => {
             action: () => router.push({ name: "product.index" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
         },
+        {
+            label: "Document",
+            icon: "description",
+            active: /document/g.test(route.name.toString()),
+            action: () => router.push({ name: "document.index" }),
+            show: true,
+        },
     ];
 });
 </script>

@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
     Route::get('/logout', [LoginController::class, 'logout']);
     Route::post('/change-password', [ProfileController::class, 'updatePassword']);
     Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
+    Route::get('/products/categories', [ProductController::class, 'getCategories']);
 
     //admin router
     Route::middleware('check-role:ADMIN')->group(function () {
@@ -62,7 +63,6 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
         Route::prefix('products')->group(function () {
             Route::get('/', [ProductController::class, 'index']);
-            Route::get('/categories', [ProductController::class, 'getCategories']);
             Route::post('/create', [ProductController::class, 'create']);
             Route::get('/{id}', [ProductController::class, 'show']);
             Route::post('/{id}', [ProductController::class, 'update']);
@@ -85,6 +85,7 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::prefix('documents')->group(function () {
             Route::get('/', [DocumentController::class, 'getMyDocuments']);
             Route::get('/my/{id}', [DocumentController::class, 'showMyDocuments']);
+            Route::post('/create', [DocumentController::class, 'create']);
             Route::post('/{id}', [DocumentController::class, 'update']);
             Route::delete('/{id}', [DocumentController::class, 'delete']);
         });

@@ -19,7 +19,7 @@ class DocumentController extends Controller
 
     public function getMyDocuments(Request $request)
     {
-        $params = $request->only(['per_page']);
+        $params = $request->only(['per_page', 'status']);
         $documents = $this->documentService->get($params);
         return JsonResource::collection($documents);
     }
@@ -47,7 +47,7 @@ class DocumentController extends Controller
 
     public function showMyDocuments(int $id): JsonResource
     {
-        $document = $this->documentService->findDocumentById($id);
+        $document = $this->documentService->findMyDocumentById($id);
         return new JsonResource($document);
     }
 
