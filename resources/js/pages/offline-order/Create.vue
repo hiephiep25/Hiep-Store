@@ -60,7 +60,7 @@ const form = reactive({
 
 const paymentTypeOptions = [
     { label: "CASH", value: "CASH" },
-    { label: "E-WALLET", value: "E-WALLET" },
+    { label: "E_WALLET", value: "E_WALLET" },
     { label: "CARD", value: "CARD" },
 ];
 
@@ -137,7 +137,7 @@ const create = async () => {
         }, storage);
         errors.value = {};
         notify.success('Create data successfully');
-        router.push({ name: 'offline-order.index' });
+        router.push({ name: 'offline-order' });
     } catch (error) {
         errors.value = error?.response?.data?.errors;
         notify.error(error.response.data.message);

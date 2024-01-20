@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OfflineOrderController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,5 +103,11 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::post('/{storage}/create', [OfflineOrderController::class, 'store']);
             Route::get('/{id}', [OfflineOrderController::class, 'getOfflineOrderDetail']);
         });
+    });
+
+    Route::prefix('notifications')->group(function () {
+        Route::get('/list-noti', [NotificationController::class, 'listNotification']);
+        Route::put('/{id}/read', [NotificationController::class, 'readNotification']);
+        Route::get('/unread-count', [NotificationController::class, 'countUnreadNotifications']);
     });
 });

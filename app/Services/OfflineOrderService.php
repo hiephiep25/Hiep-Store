@@ -10,9 +10,17 @@ use App\Models\Order;
 use App\Models\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\OrderProduct;
+use App\Services\NotificationService;
 
 class OfflineOrderService
 {
+    private NotificationService $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
     public function getAllOfflineOrders(array $params): LengthAwarePaginator
     {
         $perPage = $params['per_page'] ?? PER_PAGE;
@@ -66,6 +74,7 @@ class OfflineOrderService
                     ]);
 
                     $this->decreaseProductQuantity($product->code, $productData['qty']);
+                    $this->notificationService->createNotification(2, 'create-offline-order');
                 }
             }
 

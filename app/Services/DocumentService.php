@@ -10,9 +10,17 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Exception;
+use App\Services\NotificationService;
 
 class DocumentService
 {
+    private NotificationService $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
     public function get(array $params): LengthAwarePaginator
     {
         $user = Auth::user();
@@ -69,6 +77,7 @@ class DocumentService
         $document = Document::create([
             ...$data,
         ]);
+        $this->notificationService->createNotification(2, 'create-document');
 
         return $document;
     }
@@ -149,6 +158,7 @@ class DocumentService
         if ($document->status === Document::AWAIT_APPROVAL) {
             $document->status = Document::APPROVED;
             $document->save();
+            $this->notificationService->createNotification($document->supplier_id, 'approve-document');
         } else {
             abort(422, 'Cannot approve a document that is not in AWAIT_APPROVAL status.');
         }
@@ -160,8 +170,8 @@ class DocumentService
         if ($document->status === Document::AWAIT_APPROVAL) {
             $document->status = Document::DENIED;
             $document->save();
+            $this->notificationService->createNotification($document->supplier_id, 'deny-document');
         } else {
-
             abort(422, 'Cannot deny a document that is not in AWAIT_APPROVAL status.');
         }
     }

@@ -10,6 +10,25 @@
             />
             <q-toolbar-title>{{ $route.meta.title }}</q-toolbar-title>
             <q-space></q-space>
+            <q-btn
+                dense
+                flat
+                round
+                :class="{ 'bg-red-7 text-white': counts > 0 }"
+                class="position-relative"
+            >
+                <q-icon name="notifications" />
+                <span v-if="counts > 0" class="badge bg-white text-red-7">{{ counts }}</span>
+                <q-menu transition-show="scale" transition-hide="scale">
+                    <q-list>
+                        <q-item v-for="(notification, index) in notifications" :key="index" clickable>
+                        <q-item-section>
+                            <b>{{ notification.sender.name }}</b>{{ notification.content }}
+                        </q-item-section>
+                        </q-item>
+                    </q-list>
+                </q-menu>
+            </q-btn>
             <q-btn-dropdown
                 class="q-ml-sm"
                 unelevated
@@ -39,10 +58,14 @@
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { useNotificationStore } from "@/store/notification";
+import { onMounted, ref } from 'vue';
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 const router = useRouter();
+const notificationStore = useNotificationStore();
+const { counts, notifications } = storeToRefs(notificationStore);
 
 const dropdownItems = [
     {
@@ -64,4 +87,23 @@ const dropdownItems = [
         },
     },
 ];
+onMounted(async () => {
+  await notificationStore.countUnreadNotifications();
+  await notificationStore.getNotifications();
+});
 </script>
+
+<style scoped>
+.badge {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
