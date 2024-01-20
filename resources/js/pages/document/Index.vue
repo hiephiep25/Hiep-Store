@@ -42,7 +42,7 @@
                                         <q-btn class="q-ml-sm" icon="edit" color="primary" size="sm"
                                             @click="handleEdit(props.row)" />
                                         <q-btn class="q-ml-sm" icon="delete" color="red" size="sm"
-                                            @click="handleDelete(props.row)" />
+                                            @click="handleDelete(props.row)" v-if="props.row.status != 'APPROVED'"/>
                                     </q-td>
                                 </template>
                             </q-table>

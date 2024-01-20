@@ -149,7 +149,8 @@ const onUpdate = async () => {
         await storageStore.updateStorages(form)
         errors.value = {};
         form.product_code = "";
-        form.quantity = null;
+        form.add_quantity = null;
+        form.sub_quantity = null;
         notify.success('Export to store successfully');
         storageStore.getStorages({ storage: storage.value.value });
     } catch (error) {

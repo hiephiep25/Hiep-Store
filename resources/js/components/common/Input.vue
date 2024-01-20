@@ -46,7 +46,7 @@ defineProps({
     },
     modelValue: {
         type: Object,
-        required: false
+        required: true
     },
     rules: {
         type: Array,

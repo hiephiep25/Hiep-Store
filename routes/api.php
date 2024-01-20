@@ -10,6 +10,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\OfflineOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,15 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::post('/create', [DocumentController::class, 'create']);
             Route::post('/{id}', [DocumentController::class, 'update']);
             Route::delete('/{id}', [DocumentController::class, 'delete']);
+        });
+    });
+
+    Route::middleware('check-role:MANAGER,STAFF')->group(function () {
+        Route::prefix('offline-orders')->group(function () {
+            Route::get('/', [OfflineOrderController::class, 'index']);
+            Route::get('/storage-product/{storage}', [OfflineOrderController::class, 'getStorageProducts']);
+            Route::post('/{storage}/create', [OfflineOrderController::class, 'store']);
+            Route::get('/{id}', [OfflineOrderController::class, 'getOfflineOrderDetail']);
         });
     });
 });

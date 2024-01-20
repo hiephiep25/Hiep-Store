@@ -212,6 +212,7 @@ const approve = async () => {
     try {
         await documentStore.approve(selectedDocument.value.id);
         notify.success('Success');
+        dialogVisible.value = false;
         router.push({ name: 'document-approval.index' });
     } catch( error ) {
         console.log(error);
@@ -222,6 +223,7 @@ const deny = async () => {
     try {
         await documentStore.deny(selectedDocument.value.id);
         notify.success('Success');
+        dialogVisible.value = false;
         router.push({ name: 'document-approval.index' });
     } catch( error ) {
         console.log(error);

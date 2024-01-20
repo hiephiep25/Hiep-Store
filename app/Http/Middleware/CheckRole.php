@@ -15,16 +15,13 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (auth()->user()->role == User::ROLE_ADMIN) {
+        $user = auth()->user();
+        if ($user->role == User::ROLE_ADMIN || in_array($user->role, $roles)) {
             return $next($request);
         }
 
-        if (auth()->user()->role !== $role) {
-            abort(HttpResponse::HTTP_FORBIDDEN, "You don't have permission.");
-        }
-
-        return $next($request);
+        abort(HttpResponse::HTTP_FORBIDDEN, "You don't have permission.");
     }
 }

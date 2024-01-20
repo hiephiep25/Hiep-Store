@@ -19,7 +19,7 @@ class Order extends Model
     protected $fillable = [
         'type',
         'payment_type',
-        'money',
+        'total',
     ];
 
     public function onlineOrder()

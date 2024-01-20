@@ -224,6 +224,27 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/document-approval/Index.vue"),
                 },
+                //offline-order
+                {
+                    path: "offline-order",
+                    name: "offline-order",
+                    meta: {
+                        title: "Offline Order",
+                        isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER", "STAFF"],
+                    },
+                    component: () => import("@/pages/offline-order/Index.vue"),
+                },
+                {
+                    path: "offline-order/:storage/create",
+                    name: "offline-order.create",
+                    meta: {
+                        title: "Offline Order",
+                        isAuth: true,
+                        requiredRole: ["ADMIN", "MANAGER", "STAFF"],
+                    },
+                    component: () => import("@/pages/offline-order/Create.vue"),
+                },
             ],
         },
         {

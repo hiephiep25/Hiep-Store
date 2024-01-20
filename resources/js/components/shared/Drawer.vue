@@ -18,7 +18,7 @@
         </q-scroll-area>
         <q-img class="absolute-top cursor-pointer" :style="{
             height: headerHeight,
-        }" @click="redirectLandingPage">
+        }">
             <div class="bg-transparent row column items-center full-height full-width justify-center">
                 <q-avatar size="64px">
                     <template v-if="user.avatar">
@@ -118,9 +118,16 @@ const drawerContent = computed(() => {
         {
             label: "Document approval",
             icon: "description",
-            active: /document/g.test(route.name.toString()),
+            active: /document-approval/g.test(route.name.toString()),
             action: () => router.push({ name: "document-approval.index" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+        },
+        {
+            label: "Offline order",
+            icon: "shopping_cart",
+            active: /offline-order/g.test(route.name.toString()),
+            action: () => router.push({ name: "offline-order" }),
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER" || user.value.role === "STAFF"
         },
     ];
 });
