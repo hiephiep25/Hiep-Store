@@ -12,6 +12,7 @@ use App\Http\Controllers\StorageController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OfflineOrderController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,5 +110,9 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::get('/list-noti', [NotificationController::class, 'listNotification']);
         Route::put('/{id}/read', [NotificationController::class, 'readNotification']);
         Route::get('/unread-count', [NotificationController::class, 'countUnreadNotifications']);
+    });
+
+    Route::prefix('revenues')->group(function () {
+        Route::get('/month', [OrderController::class, 'getRevenueByMonth']);
     });
 });

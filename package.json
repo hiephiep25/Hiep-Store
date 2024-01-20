@@ -15,12 +15,14 @@
         "sass": "^1.32.12",
         "vite": "^4.0.0",
         "vue": "^3.2.37"
-      },
-      "dependencies": {
+    },
+    "dependencies": {
         "@quasar/extras": "^1.16.5",
+        "chart.js": "^4.4.1",
         "dayjs": "^1.11.9",
         "pinia": "^2.1.4",
         "quasar": "^2.12.2",
+        "vue-chartjs": "^5.3.0",
         "vue-router": "^4.2.2"
-      }
+    }
 }
