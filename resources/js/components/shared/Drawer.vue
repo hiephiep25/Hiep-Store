@@ -85,28 +85,28 @@ const drawerContent = computed(() => {
             icon: "storage",
             active: /storage/g.test(route.name.toString()),
             action: () => router.push({ name: "storage" }),
-            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+            show: user.value.role === "MANAGER"
         },
         {
             label: "Category",
             icon: "category",
             active: /category/g.test(route.name.toString()),
             action: () => router.push({ name: "category.index" }),
-            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+            show: user.value.role === "MANAGER"
         },
         {
             label: "Discount",
             icon: "discount",
             active: /discount/g.test(route.name.toString()),
             action: () => router.push({ name: "discount.index" }),
-            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+            show: user.value.role === "MANAGER"
         },
         {
             label: "Product",
             icon: "fastfood",
             active: /product/g.test(route.name.toString()),
             action: () => router.push({ name: "product.index" }),
-            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+            show: user.value.role === "MANAGER"
         },
         {
             label: "Document",
@@ -120,14 +120,14 @@ const drawerContent = computed(() => {
             icon: "description",
             active: /document-approval/g.test(route.name.toString()),
             action: () => router.push({ name: "document-approval.index" }),
-            show: user.value.role === "ADMIN" || user.value.role === "MANAGER"
+            show: user.value.role === "MANAGER"
         },
         {
             label: "Offline order",
             icon: "shopping_cart",
             active: /offline-order/g.test(route.name.toString()),
             action: () => router.push({ name: "offline-order" }),
-            show: user.value.role === "ADMIN" || user.value.role === "MANAGER" || user.value.role === "STAFF"
+            show: user.value.role === "MANAGER" || user.value.role === "STAFF"
         },
     ];
 });
