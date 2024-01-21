@@ -9,7 +9,7 @@ import orderRoutes from "@/routes/orderRoutes";
 const env = import.meta.env;
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/admin'),
     scrollBehavior: (to, from, savedPosition) => {
         if (to.hash) {
             return {

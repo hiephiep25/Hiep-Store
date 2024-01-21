@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('{any}', function () {
+Route::get('/admin/{any?}', function () {
     return view('app');
 })->where('any', '.*');
+
+Route::get('/', [Web\HomeController::class, 'index']);

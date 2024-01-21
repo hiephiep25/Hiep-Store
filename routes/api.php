@@ -2,17 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DiscountController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\StorageController;
-use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\OfflineOrderController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,94 +15,94 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-Route::get('verify', [LoginController::class, 'verify']);
-Route::post('login', [LoginController::class, 'login']);
+Route::get('verify', [Admin\Auth\LoginController::class, 'verify']);
+Route::post('login', [Admin\Auth\LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum', 'have-permission')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'profile']);
-    Route::get('/logout', [LoginController::class, 'logout']);
-    Route::post('/change-password', [ProfileController::class, 'updatePassword']);
-    Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
-    Route::get('/products/categories', [ProductController::class, 'getCategories']);
+    Route::get('/profile', [Admin\ProfileController::class, 'profile']);
+    Route::get('/logout', [Admin\Auth\LoginController::class, 'logout']);
+    Route::post('/change-password', [Admin\ProfileController::class, 'updatePassword']);
+    Route::post('/update-profile', [Admin\ProfileController::class, 'updateProfile']);
+    Route::get('/products/categories', [Admin\ProductController::class, 'getCategories']);
 
     //admin router
     Route::middleware('check-role:ADMIN')->group(function () {
         Route::prefix('users')->group(function () {
-            Route::get('/', [UserController::class, 'index']);
-            Route::post('/create', [UserController::class, 'create']);
-            Route::get('/{id}', [UserController::class, 'show']);
-            Route::post('/{id}', [UserController::class, 'update']);
-            Route::delete('{id}', [UserController::class, 'delete']);
+            Route::get('/', [Admin\UserController::class, 'index']);
+            Route::post('/create', [Admin\UserController::class, 'create']);
+            Route::get('/{id}', [Admin\UserController::class, 'show']);
+            Route::post('/{id}', [Admin\UserController::class, 'update']);
+            Route::delete('{id}', [Admin\UserController::class, 'delete']);
         });
     });
 
     // manager router
     Route::middleware('check-role:MANAGER')->group(function () {
         Route::prefix('categories')->group(function () {
-            Route::get('/', [CategoryController::class, 'index']);
-            Route::post('/create', [CategoryController::class, 'create']);
-            Route::get('/{id}', [CategoryController::class, 'show']);
-            Route::post('/{id}', [CategoryController::class, 'update']);
-            Route::delete('/{id}', [CategoryController::class, 'delete']);
+            Route::get('/', [Admin\CategoryController::class, 'index']);
+            Route::post('/create', [Admin\CategoryController::class, 'create']);
+            Route::get('/{id}', [Admin\CategoryController::class, 'show']);
+            Route::post('/{id}', [Admin\CategoryController::class, 'update']);
+            Route::delete('/{id}', [Admin\CategoryController::class, 'delete']);
         });
 
         Route::prefix('discounts')->group(function () {
-            Route::get('/', [DiscountController::class, 'index']);
-            Route::post('/create', [DiscountController::class, 'create']);
-            Route::get('/{id}', [DiscountController::class, 'show']);
-            Route::post('/{id}', [DiscountController::class, 'update']);
-            Route::delete('/{id}', [DiscountController::class, 'delete']);
+            Route::get('/', [Admin\DiscountController::class, 'index']);
+            Route::post('/create', [Admin\DiscountController::class, 'create']);
+            Route::get('/{id}', [Admin\DiscountController::class, 'show']);
+            Route::post('/{id}', [Admin\DiscountController::class, 'update']);
+            Route::delete('/{id}', [Admin\DiscountController::class, 'delete']);
         });
 
         Route::prefix('products')->group(function () {
-            Route::get('/', [ProductController::class, 'index']);
-            Route::post('/create', [ProductController::class, 'create']);
-            Route::get('/{id}', [ProductController::class, 'show']);
-            Route::post('/{id}', [ProductController::class, 'update']);
-            Route::delete('/{id}', [ProductController::class, 'delete']);
+            Route::get('/', [Admin\ProductController::class, 'index']);
+            Route::post('/create', [Admin\ProductController::class, 'create']);
+            Route::get('/{id}', [Admin\ProductController::class, 'show']);
+            Route::post('/{id}', [Admin\ProductController::class, 'update']);
+            Route::delete('/{id}', [Admin\ProductController::class, 'delete']);
         });
 
         Route::prefix('storages')->group(function () {
-            Route::get('/', [StorageController::class, 'getStorages']);
-            Route::post('/store', [StorageController::class, 'store']);
+            Route::get('/', [Admin\StorageController::class, 'getStorages']);
+            Route::post('/store', [Admin\StorageController::class, 'store']);
         });
 
         Route::prefix('documents')->group(function () {
-            Route::get('/suppliers', [DocumentController::class, 'getSuppliers']);
-            Route::get('/all', [DocumentController::class, 'getAllDocuments']);
-            Route::get('/{id}', [DocumentController::class, 'show']);
-            Route::post('/approve/{id}', [DocumentController::class, 'approve']);
-            Route::post('/deny/{id}', [DocumentController::class, 'deny']);
+            Route::get('/suppliers', [Admin\DocumentController::class, 'getSuppliers']);
+            Route::get('/all', [Admin\DocumentController::class, 'getAllDocuments']);
+            Route::get('/{id}', [Admin\DocumentController::class, 'show']);
+            Route::post('/approve/{id}', [Admin\DocumentController::class, 'approve']);
+            Route::post('/deny/{id}', [Admin\DocumentController::class, 'deny']);
         });
     });
 
     // supplier-route
     Route::middleware('check-role:SUPPLIER')->group(function () {
         Route::prefix('documents')->group(function () {
-            Route::get('/', [DocumentController::class, 'getMyDocuments']);
-            Route::get('/my/{id}', [DocumentController::class, 'showMyDocuments']);
-            Route::post('/create', [DocumentController::class, 'create']);
-            Route::post('/{id}', [DocumentController::class, 'update']);
-            Route::delete('/{id}', [DocumentController::class, 'delete']);
+            Route::get('/', [Admin\DocumentController::class, 'getMyDocuments']);
+            Route::get('/my/{id}', [Admin\DocumentController::class, 'showMyDocuments']);
+            Route::post('/create', [Admin\DocumentController::class, 'create']);
+            Route::post('/{id}', [Admin\DocumentController::class, 'update']);
+            Route::delete('/{id}', [Admin\DocumentController::class, 'delete']);
         });
     });
 
     Route::middleware('check-role:MANAGER,STAFF')->group(function () {
         Route::prefix('offline-orders')->group(function () {
-            Route::get('/', [OfflineOrderController::class, 'index']);
-            Route::get('/storage-product/{storage}', [OfflineOrderController::class, 'getStorageProducts']);
-            Route::post('/{storage}/create', [OfflineOrderController::class, 'store']);
-            Route::get('/{id}', [OfflineOrderController::class, 'getOfflineOrderDetail']);
+            Route::get('/', [Admin\OfflineOrderController::class, 'index']);
+            Route::get('/storage-product/{storage}', [Admin\OfflineOrderController::class, 'getStorageProducts']);
+            Route::post('/{storage}/create', [Admin\OfflineOrderController::class, 'store']);
+            Route::get('/{id}', [Admin\OfflineOrderController::class, 'getOfflineOrderDetail']);
         });
     });
 
     Route::prefix('notifications')->group(function () {
-        Route::get('/list-noti', [NotificationController::class, 'listNotification']);
-        Route::put('/{id}/read', [NotificationController::class, 'readNotification']);
-        Route::get('/unread-count', [NotificationController::class, 'countUnreadNotifications']);
+        Route::get('/list-noti', [Admin\NotificationController::class, 'listNotification']);
+        Route::put('/{id}/read', [Admin\NotificationController::class, 'readNotification']);
+        Route::get('/unread-count', [Admin\NotificationController::class, 'countUnreadNotifications']);
     });
 
     Route::prefix('revenues')->group(function () {
-        Route::get('/month', [OrderController::class, 'getRevenueByMonth']);
+        Route::get('/month', [Admin\OrderController::class, 'getRevenueByMonth']);
     });
 });

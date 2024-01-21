@@ -88,7 +88,7 @@ export const useAuthStore = defineStore("auth", {
         },
         async useLogout() {
             await this.logout();
-            window.location.replace("/login");
+            window.location.replace("/admin/login");
         },
     },
 });
