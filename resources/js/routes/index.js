@@ -1,6 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/store/auth";
-
+import categoryRoutes from "@/routes/categoryRoutes";
+import userRoutes from "@/routes/userRoutes";
+import discountRoutes from "@/routes/discountRoutes";
+import productRoutes from "@/routes/productRoutes";
+import documentRoutes from "@/routes/documentRoutes";
+import orderRoutes from "@/routes/orderRoutes";
 const env = import.meta.env;
 
 const router = createRouter({
@@ -27,130 +32,10 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/Home.vue"),
                 },
-                //user
-                {
-                    path: "users",
-                    name: "user.index",
-                    meta: {
-                        title: "User management",
-                        isAuth: true,
-                        requiredRole: "ADMIN",
-                    },
-                    component: () => import("@/pages/user/Index.vue"),
-                },
-                {
-                    path: "users/create",
-                    name: "user.create",
-                    meta: {
-                        title: "User management",
-                        isAuth: true,
-                        requiredRole: "ADMIN",
-                    },
-                    component: () => import("@/pages/user/Create.vue"),
-                },
-                {
-                    path: "users/:id",
-                    name: "user.edit",
-                    meta: {
-                        title: "User management",
-                        isAuth: true,
-                        requiredRole: "ADMIN",
-                    },
-                    component: () => import("@/pages/user/Edit.vue"),
-                },
-                //category
-                {
-                    path: "categories",
-                    name: "category.index",
-                    meta: {
-                        title: "Category management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/category/Index.vue"),
-                },
-                {
-                    path: "categories/create",
-                    name: "category.create",
-                    meta: {
-                        title: "Category management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/category/Create.vue"),
-                },
-                {
-                    path: "categories/:id",
-                    name: "category.edit",
-                    meta: {
-                        title: "Category management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/category/Edit.vue"),
-                },
-                //discount
-                {
-                    path: "discounts",
-                    name: "discount.index",
-                    meta: {
-                        title: "Discount management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/discount/Index.vue"),
-                },
-                {
-                    path: "discounts/create",
-                    name: "discount.create",
-                    meta: {
-                        title: "Discount management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/discount/Create.vue"),
-                },
-                {
-                    path: "discounts/:id",
-                    name: "discount.edit",
-                    meta: {
-                        title: "Discount management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/discount/Edit.vue"),
-                },
-                //product
-                {
-                    path: "products",
-                    name: "product.index",
-                    meta: {
-                        title: "Product management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/product/Index.vue"),
-                },
-                {
-                    path: "products/create",
-                    name: "product.create",
-                    meta: {
-                        title: "Product management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/product/Create.vue"),
-                },
-                {
-                    path: "products/:id",
-                    name: "product.edit",
-                    meta: {
-                        title: "Product management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/product/Edit.vue"),
-                },
+                ...userRoutes,
+                ...categoryRoutes,
+                ...discountRoutes,
+                ...productRoutes,
                 //storage
                 {
                     path: "storages",
@@ -182,79 +67,8 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/Profile.vue"),
                 },
-                //document
-                {
-                    path: "documents",
-                    name: "document.index",
-                    meta: {
-                        title: "Document management",
-                        isAuth: true,
-                        requiredRole: ["SUPPLIER"],
-                    },
-                    component: () => import("@/pages/document/Index.vue"),
-                },
-                {
-                    path: "documents/create",
-                    name: "document.create",
-                    meta: {
-                        title: "Document management",
-                        isAuth: true,
-                        requiredRole: ["SUPPLIER"],
-                    },
-                    component: () => import("@/pages/document/Create.vue"),
-                },
-                {
-                    path: "documents/:id",
-                    name: "document.edit",
-                    meta: {
-                        title: "Document management",
-                        isAuth: true,
-                        requiredRole: ["SUPPLIER"],
-                    },
-                    component: () => import("@/pages/document/Edit.vue"),
-                },
-                // document-approval
-                {
-                    path: "documents-approval",
-                    name: "document-approval.index",
-                    meta: {
-                        title: "Document management",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
-                    },
-                    component: () => import("@/pages/document-approval/Index.vue"),
-                },
-                //offline-order
-                {
-                    path: "offline-order",
-                    name: "offline-order",
-                    meta: {
-                        title: "Offline Order",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER", "STAFF"],
-                    },
-                    component: () => import("@/pages/offline-order/Index.vue"),
-                },
-                {
-                    path: "offline-order/:storage/create",
-                    name: "offline-order.create",
-                    meta: {
-                        title: "Offline Order",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER", "STAFF"],
-                    },
-                    component: () => import("@/pages/offline-order/Create.vue"),
-                },
-                {
-                    path: "offline-order/:id",
-                    name: "offline-order.detail",
-                    meta: {
-                        title: "Offline Order",
-                        isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER", "STAFF"],
-                    },
-                    component: () => import("@/pages/offline-order/Detail.vue"),
-                },
+                ...documentRoutes,
+                ...orderRoutes,
             ],
         },
         {
