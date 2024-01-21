@@ -16,9 +16,11 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function getRevenueByMonth()
+    public function getRevenueByMonth(Request $request)
     {
-        $revenueByMonth = $this->orderService->getRevenueByMonth();
+        $year = $request->input('year');
+
+        $revenueByMonth = $this->orderService->getRevenueByMonth($year);
 
         return response()->json($revenueByMonth);
     }

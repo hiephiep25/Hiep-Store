@@ -9,8 +9,8 @@ export const useOrderStore = defineStore('order', {
     getters: {
     },
     actions: {
-        async getRevenuesByMonth(storage) {
-            return request.get('/revenues/month');
+        async getRevenuesByMonth(year) {
+            return request.get('/revenues/month', { params: { year } });
         },
     },
 });
