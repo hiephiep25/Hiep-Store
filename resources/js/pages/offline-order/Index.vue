@@ -161,7 +161,7 @@ const resetSearch = () => {
 };
 
 const handleInfo = (offlineOrder) => {
-
+    router.push(`/offline-order/${offlineOrder.id}`);
 };
 
 const onSubmit = async () => {

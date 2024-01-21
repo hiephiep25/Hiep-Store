@@ -98,7 +98,8 @@ onMounted(async () => {
   position: absolute;
   top: -2px;
   right: -6px;
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: bold;
   width: 16px;
   height: 16px;
   border-radius: 50%;
