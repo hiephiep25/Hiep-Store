@@ -99,7 +99,7 @@ router.beforeEach(async (to, from, next) => {
     await authStore.verify();
 
     if (to.meta?.isAuth && !authStore.isAuth && to.name !== "login") {
-        window.location.replace("/login");
+        window.location.replace("/admin/login");
         return;
     }
 
