@@ -29,13 +29,21 @@ class OfflineOrderService
 
         if (isset($params['from']) && isset($params['to'])) {
             $query->whereBetween('created_at', [$params['from'], $params['to']]);
+        } else {
+            if (isset($params['from'])) {
+                $query->where('created_at', '>=', $params['from']);
+            } elseif (isset($params['to'])) {
+                $query->where('created_at', '<=', $params['to']);
+            }
         }
+
         if (isset($params['storage'])) {
             $query->where('storage', $params['storage']);
         }
 
         return $query->paginate($perPage);
     }
+
 
     public function getStorageProducts(int $storage)
     {
