@@ -36,7 +36,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="storeNameModel.value"
+                            <q-input class="q-ma-md" outlined dense v-model="storeNameModel"
                                 label="Store name" :rules="[
                                     (val) => !!val.trim() || 'Please enter store name!',
                                     (val) =>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="storeAddressModel.value"
+                            <q-input class="q-ma-md" outlined dense v-model="storeAddressModel"
                                 label="Store address" :rules="[
                                     (val) => !!val.trim() || 'Please enter store address!',
                                 ]" />
@@ -55,8 +55,8 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'MANAGER'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="storeContactModel.value"
-                                label="Store address" :rules="[
+                            <q-input class="q-ma-md" outlined dense v-model="storeContactModel"
+                                label="Store contact" :rules="[
                                     (val) => !!val.trim() || 'Please enter store contact!',
                                 ]" />
                         </div>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="phoneModel.value" label="Phone" :rules="[
+                            <q-input class="q-ma-md" outlined dense v-model="phoneModel" label="Phone" :rules="[
                                 (val) => !!val.trim() || 'Please enter phone!',
                                 (val) =>
                                     val === null ||
@@ -102,7 +102,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="addressModel.value" label="Address"
+                            <q-input class="q-ma-md" outlined dense v-model="addressModel" label="Address"
                                 :rules="[
                                     (val) => !!val.trim() || 'Please enter address!',
                                 ]" />
@@ -110,7 +110,7 @@
                     </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined type="date" dense v-model="dobModel.value"
+                            <q-input class="q-ma-md" outlined type="date" dense v-model="dobModel"
                                 label="Birthday" :rules="[
                                     (val) => !!val.trim() || 'Please enter birthday',
                                     (val) =>
@@ -142,7 +142,6 @@ const file = ref(null);
 const storeNameModel = ref(authStore.manager?.store_name || "");
 const storeAddressModel = ref(authStore.manager?.store_address || "");
 const storeContactModel = ref(authStore.manager?.store_contact || "");
-
 const companyNameModel = ref(authStore.supplier?.company_name || "");
 const companyAddressModel = ref(authStore.supplier?.company_address || "");
 const companyContactModel = ref(authStore.supplier?.company_contact || "");
