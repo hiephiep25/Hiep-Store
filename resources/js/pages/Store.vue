@@ -7,8 +7,8 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col-6">
-                                    <CommonSelectBox v-model:model-value="storage" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Storage" :select-options="storageOptions" />
+                                    <CommonSelectBox v-model:model-value="store" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Store" :select-options="storeOptions" />
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                         <q-markup-table :separator="separator" flat bordered>
                             <q-table flat bordered virtual-scroll no-data-label="no data available"
                                 class="header-table-custom" rows-per-page-label="Records per page"
-                                :pagination-label="getPaginationLabel" :rows="storages" :columns="columns"
+                                :pagination-label="getPaginationLabel" :rows="stores" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
                                 @request="onRequest">
                                 <template v-slot:body-cell-image="props">
@@ -75,7 +75,7 @@
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import { useStorageStore } from "@/store/storage";
+import { useStoreStore } from "@/store/store";
 import { storeToRefs } from "pinia";
 import CommonSelectBox from "../components/common/CommonSelectBox.vue";
 import CommonInput from "../components/common/CommonInput.vue";
@@ -83,17 +83,17 @@ import useNotify from '@/utils/notify';
 
 const notify = useNotify();
 const errors = ref({});
-const storageStore = useStorageStore();
+const storeStore = useStoreStore();
 const separator = ref("vertical");
-const { storages, pagination } = storeToRefs(storageStore);
-const storage = ref({ value: 1, label: 1 });
-const storageOptions = ref([
+const { stores, pagination } = storeToRefs(storeStore);
+const store = ref({ value: 1, label: 1 });
+const storeOptions = ref([
   { value: 1, label: 1 },
   { value: 2, label: 2 },
 ]);
 
 const form = reactive({
-    storage : storage.value.value,
+    store : store.value.value,
     product_code: "",
     add_quantity: null,
     sub_quantity: null,
@@ -128,16 +128,16 @@ const columns = ref([
 ]);
 
 const onSubmit = async () => {
-    await storageStore.getStorages({
-        storage: storage.value.value,
+    await storeStore.getStores({
+        store: store.value.value,
         page: pagination.value.page,
         per_page: pagination.value.rowsPerPage,
     });
 };
 
 const onRequest = async ({ pagination }) => {
-    await storageStore.getStorages({
-        storage: storage.value.value,
+    await storeStore.getStores({
+        store: store.value.value,
         page: pagination.page,
         per_page: pagination.rowsPerPage,
     });
@@ -145,14 +145,14 @@ const onRequest = async ({ pagination }) => {
 
 const onUpdate = async () => {
     try {
-        form.storage = storage.value.value;
-        await storageStore.updateStorages(form)
+        form.store = store.value.value;
+        await storeStore.updateStores(form)
         errors.value = {};
         form.product_code = "";
         form.add_quantity = null;
         form.sub_quantity = null;
         notify.success('Export to store successfully');
-        storageStore.getStorages({ storage: storage.value.value });
+        storeStore.getStores({ store: store.value.value });
     } catch (error) {
         errors.value = error?.response?.data?.errors
         notify.error(error.response.data.message);
@@ -164,7 +164,7 @@ const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
 };
 
 onMounted(async () => {
-    storageStore.getStorages({ storage: storage.value.value });
+    storeStore.getStores({ store: store.value.value });
 });
 </script>
 

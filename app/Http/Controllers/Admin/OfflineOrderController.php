@@ -23,9 +23,9 @@ class OfflineOrderController extends Controller
         return JsonResource::collection($offlineOrders);
     }
 
-    public function getStorageProducts($storage)
+    public function getStoreProducts($store)
     {
-        $productCodes = $this->offlineOrderService->getStorageProducts($storage);
+        $productCodes = $this->offlineOrderService->getStoreProducts($store);
         return JsonResource::collection($productCodes);
     }
 

@@ -62,9 +62,9 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::delete('/{id}', [Admin\ProductController::class, 'delete']);
         });
 
-        Route::prefix('storages')->group(function () {
-            Route::get('/', [Admin\StorageController::class, 'getStorages']);
-            Route::post('/store', [Admin\StorageController::class, 'store']);
+        Route::prefix('stores')->group(function () {
+            Route::get('/', [Admin\StoreController::class, 'getStores']);
+            Route::post('/store', [Admin\StoreController::class, 'store']);
         });
 
         Route::prefix('documents')->group(function () {
@@ -90,8 +90,8 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
     Route::middleware('check-role:MANAGER,STAFF')->group(function () {
         Route::prefix('offline-orders')->group(function () {
             Route::get('/', [Admin\OfflineOrderController::class, 'index']);
-            Route::get('/storage-product/{storage}', [Admin\OfflineOrderController::class, 'getStorageProducts']);
-            Route::post('/{storage}/create', [Admin\OfflineOrderController::class, 'store']);
+            Route::get('/store-product/{store}', [Admin\OfflineOrderController::class, 'getStoreProducts']);
+            Route::post('/{store}/create', [Admin\OfflineOrderController::class, 'store']);
             Route::get('/{id}', [Admin\OfflineOrderController::class, 'getOfflineOrderDetail']);
         });
     });

@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use App\Models\OfflineOrder;
 use App\Models\Order;
-use App\Models\Storage;
+use App\Models\Store;
 use Illuminate\Support\Facades\DB;
 use App\Models\OrderProduct;
 use App\Services\NotificationService;
@@ -37,18 +37,18 @@ class OfflineOrderService
             }
         }
 
-        if (isset($params['storage'])) {
-            $query->where('storage', $params['storage']);
+        if (isset($params['store'])) {
+            $query->where('store', $params['store']);
         }
 
         return $query->paginate($perPage);
     }
 
 
-    public function getStorageProducts(int $storage)
+    public function getStoreProducts(int $store)
     {
-        return Storage::with('product')
-            ->where('storage', $storage)
+        return Store::with('product')
+            ->where('store', $store)
             ->get();
     }
 
@@ -64,7 +64,7 @@ class OfflineOrderService
 
             $offlineOrder = OfflineOrder::create([
                 'order_id' => $order->id,
-                'storage' => $data['storage'],
+                'store' => $data['store'],
             ]);
 
             foreach ($data['products'] as $productData) {
@@ -72,7 +72,7 @@ class OfflineOrderService
 
                 if ($product) {
                     if ($product->qty < $productData['qty']) {
-                        throw new \Exception("Insufficient quantity in storage for product: {$product->code}");
+                        throw new \Exception("Insufficient quantity in store for product: {$product->code}");
                     }
                     OrderProduct::create([
                         'order_id' => $order->id,
@@ -97,7 +97,7 @@ class OfflineOrderService
 
     protected function decreaseProductQuantity($productCode, $quantity)
     {
-        Storage::where('product_code', $productCode)->decrement('quantity', $quantity);
+        Store::where('product_code', $productCode)->decrement('quantity', $quantity);
         Product::where('code', $productCode)->decrement('qty', $quantity);
     }
 

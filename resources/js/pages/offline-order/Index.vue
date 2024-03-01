@@ -7,8 +7,8 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col-6">
-                                    <CommonSelectBox v-model:model-value="storage" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Storage" :select-options="storageOptions" />
+                                    <CommonSelectBox v-model:model-value="store" width-common="col-12 q-ml-lg"
+                                        width-label="col-2" label="Store" :select-options="storeOptions" />
                                 </div>
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="from" type="date" width-common="col-12 q-ml-lg"
@@ -27,7 +27,7 @@
             </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
-                    <q-btn class="btn" color="primary" label="Create" @click="navigateToRegistrationPage(storage.value)" />
+                    <q-btn class="btn" color="primary" label="Create" @click="navigateToRegistrationPage(store.value)" />
                 </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
@@ -79,8 +79,8 @@ const from = ref("");
 const to = ref("");
 const { offlineOrders, pagination } = storeToRefs(offlineOrderStore);
 const notify = useNotify();
-const storage = ref({ value: 1, label: 1 });
-const storageOptions = ref([
+const store = ref({ value: 1, label: 1 });
+const storeOptions = ref([
     { value: 1, label: 1 },
     { value: 2, label: 2 },
 ]);
@@ -146,7 +146,7 @@ const formatDate = (dateString) => {
 
 const onRequest = async ({ pagination }) => {
     await offlineOrderStore.getOfflineOrders({
-        storage: storage.value.value,
+        store: store.value.value,
         from: from.value,
         to: to.value,
         page: pagination.page,
@@ -166,7 +166,7 @@ const handleInfo = (offlineOrder) => {
 
 const onSubmit = async () => {
     await offlineOrderStore.getOfflineOrders({
-        storage: storage.value.value,
+        store: store.value.value,
         from: from.value,
         to: to.value,
         page: pagination.value.page,
@@ -174,15 +174,15 @@ const onSubmit = async () => {
     });
 };
 
-const navigateToRegistrationPage = (storageValue) => {
-    router.push({ name: 'offline-order.create', params: { storage: storageValue } });
+const navigateToRegistrationPage = (storeValue) => {
+    router.push({ name: 'offline-order.create', params: { store: storeValue } });
 };
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
-offlineOrderStore.getOfflineOrders({ storage: storage.value.value });
+offlineOrderStore.getOfflineOrders({ store: store.value.value });
 </script>
 
 <style lang="scss" scoped>

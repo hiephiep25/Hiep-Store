@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Storage extends Model
+class Store extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'storage', 'product_code', 'quantity'
+        'store', 'product_code', 'quantity'
     ];
 
     public function product()

@@ -38,14 +38,14 @@ const router = createRouter({
                 ...productRoutes,
                 //storage
                 {
-                    path: "storages",
-                    name: "storage",
+                    path: "stores",
+                    name: "store",
                     meta: {
-                        title: "Storages management",
+                        title: "Stores management",
                         isAuth: true,
                         requiredRole: ["ADMIN", "MANAGER"],
                     },
-                    component: () => import("@/pages/Storage.vue"),
+                    component: () => import("@/pages/Store.vue"),
                 },
                 //change-password
                 {

@@ -10,7 +10,7 @@ const orderRoutes = [
         component: () => import("@/pages/offline-order/Index.vue"),
     },
     {
-        path: "offline-order/:storage/create",
+        path: "offline-order/:store/create",
         name: "offline-order.create",
         meta: {
             title: "Offline Order",

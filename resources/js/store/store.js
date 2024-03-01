@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia';
 import request from '@/utils/request';
 
-export const useStorageStore = defineStore('storage', {
+export const useStoreStore = defineStore('store', {
   state: () => ({
     user: {},
     isAuth: true,
-    storages: [],
+    stores: [],
     pagination: {},
   }),
   getters: {
   },
   actions: {
-    async getStorages(params) {
+    async getStores(params) {
       try {
-        const { data } = await request.get('/storages', {
+        const { data } = await request.get('/stores', {
             params: params
         })
-        this.storages = data.data
+        this.stores = data.data
         this.pagination = {
             page: data.meta.current_page,
             rowsPerPage: data.meta.per_page,
@@ -26,9 +26,9 @@ export const useStorageStore = defineStore('storage', {
         throw error
       }
     },
-    async updateStorages(formData) {
+    async updateStores(formData) {
       try {
-        await request.post('/storages/store', {
+        await request.post('/stores/store', {
           data: formData,
         });
       } catch (error) {

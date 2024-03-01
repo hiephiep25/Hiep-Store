@@ -71,7 +71,7 @@ const newProduct = reactive({
     qty: '',
 });
 const { params } = useRoute();
-const storage = params.storage;
+const store = params.store;
 const selectedProducts = ref([]);
 const errors = ref({});
 const router = useRouter();
@@ -113,9 +113,9 @@ const calculateTotal = computed(() => {
     }, 0);
 });
 
-const loadProductCodes = async (storage) => {
+const loadProductCodes = async (store) => {
   try {
-    const response = await offlineOrderStore.getStorageProductCodes(storage);
+    const response = await offlineOrderStore.getStoreProductCodes(store);
     productCodeOptions.value = response.data.map((item) => ({
       label: item.product_code,
       value: item.product_code,
@@ -134,7 +134,7 @@ const create = async () => {
             ...form,
             products: selectedProducts.value,
             total,
-        }, storage);
+        }, store);
         errors.value = {};
         notify.success('Create data successfully');
         router.push({ name: 'offline-order' });
@@ -145,6 +145,6 @@ const create = async () => {
 };
 
 onMounted(() => {
-  loadProductCodes(storage);
+  loadProductCodes(store);
 });
 </script>
