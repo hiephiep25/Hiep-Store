@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('store_name');
-            $table->string('store_address');
-            $table->string('store_contact');
+            $table->string('store_id');
+            $table->string('phone_number');
             $table->timestamps();
         });
     }

@@ -10,23 +10,23 @@ class Store extends Model
     use HasFactory;
 
     protected $fillable = [
-        'store', 'product_code', 'quantity'
+        'address', 'phone_contact'
     ];
 
-    public function product()
-    {
-        return $this->hasOne(Product::class, 'code', 'product_code');
-    }
+    // public function product()
+    // {
+    //     return $this->hasOne(Product::class, 'code', 'product_code');
+    // }
 
-    protected $appends = ['product_name', 'image'];
+    // protected $appends = ['product_name', 'image'];
 
-    public function getProductNameAttribute()
-    {
-        return $this->product->name;
-    }
+    // public function getProductNameAttribute()
+    // {
+    //     return $this->product->name;
+    // }
 
-    public function getImageAttribute()
-    {
-        return $this->product->image;
-    }
+    // public function getImageAttribute()
+    // {
+    //     return $this->product->image;
+    // }
 }

@@ -20,6 +20,7 @@ class Order extends Model
         'type',
         'payment_type',
         'total',
+        'store_id'
     ];
 
     public function onlineOrder()

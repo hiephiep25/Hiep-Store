@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('offline_orders', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
-            $table->integer('store');
+            $table->integer('staff_id');
             $table->timestamps();
         });
     }

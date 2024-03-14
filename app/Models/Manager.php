@@ -11,9 +11,8 @@ class Manager extends Model
 
     protected $fillable = [
         'user_id',
-        'store_name',
-        'store_address',
-        'store_contact',
+        'store_id',
+        'phone_number'
     ];
 
     public function user()
