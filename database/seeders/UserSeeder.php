@@ -26,14 +26,6 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
             ],
             [
-                'name' =>  'Super Manager',
-                'email' => 'supermanager@gmail.com',
-                'email_verified_at' => now(),
-                'password' => Hash::make('25052002'),
-                'role' => User::ROLE_SUPER_MANAGER,
-                'remember_token' => Str::random(10),
-            ],
-            [
                 'name' =>  'Manager',
                 'email' => 'manager@gmail.com',
                 'email_verified_at' => now(),

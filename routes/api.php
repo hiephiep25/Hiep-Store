@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
     });
 
     // manager router
-    Route::middleware('check-role:MANAGER')->group(function () {
+    Route::middleware('check-role:ADMIN,MANAGER')->group(function () {
         Route::prefix('categories')->group(function () {
             Route::get('/', [Admin\CategoryController::class, 'index']);
             Route::post('/create', [Admin\CategoryController::class, 'create']);
@@ -74,6 +74,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::post('/approve/{id}', [Admin\DocumentController::class, 'approve']);
             Route::post('/deny/{id}', [Admin\DocumentController::class, 'deny']);
         });
+
+        Route::prefix('revenues')->group(function () {
+            Route::get('/month', [Admin\OrderController::class, 'getRevenueByMonth']);
+        });
     });
 
     // supplier-route
@@ -87,7 +91,7 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         });
     });
 
-    Route::middleware('check-role:MANAGER,STAFF')->group(function () {
+    Route::middleware('check-role:ADMIN,MANAGER,STAFF')->group(function () {
         Route::prefix('offline-orders')->group(function () {
             Route::get('/', [Admin\OfflineOrderController::class, 'index']);
             Route::get('/store-product/{store}', [Admin\OfflineOrderController::class, 'getStoreProducts']);
@@ -100,9 +104,5 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::get('/list-noti', [Admin\NotificationController::class, 'listNotification']);
         Route::put('/{id}/read', [Admin\NotificationController::class, 'readNotification']);
         Route::get('/unread-count', [Admin\NotificationController::class, 'countUnreadNotifications']);
-    });
-
-    Route::prefix('revenues')->group(function () {
-        Route::get('/month', [Admin\OrderController::class, 'getRevenueByMonth']);
     });
 });

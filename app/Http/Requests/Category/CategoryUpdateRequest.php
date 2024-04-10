@@ -25,4 +25,14 @@ class CategoryUpdateRequest extends FormRequest
             'name' => 'required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]+$/', 'unique:categories,name'. $this->id,
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Vui lòng nhập tên của category',
+            'name.max' => 'Tên không được vượt quá 255 ký tự',
+            'name.regex' => 'Tên chỉ có thể chứa ký tự chữ cái và khoảng trắng',
+            'name.unique' => 'Tên đã tồn tại trong hệ thống',
+        ];
+    }
 }

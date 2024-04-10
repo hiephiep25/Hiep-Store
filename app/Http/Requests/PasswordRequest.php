@@ -26,4 +26,16 @@ class PasswordRequest extends FormRequest
             'password_confirmation' => ['required', 'string', 'min:8']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'password.required' => 'Vui lòng nhập mật khẩu',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 kí tự trở lên',
+            'password.confirmed' => 'Mật khẩu không trùng khớp với xác nhận mật khẩu.',
+            'password_confirmation.required' => 'Xác nhận mật khẩu là trường bắt buộc.',
+            'password_confirmation.string' => 'Xác nhận mật khẩu phải là một chuỗi.',
+            'password_confirmation.min' => 'Xác nhận mật khẩu phải có ít nhất 8 ký tự.'
+        ];
+    }
 }

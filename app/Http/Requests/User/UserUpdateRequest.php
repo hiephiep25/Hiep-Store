@@ -28,4 +28,17 @@ class UserUpdateRequest extends FormRequest
             'role' => ['required']
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Vui lòng nhập tên của người dùng',
+            'name.max' => 'Tên phải nhỏ hơn 255 kí tự',
+            'password.required' => 'Vui lòng nhập mật khẩu',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 kí tự',
+            'email.required' => 'Vui lòng nhập email',
+            'email.unique' => 'Email đã tồn tại, hãy chọn email khác',
+            'role.required' => 'Vui lòng nhập vai trò'
+        ];
+    }
 }
