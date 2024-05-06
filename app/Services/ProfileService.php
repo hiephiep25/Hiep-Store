@@ -36,7 +36,7 @@ class ProfileService
         ]);
     }
 
-    public function updateProfile($userData, $managerData, $supplierData, $staffData)
+    public function updateProfile($userData, $supplierData, $staffData)
     {
         $user = Auth::user();
         if (!empty($userData['avatar'])) {
@@ -51,22 +51,16 @@ class ProfileService
         }
         $user->update($userData);
 
-        if ($user->role === User::ROLE_MANAGER) {
-            Manager::updateOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'store_name' => $managerData['store_name'],
-                    'store_address' => $managerData['store_address'],
-                    'store_contact' => $managerData['store_contact'],
-                ]
-            );
-        }
+        // if ($user->role === User::ROLE_MANAGER) {
+        //     Manager::updateOrCreate(
+        //         ['user_id' => $user->id],
+        //     );
+        // }
 
         if ($user->role === User::ROLE_STAFF) {
             Staff::updateOrCreate(
                 ['user_id' => $user->id],
                 [
-                    'phone' => $staffData['phone'],
                     'address' => $staffData['address'],
                     'dob' => $staffData['dob'],
                 ]

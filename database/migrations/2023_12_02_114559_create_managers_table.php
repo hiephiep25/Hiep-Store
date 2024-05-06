@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('store_id');
-            $table->string('phone_number');
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->enum('role', [User::ROLE_ADMIN, User::ROLE_MANAGER, User::ROLE_CUSTOMER, User::ROLE_SUPPLIER, User::ROLE_STAFF])->default(User::ROLE_CUSTOMER);
+            $table->string('phone')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

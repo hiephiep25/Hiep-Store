@@ -66,7 +66,6 @@ class UserSeeder extends Seeder
             [
                 'user_id' =>  2,
                 'store_id' => 1,
-                'phone_number' => '0366125502',
             ],
         ];
         DB::table('managers')->insert($manager);

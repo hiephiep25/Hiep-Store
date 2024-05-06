@@ -69,19 +69,19 @@ const { counts, notifications } = storeToRefs(notificationStore);
 
 const dropdownItems = [
     {
-        label: "Profile",
+        label: "Thông tin cá nhân",
         onClick: () => {
             router.push({ name: "profile" });
         },
     },
     {
-        label: "Change password",
+        label: "Đổi mật khẩu",
         onClick: () => {
             router.push({ name: "change-password" });
         },
     },
     {
-        label: "Log out",
+        label: "Đăng xuất",
         onClick: () => {
             authStore.useLogout();
         },

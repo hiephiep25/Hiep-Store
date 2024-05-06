@@ -6,14 +6,14 @@
                     <div class="row justify-center">
                         <div class="col-12">
                             <Input v-model:model-value="form" name="password" type="password" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="New password" :errors="errors" />
+                                width-label="col-2" label="Mật khẩu mới" :errors="errors" />
                             <Input v-model:model-value="form" name="password_confirmation" type="password"
-                                width-common="col-8 q-ml-lg" width-label="col-2" label="New password (for confirmation)"
+                                width-common="col-8 q-ml-lg" width-label="col-2" label="Xác nhật mật khẩu mới"
                                 :errors="errors" />
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Change password" />
+                        <q-btn type="submit" color="primary" label="Đổi mật khẩu" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -42,7 +42,7 @@ const updatePassword = async () => {
     try {
         await authStore.changePassword(form);
         errors.value = {};
-        notify.success("You have successfully changed your password");
+        notify.success("Đổi mật khẩu thành công");
         authStore.useLogout();
     } catch (error) {
         errors.value = error?.response?.data?.errors

@@ -1,7 +1,7 @@
 <template>
     <q-page>
         <div class="center-text">
-            Welcome to home page !
+            Chào mừng đến với trang chủ
         </div>
         <div>
             <RevenueChartMonth />

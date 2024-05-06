@@ -6,10 +6,10 @@
             </div>
 
             <div class="text-h2" style="opacity:.4">
-                Oops. Nothing here...
+                Trang không tìm thấy
             </div>
 
-            <q-btn class="q-mt-xl" color="white" text-color="blue" unelevated @click="goHome" label="Go Home" no-caps />
+            <q-btn class="q-mt-xl" color="white" text-color="blue" unelevated @click="goHome" label="Về trang chủ" no-caps />
         </div>
     </div>
 </template>

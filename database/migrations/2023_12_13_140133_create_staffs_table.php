@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('store_id');
-            $table->string('phone');
             $table->string('address');
             $table->dateTime('dob');
             $table->enum('status', [Staff::WORK, Staff::QUIT])->default(Staff::WORK);

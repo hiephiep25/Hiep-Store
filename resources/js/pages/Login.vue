@@ -7,7 +7,7 @@
                 </q-card-section>
                 <q-card-section>
                     <div class="text-center text-red" v-if="invalid">
-                        Your email or password is incorrect
+                        Sai thông tin đăng nhập
                     </div>
                     <q-form class="q-px-md" @submit="login()">
                         <q-input class="q-mt-md" outlined v-model="loginForm.email" dense>
@@ -37,7 +37,7 @@
                   label="Remember me!" /> -->
                         <div class="row justify-center q-mt-md">
                             <q-btn no-caps class="col-12" :loading="isSubmitting" type="submit" color="primary">
-                                {{ "Submit" }}
+                                {{ "Đăng nhập" }}
                             </q-btn>
                         </div>
                         <!-- <div class="row justify-center q-mt-md">

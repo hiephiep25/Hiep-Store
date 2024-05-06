@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Store;
 use App\Models\Product;
+use App\Models\ProductStore;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class StoreService

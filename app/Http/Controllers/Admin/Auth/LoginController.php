@@ -21,8 +21,8 @@ class LoginController extends Controller
             'email'     => 'required',
             'password'  => 'required|string',
         ], [
-            'email.required' => 'Please enter email',
-            'email.email' => 'Email is invalid',
+            'email.required' => 'Hãy nhập email',
+            'email.email' => 'Email không hợp lệ',
         ]);
 
         $credentials = $request->only(['email', 'password']);

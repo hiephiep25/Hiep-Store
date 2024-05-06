@@ -11,7 +11,7 @@ class ProductStore extends Model
 
     protected $fillable = [
         'store_id',
-        'product_id',
+        'product_code',
         'qty',
     ];
 }
