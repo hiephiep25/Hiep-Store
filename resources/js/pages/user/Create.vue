@@ -6,13 +6,13 @@
                     <div class="row justify-center">
                         <div class="col-12">
                             <Input v-model:model-value="form" name="name" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Name" :errors="errors" />
+                                width-label="col-2" label="Tên" :errors="errors" />
                             <Input v-model:model-value="form" name="email" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Email" :errors="errors" />
                             <Input v-model:model-value="form" name="password" type="password" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Password" :errors="errors" />
+                                width-label="col-2" label="Mật khẩu" :errors="errors" />
                             <SelectBox v-model:model-value="form" name="role" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Role" :option="UserRole" :errors="errors" />
+                                width-label="col-2" label="Vai trò" :option="UserRole" :errors="errors" />
                         </div>
                     </div>
                     <div class="row justify-center">
@@ -38,6 +38,7 @@ const UserRole = [
     { label: "MANAGER", value: "MANAGER" },
     { label: "CUSTOMER", value: "CUSTOMER" },
     { label: "SUPPLIER", value: "SUPPLIER" },
+    { label: "STAFF", value: "STAFF" },
 ];
 
 const form = reactive({

@@ -62,12 +62,21 @@ class UserSeeder extends Seeder
         DB::table('stores')->insert($store);
 
         DB::table('managers')->truncate();
-        $manager  = [
+        $manager = [
             [
                 'user_id' =>  2,
                 'store_id' => 1,
             ],
         ];
         DB::table('managers')->insert($manager);
+
+        DB::table('staffs')->truncate();
+        $staff = [
+            [
+                'user_id' =>  4,
+                'store_id' => 1,
+            ],
+        ];
+        DB::table('staffs')->insert($staff);
     }
 }

@@ -54,17 +54,16 @@ class User extends Authenticatable
 
     public function manager()
     {
-        return $this->hasOne(Manager::class);
+        return $this->belongsTo(Manager::class, 'user_id', 'id');
     }
-
 
     public function supplier()
     {
-        return $this->hasOne(Supplier::class);
+        return $this->belongsTo(Supplier::class, 'user_id', 'id');
     }
 
     public function staff()
     {
-        return $this->hasOne(Staff::class);
+        return $this->belongsTo(Staff::class, 'user_id', 'id');
     }
 }

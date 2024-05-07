@@ -10,12 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class StaffService
 {
-    public function get(): LengthAwarePaginator
+    public function get($params): LengthAwarePaginator
     {
         $perPage = $params['per_page'] ?? PER_PAGE;
-
-        if(auth()->user->role == User::ROLE_ADMIN) {
-            return User::where('role', User::ROLE_STAFF)->orderBy('id', 'asc')->paginate($perPage);
+        if(auth()->user()->role == User::ROLE_ADMIN) {
+            return Staff::orderBy('id', 'asc')->paginate($perPage);
         }
         if(auth()->user->role == User::ROLE_MANAGER) {
             $storeId = Staff::where('id', auth()->id)->store_id;

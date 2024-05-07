@@ -23,6 +23,18 @@ class Staff extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    protected $appends = ['user_name', 'user_email'];
+
+    public function getUserNameAttribute()
+    {
+        return $this->user->name;
+    }
+
+    public function getUserEmailAttribute()
+    {
+        return $this->user->email;
     }
 }

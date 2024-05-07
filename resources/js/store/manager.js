@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import request from '@/utils/request';
 
-export const useCategoryStore = defineStore('manager', {
+export const useManagerStore = defineStore('manager', {
   state: () => ({
     user: {},
     isAuth: true,

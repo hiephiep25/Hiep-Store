@@ -83,7 +83,7 @@ const drawerContent = computed(() => {
         {
             label: "Người quản lí",
             icon: "group",
-            active: /user/g.test(route.name.toString()),
+            active: /manager/g.test(route.name.toString()),
             action: () => router.push({ name: "manager.index" }),
             show: user.value.role === "ADMIN",
         },

@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class ManagerService
 {
-    public function get(): LengthAwarePaginator
+    public function get($params): LengthAwarePaginator
     {
         $perPage = $params['per_page'] ?? PER_PAGE;
-        return User::where('role', User::ROLE_MANAGER)->orderBy('id', 'asc')->paginate($perPage);
+        return Manager::orderBy('id', 'asc')->paginate($perPage);
     }
 
     public function findUserById(int $id)
