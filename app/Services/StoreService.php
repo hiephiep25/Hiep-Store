@@ -16,6 +16,28 @@ class StoreService
         return Store::where('store', $store)->orderBy('id', 'asc')->paginate($perPage);
     }
 
+    public function create(array $data): Store
+    {
+        $store = Store::create([
+            ...$data,
+        ]);
+
+        return $store;
+    }
+
+    public function findStoreById(int $id)
+    {
+        return Store::findOrFail($id);
+    }
+
+    public function update(int $id, array $storeData): Store
+    {
+        $store = $this->findStoreById($id);
+        $store->update($storeData);
+
+        return $store;
+    }
+
     public function storeProductInStore($data)
     {
         $product = Product::where('code', $data['product_code'])->firstOrFail();

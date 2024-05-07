@@ -67,7 +67,7 @@ const drawer = computed({
 const drawerContent = computed(() => {
     return [
         {
-            label: "Home",
+            label: "Trang chủ",
             icon: "home",
             active: /home/g.test(route.name.toString()),
             action: () => router.push({ name: "home" }),
@@ -81,49 +81,70 @@ const drawerContent = computed(() => {
             show: user.value.role === "ADMIN",
         },
         {
-            label: "Stores",
+            label: "Người quản lí",
+            icon: "group",
+            active: /user/g.test(route.name.toString()),
+            action: () => router.push({ name: "user.index" }),
+            show: user.value.role === "ADMIN",
+        },
+        {
+            label: "Nhân viên",
+            icon: "group",
+            active: /user/g.test(route.name.toString()),
+            action: () => router.push({ name: "user.index" }),
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER",
+        },
+        {
+            label: "Quản lí cửa hàng",
+            icon: "store",
+            active: /store/g.test(route.name.toString()),
+            action: () => router.push({ name: "admin-store" }),
+            show: user.value.role === "ADMIN"
+        },
+        {
+            label: "Cửa hàng",
             icon: "store",
             active: /store/g.test(route.name.toString()),
             action: () => router.push({ name: "store" }),
             show: user.value.role === "MANAGER"
         },
         {
-            label: "Category",
+            label: "Danh mục sản phẩm",
             icon: "category",
             active: /category/g.test(route.name.toString()),
             action: () => router.push({ name: "category.index" }),
-            show: user.value.role === "MANAGER"
+            show:user.value.role === "ADMIN"
         },
         {
-            label: "Discount",
+            label: "Khuyến mãi",
             icon: "discount",
             active: /discount/g.test(route.name.toString()),
             action: () => router.push({ name: "discount.index" }),
-            show: user.value.role === "MANAGER"
+            show: user.value.role === "ADMIN"
         },
         {
-            label: "Product",
+            label: "Sản phẩm",
             icon: "fastfood",
             active: /product/g.test(route.name.toString()),
             action: () => router.push({ name: "product.index" }),
-            show: user.value.role === "MANAGER"
+            show: user.value.role === "ADMIN"
         },
         {
-            label: "Document",
+            label: "Tài liệu cung cấp",
             icon: "description",
             active: /document/g.test(route.name.toString()),
             action: () => router.push({ name: "document.index" }),
             show: user.value.role === "SUPPLIER",
         },
         {
-            label: "Document approval",
+            label: "Quản lí tài liệu cung cấp",
             icon: "description",
             active: /document-approval/g.test(route.name.toString()),
             action: () => router.push({ name: "document-approval.index" }),
-            show: user.value.role === "MANAGER"
+            show: user.value.role === "ADMIN"
         },
         {
-            label: "Offline order",
+            label: "Đơn hàng tại quầy",
             icon: "shopping_cart",
             active: /offline-order/g.test(route.name.toString()),
             action: () => router.push({ name: "offline-order" }),

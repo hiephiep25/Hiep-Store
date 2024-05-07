@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Create" />
+                        <q-btn type="submit" color="primary" label="Tạo mới" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -55,7 +55,7 @@ const create = async () => {
     try {
         await userStore.create(form);
         errors.value = {};
-        notify.success('Added data successfully');
+        notify.success('Tạo mới thành công');
         router.push({ name: 'user.index' });
     } catch (error) {
         errors.value = error?.response?.data?.errors

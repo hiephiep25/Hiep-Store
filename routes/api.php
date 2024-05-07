@@ -34,10 +34,26 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::post('/{id}', [Admin\UserController::class, 'update']);
             Route::delete('{id}', [Admin\UserController::class, 'delete']);
         });
+        Route::prefix('managers')->group(function () {
+            Route::get('/', [Admin\ManagerController::class, 'index']);
+            Route::get('/{id}', [Admin\ManagerController::class, 'show']);
+            Route::post('/{id}', [Admin\ManagerController::class, 'update']);
+        });
+        Route::prefix('admin-stores')->group(function () {
+            Route::get('/', [Admin\StoreController::class, 'index']);
+            Route::post('/create', [Admin\StoreController::class, 'create']);
+            Route::get('/{id}', [Admin\StoreController::class, 'show']);
+            Route::post('/{id}', [Admin\StoreController::class, 'update']);
+        });
     });
 
     // manager router
     Route::middleware('check-role:ADMIN,MANAGER')->group(function () {
+        Route::prefix('staffs')->group(function () {
+            Route::get('/', [Admin\StaffController::class, 'index']);
+            Route::get('/{id}', [Admin\StaffController::class, 'show']);
+            Route::post('/{id}', [Admin\StaffController::class, 'update']);
+        });
         Route::prefix('categories')->group(function () {
             Route::get('/', [Admin\CategoryController::class, 'index']);
             Route::post('/create', [Admin\CategoryController::class, 'create']);

@@ -10,7 +10,7 @@
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Edit" />
+                        <q-btn type="submit" color="primary" label="Chỉnh sửa" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -50,7 +50,7 @@ async function update() {
     try {
         await categoryStore.updateCategory(id, form);
         errors.value = {};
-        notify.success('Edited the data successfully');
+        notify.success('Chỉnh sửa dữ liệu thành công');
         router.push({ name: 'category.index' });
     } catch (error) {
         errors.value = error?.response?.data?.errors

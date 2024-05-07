@@ -26,21 +26,21 @@ class UpdateProfileRequest extends FormRequest
             'name' => 'required|string|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:100000',
             'email' => 'required|email|unique:users,email,' . $this->id,
+            'phone' => 'required|regex:/^[0-9]+$/|min:8|max:13',
         ];
 
         $rulesManager = [
             'name' => 'required|string|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:100000',
             'email' => 'required|email|unique:users,email,' . $this->id,
-            'store_name' => 'required|string|max:255',
-            'store_address' => 'required|string',
-            'store_contact' => 'required|string',
+            'phone' => 'required|regex:/^[0-9]+$/|min:8|max:13',
         ];
 
         $rulesSupplier = [
             'name' => 'required|string|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:100000',
             'email' => 'required|email|unique:users,email,' . $this->id,
+            'phone' => 'required|regex:/^[0-9]+$/|min:8|max:13',
             'company_name' => 'required|string|max:255',
             'company_address' => 'required|string',
             'company_contact' => 'required|string',

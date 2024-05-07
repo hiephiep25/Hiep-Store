@@ -6,21 +6,21 @@
                     <div class="row justify-center">
                         <div class="col-12">
                             <Input v-model:model-value="form" name="name" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Discount's name" :errors="errors" />
+                                width-label="col-2" label="Tên khuyến mãi" :errors="errors" />
                             <Input v-model:model-value="form" name="code" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Code" :errors="errors" />
+                                width-label="col-2" label="Mã Code" :errors="errors" />
                             <Input v-model:model-value="form" name="value" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Value" :errors="errors" />
+                                width-label="col-2" label="Giá trị khuyến mãi" :errors="errors" />
                             <Input v-model:model-value="form" name="description" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Description" :errors="errors" />
+                                width-label="col-2" label="Mô tả" :errors="errors" />
                             <Input v-model:model-value="form" name="quantity" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Quantity" :errors="errors" />
+                                width-label="col-2" label="Số lượng" :errors="errors" />
                             <Input v-model:model-value="form" name="expiration_date" type="date" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Expiration date" :errors="errors" />
+                                width-label="col-2" label="Hạn sử dụng" :errors="errors" />
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Edit" />
+                        <q-btn type="submit" color="primary" label="Chỉnh sửa" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -71,7 +71,7 @@ async function update() {
     try {
         await discountStore.updateDiscount(id, form);
         errors.value = {};
-        notify.success('Edited the data successfully');
+        notify.success('Chỉnh sửa dữ liệu thành công');
         router.push({ name: 'discount.index' });
     } catch (error) {
         errors.value = error?.response?.data?.errors

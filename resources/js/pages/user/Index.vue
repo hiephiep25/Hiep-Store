@@ -8,7 +8,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="name" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="Name" />
+                                        width-label="col-1" label="Tên" />
                                 </div>
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="email" type="text" width-common="col-12 q-ml-lg"
@@ -18,19 +18,19 @@
                         </div>
                     </div>
                     <div class="row justify-center q-mt-md">
-                        <q-btn type="reset" class="btn" color="primary" label="Reset" @click="resetSearch" />
-                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Search" />
+                        <q-btn type="reset" class="btn" color="primary" label="Đặt lại" @click="resetSearch" />
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Tìm kiếm" />
                     </div>
                 </q-form>
             </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
-                    <q-btn class="btn" color="primary" label="Create" @click="navigateToRegistrationPage" />
+                    <q-btn class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage" />
                 </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
                         <q-markup-table :separator="separator" flat bordered>
-                            <q-table flat bordered virtual-scroll no-data-label="no data available"
+                            <q-table flat bordered virtual-scroll no-data-label="không có dữ liệu"
                                 class="header-table-custom" rows-per-page-label="Records per page"
                                 :pagination-label="getPaginationLabel" :rows="users" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
@@ -54,11 +54,11 @@
         <q-dialog v-model="confirm" persistent>
             <q-card>
                 <q-card-section class="row items-center">
-                    <span class="q-ml-sm">Confirm delete user {{ userDelete.name }}?</span>
+                    <span class="q-ml-sm">Xác nhận xóa {{ userDelete.name }}?</span>
                 </q-card-section>
                 <q-card-actions align="right">
-                    <q-btn flat label="Cancel" color="primary" v-close-popup />
-                    <q-btn flat label="OK" color="negative" v-close-popup @click="confirmed()" />
+                    <q-btn flat label="Hủy" color="primary" v-close-popup />
+                    <q-btn flat label="Xác nhận" color="negative" v-close-popup @click="confirmed()" />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -94,7 +94,7 @@ const columns = ref([
     {
         name: "name",
         align: "center",
-        label: "Name",
+        label: "Tên",
         field: "name",
         sortable: true,
     },
@@ -108,23 +108,23 @@ const columns = ref([
     {
         name: "role",
         align: "center",
-        label: "Role",
+        label: "Vai trò",
         field: "role",
     },
     {
         name: "actions",
-        label: "Actions",
+        label: "Hành động",
         field: "actions",
         align: "center",
         format: (val, row) => {
             return [
                 {
-                    label: "Edit",
+                    label: "Chỉnh sửa",
                     onClick: () => handleEdit(row),
                     icon: "edit_square",
                 },
                 {
-                    label: "Delete",
+                    label: "Xóa",
                     onClick: () => handleDelete(row),
                     icon: "delete",
                 },
@@ -162,7 +162,7 @@ const handleDelete = (evt) => {
 const confirmed = async () => {
     try {
         await userStore.deleteUser(userDelete.value.id);
-        notify.success("Data has been deleted.");
+        notify.success("Dữ liệu đã được xóa");
         userStore.getUsers();
     } catch (error) {
         notify.error(error.response.data.message);

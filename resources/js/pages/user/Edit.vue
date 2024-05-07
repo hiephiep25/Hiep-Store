@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Edit" />
+                        <q-btn type="submit" color="primary" label="Chỉnh sửa" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -69,7 +69,7 @@ async function update() {
     try {
         await userStore.updateUser(id, form);
         errors.value = {};
-        notify.success('Edited the data successfully');
+        notify.success('Chỉnh sửa thành công');
         router.push({ name: 'user.index' });
     } catch (error) {
         errors.value = error?.response?.data?.errors

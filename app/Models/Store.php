@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
+    const ACTIVE = 'ACTIVE';
+    const PENDING = 'PENDING';
+    
     use HasFactory;
 
     protected $fillable = [

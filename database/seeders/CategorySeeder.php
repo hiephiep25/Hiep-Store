@@ -14,17 +14,17 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->truncate();
         $categories  = [
-            ['name' => 'Fruits'],
-            ['name' => 'Vegetables'],
-            ['name' => 'Dairy'],
-            ['name' => 'Eggs'],
-            ['name' => 'Meat'],
-            ['name' => 'Seafood'],
-            ['name' => 'Canned and Packaged Goods'],
-            ['name' => 'Snacks'],
-            ['name' => 'Condiments and Sauces'],
-            ['name' => 'Beverages'],
-            ['name' => 'Frozen Foods']
+            ['name' => 'Hoa quả'],
+            ['name' => 'Rau'],
+            ['name' => 'Thực phẩm bơ sữa'],
+            ['name' => 'Trứng'],
+            ['name' => 'Thịt'],
+            ['name' => 'Hải sản'],
+            ['name' => 'Thực phẩm đóng hộp'],
+            ['name' => 'Đồ ăn vặt'],
+            ['name' => 'Gia vị và nước sốt'],
+            ['name' => 'Đồ uống'],
+            ['name' => 'Thực phẩm đông lạnh']
         ];
         DB::table('categories')->insert($categories);
     }

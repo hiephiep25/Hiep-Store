@@ -22,6 +22,25 @@ class StoreController extends Controller
         $stores = $this->storeService->getStores($params);
         return JsonResource::collection($stores);
     }
+    public function create(Request $request): JsonResource
+    {
+        $storeData = $request->only(['address', 'phone', 'status']);
+        $store = $this->storeService->create($storeData);
+        return new JsonResource($store);
+    }
+
+    public function show(int $id): JsonResource
+    {
+        $store = $this->storeService->findstoreById($id);
+        return new JsonResource($store);
+    }
+
+    public function update(int $id, Request $request): JsonResource
+    {
+        $storeData = $request->only(['address', 'phone', 'status']);
+        $store = $this->storeService->update($id, $storeData);
+        return new JsonResource($store);
+    }
 
     public function store(Request $request)
     {
