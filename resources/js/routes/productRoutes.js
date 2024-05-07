@@ -3,7 +3,7 @@ const productRoutes = [
         path: "products",
         name: "product.index",
         meta: {
-            title: "Product management",
+            title: "Quản lí sản phẩm",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },
@@ -13,7 +13,7 @@ const productRoutes = [
         path: "products/create",
         name: "product.create",
         meta: {
-            title: "Product management",
+            title: "Quản lí sản phẩm",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },
@@ -23,7 +23,7 @@ const productRoutes = [
         path: "products/:id",
         name: "product.edit",
         meta: {
-            title: "Product management",
+            title: "Quản lí sản phẩm",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },

@@ -1,7 +1,7 @@
 <template>
     <div class="q-pa-sm" :class="widthCommon">
         <div class="row">
-            <div :class="widthLabel" class="self-center text-black">
+            <div :class="widthLabel" class="self-center text-black col-2">
                 {{ label }}
                 <span v-if="required" class="required">*</span>
             </div>

@@ -3,7 +3,7 @@ const orderRoutes = [
         path: "offline-order",
         name: "offline-order",
         meta: {
-            title: "Offline Order",
+            title: "Quản lí đơn hàng tại quầy",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER", "STAFF"],
         },
@@ -13,7 +13,7 @@ const orderRoutes = [
         path: "offline-order/:store/create",
         name: "offline-order.create",
         meta: {
-            title: "Offline Order",
+            title: "Quản lí đơn hàng tại quầy",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER", "STAFF"],
         },
@@ -23,7 +23,7 @@ const orderRoutes = [
         path: "offline-order/:id",
         name: "offline-order.detail",
         meta: {
-            title: "Offline Order",
+            title: "Quản lí đơn hàng tại quầy",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER", "STAFF"],
         },

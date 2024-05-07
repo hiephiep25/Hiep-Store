@@ -3,7 +3,7 @@ const discountRoutes = [
         path: "discounts",
         name: "discount.index",
         meta: {
-            title: "Discount management",
+            title: "Quản lí khuyến mãi",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },
@@ -13,7 +13,7 @@ const discountRoutes = [
         path: "discounts/create",
         name: "discount.create",
         meta: {
-            title: "Discount management",
+            title: "Quản lí khuyến mãi",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },
@@ -23,7 +23,7 @@ const discountRoutes = [
         path: "discounts/:id",
         name: "discount.edit",
         meta: {
-            title: "Discount management",
+            title: "Quản lí khuyến mãi",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },

@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-12 q-mt-md">
                         <q-markup-table :separator="separator" flat bordered>
-                            <q-table flat bordered virtual-scroll no-data-label="no data available"
+                            <q-table flat bordered virtual-scroll no-data-label="không có dữ liệu"
                                 class="header-table-custom" rows-per-page-label="Records per page"
                                 :pagination-label="getPaginationLabel" :rows="offlineOrders" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"

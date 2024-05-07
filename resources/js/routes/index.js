@@ -6,6 +6,8 @@ import discountRoutes from "@/routes/discountRoutes";
 import productRoutes from "@/routes/productRoutes";
 import documentRoutes from "@/routes/documentRoutes";
 import orderRoutes from "@/routes/orderRoutes";
+import staffRoutes from "@/routes/staffRoutes";
+import managerRoutes from "@/routes/managerRoutes";
 const env = import.meta.env;
 
 const router = createRouter({
@@ -27,7 +29,7 @@ const router = createRouter({
                     path: "",
                     name: "home",
                     meta: {
-                        title: "Home",
+                        title: "Trang chủ",
                         isAuth: true,
                     },
                     component: () => import("@/pages/Home.vue"),
@@ -36,12 +38,14 @@ const router = createRouter({
                 ...categoryRoutes,
                 ...discountRoutes,
                 ...productRoutes,
+                ...staffRoutes,
+                ...managerRoutes,
                 //storage
                 {
                     path: "stores",
                     name: "store",
                     meta: {
-                        title: "Stores management",
+                        title: "Quản lí cửa hàng",
                         isAuth: true,
                         requiredRole: ["ADMIN", "MANAGER"],
                     },
@@ -52,7 +56,7 @@ const router = createRouter({
                     path: "change-password",
                     name: "change-password",
                     meta: {
-                        title: "Change password",
+                        title: "Đổi mật khẩu",
                         isAuth: true,
                     },
                     component: () => import("@/pages/ChangePassword.vue"),
@@ -62,7 +66,7 @@ const router = createRouter({
                     path: "profile",
                     name: "profile",
                     meta: {
-                        title: "Profile",
+                        title: "Thông tin cá nhân",
                         isAuth: true,
                     },
                     component: () => import("@/pages/Profile.vue"),
@@ -79,7 +83,7 @@ const router = createRouter({
                     path: "login",
                     name: "login",
                     meta: {
-                        title: "Login",
+                        title: "Đăng nhập",
                         isAuth: false,
                     },
                     component: () => import("@/pages/Login.vue"),

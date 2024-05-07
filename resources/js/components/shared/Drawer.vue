@@ -84,14 +84,14 @@ const drawerContent = computed(() => {
             label: "Người quản lí",
             icon: "group",
             active: /user/g.test(route.name.toString()),
-            action: () => router.push({ name: "user.index" }),
+            action: () => router.push({ name: "manager.index" }),
             show: user.value.role === "ADMIN",
         },
         {
             label: "Nhân viên",
             icon: "group",
-            active: /user/g.test(route.name.toString()),
-            action: () => router.push({ name: "user.index" }),
+            active: /staff/g.test(route.name.toString()),
+            action: () => router.push({ name: "staff.index" }),
             show: user.value.role === "ADMIN" || user.value.role === "MANAGER",
         },
         {

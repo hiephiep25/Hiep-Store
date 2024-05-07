@@ -3,7 +3,7 @@ const categoryRoutes = [
         path: "categories",
         name: "category.index",
         meta: {
-            title: "Category management",
+            title: "Quản lí danh mục",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },
@@ -13,7 +13,7 @@ const categoryRoutes = [
         path: "categories/create",
         name: "category.create",
         meta: {
-            title: "Category management",
+            title: "Quản lí danh mục",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },
@@ -23,7 +23,7 @@ const categoryRoutes = [
         path: "categories/:id",
         name: "category.edit",
         meta: {
-            title: "Category management",
+            title: "Quản lí danh mục",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },

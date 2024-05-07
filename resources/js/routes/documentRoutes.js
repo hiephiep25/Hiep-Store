@@ -3,7 +3,7 @@ const documentRoutes = [
         path: "documents",
         name: "document.index",
         meta: {
-            title: "Document management",
+            title: "Quản lí tài liệu cung cấp",
             isAuth: true,
             requiredRole: ["SUPPLIER"],
         },
@@ -13,7 +13,7 @@ const documentRoutes = [
         path: "documents/create",
         name: "document.create",
         meta: {
-            title: "Document management",
+            title: "Quản lí tài liệu cung cấp",
             isAuth: true,
             requiredRole: ["SUPPLIER"],
         },
@@ -23,7 +23,7 @@ const documentRoutes = [
         path: "documents/:id",
         name: "document.edit",
         meta: {
-            title: "Document management",
+            title: "Quản lí tài liệu cung cấp",
             isAuth: true,
             requiredRole: ["SUPPLIER"],
         },
@@ -33,7 +33,7 @@ const documentRoutes = [
         path: "documents-approval",
         name: "document-approval.index",
         meta: {
-            title: "Document management",
+            title: "Quản lí tài liệu cung cấp",
             isAuth: true,
             requiredRole: ["ADMIN", "MANAGER"],
         },
