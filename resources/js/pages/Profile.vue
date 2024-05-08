@@ -36,8 +36,8 @@
                     </div>
                     <div class="row justify-center">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.user.phone_number" label="Số điện thoại" :rules="[
-                                // (val) => !!val.trim() || 'Số điện thoại không được bỏ trống!',
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.user.phone" label="Số điện thoại" :rules="[
+                                (val) => !!val.trim() || 'Số điện thoại không được bỏ trống!',
                                 (val) =>
                                     val === null ||
                                     val === '' ||
@@ -73,17 +73,17 @@
                                 ]" />
                         </div>
                     </div>
-                    <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
+                    <div class="row justify-center">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="addressModel" label="Địa chỉ"
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.user.address" label="Địa chỉ"
                                 :rules="[
                                     (val) => !!val.trim() || 'Địa chỉ không được bỏ trống!',
                                 ]" />
                         </div>
                     </div>
-                    <div class="row justify-center" v-if="authStore.user.role === 'STAFF'">
+                    <div class="row justify-center">
                         <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined type="date" dense v-model="dobModel"
+                            <q-input class="q-ma-md" outlined type="date" dense v-model="authStore.user.dob"
                                 label="Ngày sinh" :rules="[
                                     (val) => !!val.trim() || 'Ngày sinh không được bỏ trống',
                                     (val) =>
@@ -116,23 +116,21 @@ const companyNameModel = ref(authStore.supplier?.company_name || "");
 const companyAddressModel = ref(authStore.supplier?.company_address || "");
 const companyContactModel = ref(authStore.supplier?.company_contact || "");
 
-const addressModel = ref(authStore.staff?.address || "");
-const dobModel = ref(authStore.staff?.dob || "");
-
 const imageSrc = computed(() => {
     if (file.value) {
         return URL.createObjectURL(file.value);
     }
     return authStore.user.avatar;
 });
-
 async function updateProfile() {
     try {
         const formData = new FormData();
         formData.append('id', authStore.user.id);
         formData.append('email', authStore.user.email);
         formData.append('name', authStore.user.name);
-        formData.append('phone_number', authStore.user.phone_number)
+        formData.append('phone', authStore.user.phone)
+        formData.append('address', authStore.user.address)
+        formData.append('dob', authStore.user.dob)
         if (file.value) {
             formData.append('avatar', file.value);
         }
@@ -141,10 +139,6 @@ async function updateProfile() {
             formData.append('company_name', companyNameModel.value);
             formData.append('company_address', companyAddressModel.value);
             formData.append('company_contact', companyContactModel.value);
-        }
-        if (authStore.user.role == 'STAFF') {
-            formData.append('address', addressModel.value);
-            formData.append('dob', dobModel.value);
         }
         await authStore.updateProfile(formData);
         errors.value = {};
@@ -160,8 +154,5 @@ watch(() => {
     companyNameModel.value = authStore.supplier?.company_name || "";
     companyContactModel.value = authStore.supplier?.company_contact || "";
     companyAddressModel.value = authStore.supplier?.company_address || "";
-
-    addressModel.value = authStore.staff?.address || "";
-    dobModel.value = authStore.staff?.dob || "";
 }, { immediate: true });
 </script>

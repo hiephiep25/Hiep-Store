@@ -28,7 +28,7 @@
                     <div class="col-12 q-mt-md">
                         <q-markup-table :separator="separator" flat bordered>
                             <q-table flat bordered virtual-scroll no-data-label="không có dữ liệu"
-                                class="header-table-custom" rows-per-page-label="Records per page"
+                                class="header-table-custom" rows-per-page-label="Số lượng trên 1 trang"
                                 :pagination-label="getPaginationLabel" :rows="documents" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
                                 @request="onRequest">

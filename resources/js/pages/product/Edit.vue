@@ -6,34 +6,34 @@
                     <div class="row justify-center">
                         <div class="col-12">
                             <Input v-model:model-value="form" name="name" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Product's name" :errors="errors" />
+                                width-label="col-2" label="Tên sản phẩm" :errors="errors" />
                             <Input v-model:model-value="form" name="code" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Code" :errors="errors" />
+                                width-label="col-2" label="Mã Code" :errors="errors" />
                             <Input v-model:model-value="form" name="brand" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Brand" :errors="errors" />
                             <SelectBox v-model:model-value="form" name="category" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Category" :option="categoryOptions" :errors="errors" />
+                                width-label="col-2" label="Danh mục" :option="categoryOptions" :errors="errors" />
                             <Input v-model:model-value="form" name="description" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Description" :errors="errors" />
+                                width-label="col-2" label="Mô tả" :errors="errors" />
                             <Input v-model:model-value="form" name="qty" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Qty" :errors="errors" />
+                                width-label="col-2" label="Số lượng" :errors="errors" />
                             <Input v-model:model-value="form" name="price_per_qty" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Price" :errors="errors" />
+                                width-label="col-2" label="Giá" :errors="errors" />
                             <Input v-model:model-value="form" name="manufacture_day" type="date"
-                                width-common="col-8 q-ml-lg" width-label="col-2" label="Manufacture day" :errors="errors" />
+                                width-common="col-8 q-ml-lg" width-label="col-2" label="Ngày sản xuất" :errors="errors" />
                             <Input v-model:model-value="form" name="expiry_day" type="date" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Expiry day" :errors="errors" />
-                            <FileInput v-model:model-value="form" name="image" label="Image" :errors="errors" />
+                                width-label="col-2" label="Hạn sử dụng" :errors="errors" />
+                            <FileInput v-model:model-value="form" name="image" label="Ảnh sản phẩm" :errors="errors" />
                             <div class="row justify-center" v-if="form.image">
-                                <img :src="imageSrc" alt="Product Image" style="max-width: 100%; max-height: 100px;">
+                                <img :src="imageSrc" alt="Ảnh" style="max-width: 100%; max-height: 100px;">
                             </div>
                             <div class="row justify-center" v-if="!form.image">
-                                <img :src="oldImageSrc" alt="Product Image" style="max-width: 100%; max-height: 100px;">
+                                <img :src="oldImageSrc" alt="Ảnh" style="max-width: 100%; max-height: 100px;">
                             </div>
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Edit" />
+                        <q-btn type="submit" color="primary" label="Chỉnh sửa" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -147,7 +147,7 @@ async function update() {
 
         await productStore.updateProduct(id, formData);
         errors.value = {};
-        notify.success('Edited the data successfully');
+        notify.success('Dữ liệu đã được cập nhật');
         router.push({ name: 'product.index' });
     } catch (error) {
         errors.value = error?.response?.data?.errors
