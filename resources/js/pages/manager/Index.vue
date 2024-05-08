@@ -43,7 +43,7 @@ const columns = ref([
         required: true,
         label: "ID",
         align: "left",
-        field: "user_id",
+        field: "id",
         sortable: true,
     },
     {
@@ -75,7 +75,7 @@ const columns = ref([
             return [
                 {
                     label: "Chỉnh sửa",
-                    // onClick: () => handleEdit(row),
+                    onClick: () => handleEdit(row),
                     icon: "edit_square",
                 },
             ];
@@ -91,9 +91,9 @@ const onRequest = async ({ pagination }) => {
     });
 };
 
-// const handleEdit = (user) => {
-//     router.push(`/managers/${user.id}`);
-// };
+const handleEdit = (manager) => {
+    router.push(`/managers/${manager.id}`);
+};
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;

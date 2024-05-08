@@ -55,8 +55,12 @@ class UserSeeder extends Seeder
         DB::table('stores')->truncate();
         $store  = [
             [
-                'address' => 'Hà Nội, Việt Nam',
+                'address' => 'Giáp Bát, Hà Nội, Việt Nam',
                 'phone_contact' => '0366125502'
+            ],
+            [
+                'address' => 'Cầu Giấy, Hà Nội, Việt Nam',
+                'phone_contact' => '0949352156'
             ],
         ];
         DB::table('stores')->insert($store);

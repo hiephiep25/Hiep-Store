@@ -43,7 +43,7 @@ const columns = ref([
         required: true,
         label: "ID",
         align: "left",
-        field: "user_id",
+        field: "id",
         sortable: true,
     },
     {
@@ -67,18 +67,6 @@ const columns = ref([
         field: "store_id",
     },
     {
-        name: "address",
-        align: "center",
-        label: "Địa chỉ",
-        field: "address",
-    },
-    {
-        name: "dob",
-        align: "center",
-        label: "Ngày sinh",
-        field: "dob",
-    },
-    {
         name: "status",
         align: "center",
         label: "Tình trạng",
@@ -93,7 +81,7 @@ const columns = ref([
             return [
                 {
                     label: "Chỉnh sửa",
-                    // onClick: () => handleEdit(row),
+                    onClick: () => handleEdit(row),
                     icon: "edit_square",
                 },
             ];
@@ -109,9 +97,9 @@ const onRequest = async ({ pagination }) => {
     });
 };
 
-// const handleEdit = (user) => {
-//     router.push(`/staffs/${user.id}`);
-// };
+const handleEdit = (staff) => {
+    router.push(`/staffs/${staff.id}`);
+};
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;

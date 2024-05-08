@@ -31,7 +31,7 @@ class StaffController extends Controller
 
     public function update(int $id, Request $request): JsonResource
     {
-        $staffData = $request->only(['store_id']);
+        $staffData = $request->only('status');
         $staff = $this->staffService->update($id, $staffData);
         return new JsonResource($staff);
     }

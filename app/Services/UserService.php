@@ -3,6 +3,10 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Manager;
+use App\Models\Staff;
+use App\Models\Customer;
+use App\Models\Supplier;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +34,33 @@ class UserService
             ...$data,
             'password' => Hash::make($data['password'])
         ]);
+
+        if($user->role == User::ROLE_MANAGER) {
+            Manager::create([
+                'user_id' => $user->id,
+                'store_id' => 0,
+            ]);
+        }
+        if($user->role == User::ROLE_STAFF) {
+            Staff::create([
+                'user_id' => $user->id,
+                'store_id' => 0,
+            ]);
+        }
+        if($user->role == User::ROLE_SUPPLIER) {
+            Supplier::create([
+                'user_id' => $user->id,
+                'company_name' => '-',
+                'company_address' => '-',
+                'company_contact' => '-',
+            ]);
+        }
+        if($user->role == User::ROLE_CUSTOMER) {
+            Customer::create([
+                'user_id' => $user->id,
+                'number_of_order' => '0',
+            ]);
+        }
 
         return $user;
     }

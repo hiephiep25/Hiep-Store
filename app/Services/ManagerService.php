@@ -21,7 +21,7 @@ class ManagerService
         return Manager::findOrFail($id);
     }
 
-    public function update(int $id, array $userData): User
+    public function update(int $id, array $userData): Manager
     {
         $user = $this->findUserById($id);
 

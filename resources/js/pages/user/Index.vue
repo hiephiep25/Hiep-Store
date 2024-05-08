@@ -112,6 +112,24 @@ const columns = ref([
         field: "role",
     },
     {
+        name: "phone",
+        align: "center",
+        label: "SDT",
+        field: "phone",
+    },
+    {
+        name: "dob",
+        align: "center",
+        label: "Ngày sinh",
+        field: "dob",
+    },
+    {
+        name: "address",
+        align: "center",
+        label: "Địa chỉ",
+        field: "address",
+    },
+    {
         name: "actions",
         label: "Hành động",
         field: "actions",
