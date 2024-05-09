@@ -8,6 +8,7 @@ import documentRoutes from "@/routes/documentRoutes";
 import orderRoutes from "@/routes/orderRoutes";
 import staffRoutes from "@/routes/staffRoutes";
 import managerRoutes from "@/routes/managerRoutes";
+import storeRoutes from "@/routes/storeRoutes";
 const env = import.meta.env;
 
 const router = createRouter({
@@ -40,16 +41,17 @@ const router = createRouter({
                 ...productRoutes,
                 ...staffRoutes,
                 ...managerRoutes,
+                ...storeRoutes,
                 //storage
                 {
-                    path: "stores",
-                    name: "store",
+                    path: "shops",
+                    name: "shop",
                     meta: {
-                        title: "Quản lí cửa hàng",
+                        title: "Quản lí sản phẩm trong cửa hàng",
                         isAuth: true,
-                        requiredRole: ["ADMIN", "MANAGER"],
+                        requiredRole: ["ADMIN"],
                     },
-                    component: () => import("@/pages/Store.vue"),
+                    component: () => import("@/pages/Shop.vue"),
                 },
                 //change-password
                 {

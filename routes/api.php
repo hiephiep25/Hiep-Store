@@ -45,6 +45,17 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/{id}', [Admin\StoreController::class, 'show']);
             Route::post('/{id}', [Admin\StoreController::class, 'update']);
         });
+
+        Route::post('/store-product', [Admin\StoreController::class, 'storeProduct']);
+
+        Route::prefix('stores')->group(function () {
+            Route::get('/', [Admin\StoreController::class, 'getStores']);
+            Route::get('/products', [Admin\StoreController::class, 'getProductStores']);
+            Route::post('/create', [Admin\StoreController::class, 'create']);
+            Route::get('/{id}', [Admin\StoreController::class, 'show']);
+            Route::post('/{id}', [Admin\StoreController::class, 'update']);
+            Route::delete('/{id}', [Admin\StoreController::class, 'delete']);
+        });
     });
 
     // manager router
@@ -76,11 +87,6 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/{id}', [Admin\ProductController::class, 'show']);
             Route::post('/{id}', [Admin\ProductController::class, 'update']);
             Route::delete('/{id}', [Admin\ProductController::class, 'delete']);
-        });
-
-        Route::prefix('stores')->group(function () {
-            Route::get('/', [Admin\StoreController::class, 'getStores']);
-            Route::post('/store', [Admin\StoreController::class, 'store']);
         });
 
         Route::prefix('documents')->group(function () {

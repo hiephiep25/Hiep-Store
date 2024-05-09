@@ -22,9 +22,9 @@ class Product extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function stores()
+    public function productStores()
     {
-        return $this->hasOne(Store::class, 'product_code', 'code');
+        return $this->hasOne(ProductStore::class, 'product_code', 'code');
     }
 
     public function orders()

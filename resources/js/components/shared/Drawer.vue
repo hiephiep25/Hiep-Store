@@ -97,16 +97,16 @@ const drawerContent = computed(() => {
         {
             label: "Quản lí cửa hàng",
             icon: "store",
-            active: /store/g.test(route.name.toString()),
-            action: () => router.push({ name: "admin-store" }),
+            active: /admin-store/g.test(route.name.toString()),
+            action: () => router.push({ name: "admin-store.index" }),
             show: user.value.role === "ADMIN"
         },
         {
-            label: "Cửa hàng",
-            icon: "store",
-            active: /store/g.test(route.name.toString()),
-            action: () => router.push({ name: "store" }),
-            show: user.value.role === "MANAGER"
+            label: "Sản phẩm trong cửa hàng",
+            icon: "shop",
+            active: /shop/g.test(route.name.toString()),
+            action: () => router.push({ name: "shop" }),
+            show: user.value.role === "ADMIN"
         },
         {
             label: "Danh mục sản phẩm",

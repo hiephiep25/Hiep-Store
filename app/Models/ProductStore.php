@@ -14,4 +14,20 @@ class ProductStore extends Model
         'product_code',
         'qty',
     ];
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'code', 'product_code');
+    }
+
+    protected $appends = ['product_name', 'image'];
+
+    public function getProductNameAttribute()
+    {
+        return $this->product->name;
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->product->image;
+    }
 }

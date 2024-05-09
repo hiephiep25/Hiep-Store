@@ -11,9 +11,15 @@ class StoreService
 {
     public function getStores(array $params): LengthAwarePaginator
     {
-        $store = $params['store'];
         $perPage = $params['per_page'] ?? PER_PAGE;
-        return Store::where('store', $store)->orderBy('id', 'asc')->paginate($perPage);
+        return Store::orderBy('id', 'asc')->paginate($perPage);
+    }
+
+    public function getProductStores(array $params): LengthAwarePaginator
+    {
+        $store = $params['store_id'];
+        $perPage = $params['per_page'] ?? PER_PAGE;
+        return ProductStore::where('store_id', $store)->orderBy('id', 'asc')->paginate($perPage);
     }
 
     public function create(array $data): Store
@@ -42,50 +48,50 @@ class StoreService
     {
         $product = Product::where('code', $data['product_code'])->firstOrFail();
         if (!empty($data['add_quantity']) && !empty($data['sub_quantity'])) {
-            throw new \Exception('Both add_quantity and sub_quantity cannot have values at the same time');
+            throw new \Exception('Cả hai trường "số lượng thêm" và "số lượng bớt" không thể có giá trị cùng một lúc');
         }
 
         if (empty($data['add_quantity']) && empty($data['sub_quantity'])) {
-            throw new \Exception('Please add or sub quantity of product');
+            throw new \Exception('Vui lòng thêm hoặc trừ số lượng sản phẩm');
         }
 
-        $totalQuantityInStore = $product->stores()->sum('quantity');
+        $totalQuantityInStore = $product->productStores()->sum('qty');
 
         if (!empty($data['add_quantity'])) {
             $totalQuantityInStore += $data['add_quantity'];
         }
 
         if ($totalQuantityInStore > $product->qty) {
-            throw new \Exception('Not enough quantity of products');
+            throw new \Exception('Không đủ số lượng sản phẩm');
         }
 
-        $store = Store::where('store', $data['store'])
-                        ->where('product_code', $data['product_code'])
-                        ->first();
+        $store = ProductStore::where('store_id', $data['store_id'])
+            ->where('product_code', $data['product_code'])
+            ->first();
 
-        if(!$store) {
-            if(!empty($data['sub_quantity'])) {
-                throw new \Exception('Quantity cannot be subtracted');
+        if (!$store) {
+            if (!empty($data['sub_quantity'])) {
+                throw new \Exception('Không thể trừ số lượng');
             }
-            $storeNew = Store::create([
-                'store' => $data['store'],
+            $storeNew = ProductStore::create([
+                'store_id' => $data['store_id'],
                 'product_code' => $data['product_code'],
-                'quantity' => $data['add_quantity'],
+                'qty' => $data['add_quantity'],
             ]);
 
-            return $storeNew ;
-        } elseif( ($data['sub_quantity']) >= $store->quantity) {
-            throw new \Exception('Sub_quantity can not greater than quantity');
-        } elseif(!empty($data['add_quantity'])){
-            $newQuantity = $store->quantity + $data['add_quantity'];
+            return $storeNew;
+        } elseif (($data['sub_quantity']) >= $store->qty) {
+            throw new \Exception('Số lượng trừ không thể lớn hơn số lượng hiện có');
+        } elseif (!empty($data['add_quantity'])) {
+            $newQuantity = $store->qty + $data['add_quantity'];
             $store = $store->update([
-                'quantity' =>  $newQuantity,
+                'qty' =>  $newQuantity,
             ]);
             return $store;
         } else {
-            $newQuantity = $store->quantity - $data['sub_quantity'];
+            $newQuantity = $store->qty - $data['sub_quantity'];
             $store = $store->update([
-                'quantity' =>  $newQuantity,
+                'qty' =>  $newQuantity,
             ]);
             return $store;
         }

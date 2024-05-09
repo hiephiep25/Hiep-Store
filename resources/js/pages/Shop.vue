@@ -8,13 +8,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <CommonSelectBox v-model:model-value="store" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Store" :select-options="storeOptions" />
+                                        width-label="col-2" label="Cửa hàng" :select-options="storeOptions" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-center q-mt-md">
-                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Search" />
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Tìm kiếm" />
                     </div>
                 </q-form>
             </q-card>
@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="form.product_code" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Product's code" />
+                                        width-label="col-2" label="Mã sản phẩm" />
                                 </div>
                             </div>
                         </div>
@@ -35,17 +35,17 @@
                             <div class="row">
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="form.add_quantity" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Add quantity" />
+                                        width-label="col-2" label="Số lượng thêm" />
                                 </div>
                                 <div class="col-6">
                                     <CommonInput v-model:model-value="form.sub_quantity" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Sub quantity" />
+                                        width-label="col-2" label="Số lượng bớt" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-center q-mt-md">
-                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Export to store" />
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Xuất ra cửa hàng" />
                     </div>
                 </q-form>
             </q-card>
@@ -55,12 +55,12 @@
                         <q-markup-table :separator="separator" flat bordered>
                             <q-table flat bordered virtual-scroll no-data-label="không có dữ liệu"
                                 class="header-table-custom" rows-per-page-label="Số lượng trên 1 trang"
-                                :pagination-label="getPaginationLabel" :rows="stores" :columns="columns"
+                                :pagination-label="getPaginationLabel" :rows="productStores" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
                                 @request="onRequest">
                                 <template v-slot:body-cell-image="props">
                                     <q-td :props="props">
-                                        <img :src="props.row.image" alt="Product Image"
+                                        <img :src="props.row.image" alt="Ảnh"
                                             style="width: 50px; height: auto;" />
                                     </q-td>
                                 </template>
@@ -85,15 +85,13 @@ const notify = useNotify();
 const errors = ref({});
 const storeStore = useStoreStore();
 const separator = ref("vertical");
-const { stores, pagination } = storeToRefs(storeStore);
+const { stores, productStores, pagination } = storeToRefs(storeStore);
+console.log(stores.value)
 const store = ref({ value: 1, label: 1 });
-const storeOptions = ref([
-  { value: 1, label: 1 },
-  { value: 2, label: 2 },
-]);
+const storeOptions = stores.value.map(store => ({ label: store.id, value: store.id }));
 
 const form = reactive({
-    store : store.value.value,
+    store_id : store.value.value,
     product_code: "",
     add_quantity: null,
     sub_quantity: null,
@@ -102,42 +100,42 @@ const columns = ref([
     {
         name: "code",
         align: "center",
-        label: "Code",
+        label: "Mã sản phẩm",
         field: "product_code",
         sortable: true,
     },
     {
         name: "name",
         align: "center",
-        label: "Product's name",
+        label: "Tên sản phẩm",
         field: "product_name",
     },
     {
         name: "image",
         align: "center",
-        label: "Product's image",
+        label: "Ảnh sản phẩm",
         field: "image",
     },
     {
         name: "quantity",
         align: "center",
-        label: "Quantity",
-        field: "quantity",
+        label: "Số lượng",
+        field: "qty",
         sortable: true,
     }
 ]);
 
 const onSubmit = async () => {
-    await storeStore.getStores({
-        store: store.value.value,
+    await storeStore.getProductStores({
+        store_id: store.value.value,
         page: pagination.value.page,
         per_page: pagination.value.rowsPerPage,
     });
 };
 
 const onRequest = async ({ pagination }) => {
-    await storeStore.getStores({
-        store: store.value.value,
+    await storeStore.getProductStores({
+        store_id: store.value.value,
         page: pagination.page,
         per_page: pagination.rowsPerPage,
     });
@@ -145,14 +143,14 @@ const onRequest = async ({ pagination }) => {
 
 const onUpdate = async () => {
     try {
-        form.store = store.value.value;
-        await storeStore.updateStores(form)
+        form.store_id = store.value.value;
+        await storeStore.updateProductStores(form)
         errors.value = {};
         form.product_code = "";
         form.add_quantity = null;
         form.sub_quantity = null;
-        notify.success('Export to store successfully');
-        storeStore.getStores({ store: store.value.value });
+        notify.success('Xuất ra cửa hàng thành công');
+        storeStore.getProductStores({ store_id: store.value.value });
     } catch (error) {
         errors.value = error?.response?.data?.errors
         notify.error(error.response.data.message);
@@ -164,7 +162,8 @@ const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
 };
 
 onMounted(async () => {
-    storeStore.getStores({ store: store.value.value });
+    storeStore.getStores();
+    storeStore.getProductStores({ store_id: store.value.value });
 });
 </script>
 
