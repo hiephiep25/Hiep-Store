@@ -46,6 +46,25 @@
                             ]" />
                         </div>
                     </div>
+                    <div class="row justify-center">
+                        <div class="col-12 col-md-6">
+                            <q-input class="q-ma-md" outlined dense v-model="authStore.user.address" label="Địa chỉ"
+                                :rules="[
+                                    (val) => !!val.trim() || 'Địa chỉ không được bỏ trống!',
+                                ]" />
+                        </div>
+                    </div>
+                    <div class="row justify-center">
+                        <div class="col-12 col-md-6">
+                            <q-input class="q-ma-md" outlined type="date" dense v-model="authStore.user.dob"
+                                label="Ngày sinh" :rules="[
+                                    (val) => !!val.trim() || 'Ngày sinh không được bỏ trống',
+                                    (val) =>
+                                        new Date(val) <= new Date() ||
+                                        'Ngày sinh không hợp lệ',
+                                ]" />
+                        </div>
+                    </div>
                     <div class="row justify-center" v-if="authStore.user.role === 'SUPPLIER'">
                         <div class="col-12 col-md-6">
                             <q-input class="q-ma-md" outlined dense v-model="companyNameModel"
@@ -70,25 +89,6 @@
                             <q-input class="q-ma-md" outlined dense v-model="companyContactModel"
                                 label="Liên hệ của công ty" :rules="[
                                     (val) => !!val.trim() || 'Liên hệ của công ty không được bỏ trống!',
-                                ]" />
-                        </div>
-                    </div>
-                    <div class="row justify-center">
-                        <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined dense v-model="authStore.user.address" label="Địa chỉ"
-                                :rules="[
-                                    (val) => !!val.trim() || 'Địa chỉ không được bỏ trống!',
-                                ]" />
-                        </div>
-                    </div>
-                    <div class="row justify-center">
-                        <div class="col-12 col-md-6">
-                            <q-input class="q-ma-md" outlined type="date" dense v-model="authStore.user.dob"
-                                label="Ngày sinh" :rules="[
-                                    (val) => !!val.trim() || 'Ngày sinh không được bỏ trống',
-                                    (val) =>
-                                        new Date(val) <= new Date() ||
-                                        'Ngày sinh không hợp lệ',
                                 ]" />
                         </div>
                     </div>

@@ -6,34 +6,34 @@
                     <div class="row justify-center">
                         <div class="col-12">
                             <Input v-model:model-value="form" name="product_name" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Product's name" :errors="errors" />
+                                width-label="col-2" label="Tên sản phẩm" :errors="errors" />
                             <SelectBox v-model:model-value="form" name="category" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Category" :option="categoryOptions" :errors="errors" />
+                                width-label="col-2" label="Danh mục" :option="categoryOptions" :errors="errors" />
                             <Input v-model:model-value="form" name="description" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Description" :errors="errors" />
+                                width-label="col-2" label="Mô tả" :errors="errors" />
                             <Input v-model:model-value="form" name="qty" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Qty" :errors="errors" />
+                                width-label="col-2" label="Số lượng" :errors="errors" />
                             <Input v-model:model-value="form" name="price" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Price" :errors="errors" />
+                                width-label="col-2" label="Giá nhập hàng" :errors="errors" />
                             <Input v-model:model-value="form" name="manufacture_day" type="date"
-                                width-common="col-8 q-ml-lg" width-label="col-2" label="Manufacture day" :errors="errors" />
+                                width-common="col-8 q-ml-lg" width-label="col-2" label="Ngày sản xuất" :errors="errors" />
                             <Input v-model:model-value="form" name="expiry_day" type="date" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Expiry day" :errors="errors" />
-                            <FileInput v-model:model-value="form" name="image" label="Image" :errors="errors" />
+                                width-label="col-2" label="Hạn sử dụng" :errors="errors" />
+                            <FileInput v-model:model-value="form" name="image" label="Ảnh sản phẩm" :errors="errors" />
                             <div class="row justify-center" v-if="form.image">
                                 <img :src="imageSrc" alt="Product Image" style="max-width: 100%; max-height: 100px;">
                             </div>
                             <div class="row justify-center" v-if="!form.image">
                                 <img :src="oldImageSrc" alt="Product Image" style="max-width: 100%; max-height: 100px;">
                             </div>
-                            <FileInput v-model:model-value="form" name="license_company" label="License Company" :errors="errors" />
+                            <FileInput v-model:model-value="form" name="license_company" label="Giấy phép kinh doanh" :errors="errors" />
                             <div class="row justify-center" v-if="form.license_company">
                                 <img :src="licenseCompanySrc" alt="License Company" style="max-width: 100%; max-height: 100px;">
                             </div>
                             <div class="row justify-center" v-if="!form.license_company">
                                 <img :src="oldLicenseCompanySrc" alt="License Company" style="max-width: 100%; max-height: 100px;">
                             </div>
-                            <FileInput v-model:model-value="form" name="license_product" label="License Product" :errors="errors" />
+                            <FileInput v-model:model-value="form" name="license_product" label="Giấy phép sản phẩm" :errors="errors" />
                             <div class="row justify-center" v-if="form.license_product">
                                 <img :src="licenseProductSrc" alt="License Product" style="max-width: 100%; max-height: 100px;">
                             </div>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Edit" />
+                        <q-btn type="submit" color="primary" label="Chỉnh sửa" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -170,6 +170,7 @@ async function update() {
         formData.append('expiry_day', form.expiry_day);
         if(form.image) {
             formData.append('image', form.image);
+
         }
         if(form.license_company) {
             formData.append('license_company', form.license_company);
@@ -180,7 +181,7 @@ async function update() {
 
         await documentStore.updateDocument(id, formData);
         errors.value = {};
-        notify.success('Edited the data successfully');
+        notify.success('Chỉnh sửa thành công');
         router.push({ name: 'document.index' });
     } catch (error) {
         errors.value = error?.response?.data?.errors

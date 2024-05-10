@@ -8,20 +8,20 @@
                             <div class="row">
                                 <div class="col-6">
                                     <CommonSelectBox v-model:model-value="status" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Status" :select-options="statusOptions" />
+                                        width-label="col-2" label="Trạng thái" :select-options="statusOptions" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-center q-mt-md">
-                        <q-btn type="reset" class="btn" color="primary" label="Reset" @click="resetSearch" />
-                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Search" />
+                        <q-btn type="reset" class="btn" color="primary" label="Đặt lại" @click="resetSearch" />
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Tìm kiếm" />
                     </div>
                 </q-form>
             </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
-                    <q-btn class="btn" color="primary" label="Create" @click="navigateToRegistrationPage" />
+                    <q-btn class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage" />
                 </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
@@ -33,7 +33,7 @@
                                 @request="onRequest">
                                 <template v-slot:body-cell-image="props">
                                     <q-td :props="props">
-                                        <img :src="props.row.image" alt="Product Image"
+                                        <img :src="props.row.image" alt="Ảnh"
                                             style="width: 50px; height: auto;" />
                                     </q-td>
                                 </template>
@@ -56,10 +56,10 @@
         <q-dialog v-model="confirm" persistent>
             <q-card>
                 <q-card-section class="row items-center">
-                    <span class="q-ml-sm">Confirm delete document {{ documentDelete.name }}?</span>
+                    <span class="q-ml-sm">Xác nhận xóa tài liệu {{ documentDelete.name }}?</span>
                 </q-card-section>
                 <q-card-actions align="right">
-                    <q-btn flat label="Cancel" color="primary" v-close-popup />
+                    <q-btn flat label="Hủy" color="primary" v-close-popup />
                     <q-btn flat label="OK" color="negative" v-close-popup @click="confirmed()" />
                 </q-card-actions>
             </q-card>
@@ -98,55 +98,55 @@ const columns = ref([
     {
         name: "product_name",
         align: "center",
-        label: "Product name",
+        label: "Tên sản phẩm",
         field: "product_name",
         sortable: true,
     },
     {
         name: "category",
         align: "center",
-        label: "Category",
+        label: "Danh mục",
         field: "category",
         sortable: true,
     },
     {
         name: "qty",
         align: "center",
-        label: "Qty",
+        label: "Số lượng",
         field: "qty",
     },
     {
         name: "price",
         align: "center",
-        label: "Price",
+        label: "Giá bán (cung cấp)",
         field: "price",
     },
     {
         name: "image",
         align: "center",
-        label: "Image",
+        label: "Ảnh",
         field: "image",
     },
     {
         name: "status",
         align: "center",
-        label: "Status",
+        label: "Trạng thái",
         field: "status",
     },
     {
         name: "actions",
-        label: "Actions",
+        label: "Hành động",
         field: "actions",
         align: "center",
         format: (val, row) => {
             return [
                 {
-                    label: "Edit",
+                    label: "Chỉnh sửa",
                     onClick: () => handleEdit(row),
                     icon: "edit_square",
                 },
                 {
-                    label: "Delete",
+                    label: "Xóa",
                     onClick: () => handleDelete(row),
                     icon: "delete",
                 },
@@ -156,9 +156,9 @@ const columns = ref([
 ]);
 
 const statusOptions = [
-  { label: 'APPROVED', value: 'APPROVED' },
-  { label: 'AWAIT_APPROVAL', value: 'AWAIT_APPROVAL' },
-  { label: 'DENIED', value: 'DENIED' },
+  { label: 'Được chấp nhận', value: 'APPROVED' },
+  { label: 'Đợi phản hồi', value: 'AWAIT_APPROVAL' },
+  { label: 'Bị từ chối', value: 'DENIED' },
 ];
 
 const onRequest = async ({ pagination }) => {
@@ -188,7 +188,7 @@ const handleDelete = (evt) => {
 const confirmed = async () => {
     try {
         await documentStore.deleteDocument(documentDelete.value.id);
-        notify.success("Data has been deleted.");
+        notify.success("Dữ liệu đã được xóa.");
         documentStore.getMyDocuments();
     } catch (error) {
         notify.error(error.response.data.message);
