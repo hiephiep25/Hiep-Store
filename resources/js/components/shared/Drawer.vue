@@ -148,7 +148,7 @@ const drawerContent = computed(() => {
             icon: "shopping_cart",
             active: /offline-order/g.test(route.name.toString()),
             action: () => router.push({ name: "offline-order" }),
-            show: user.value.role === "MANAGER" || user.value.role === "STAFF"
+            show: user.value.role === "MANAGER" || user.value.role === "STAFF" || user.value.role === "ADMIN"
         },
     ];
 });

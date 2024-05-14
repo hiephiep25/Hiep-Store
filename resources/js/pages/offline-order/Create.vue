@@ -6,26 +6,29 @@
                     <div class="row justify-center">
                         <div class="col-12">
                             <SelectBox v-model:model-value="form" name="payment_type" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Payment Type" :option="paymentTypeOptions" :errors="errors" />
+                                width-label="col-2" label="Hình thức thanh toán" :option="paymentTypeOptions" :errors="errors" />
                         </div>
                     </div>
                     <div class="row justify-center">
                         <div class="col-6">
                             <SelectBox v-model:model-value="newProduct" name="product_code" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Product Code" :option="productCodeOptions" :errors="errors" />
+                                width-label="col-2" label="Sản phẩm" :option="productCodeOptions" :errors="errors" />
                         </div>
                         <div class="col-6">
                             <Input v-model:model-value="newProduct" name="qty" type="number" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Quantity" :errors="errors" />
+                                width-label="col-2" label="Số lượng" :errors="errors" />
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn @click="addProduct" color="green" label="Add Product" />
+                        <q-btn @click="addProduct" color="green" label="Thêm sản phẩm" />
                     </div>
                     <div class="row justify-center">
                         <q-list bordered v-if="selectedProducts.length > 0">
                             <q-item v-for="(product, index) in selectedProducts" :key="index">
-                                <q-item-section>
+                                <q-item-section avatar>
+                                    <q-img :src="product.image" alt="Product Image" style="width: 50px; height: 50px;"></q-img>
+                                </q-item-section>
+                                        <q-item-section>
                                     <q-item-label>{{ product.product_code }} - {{ product.product_name }} - Qty: {{ product.qty }}</q-item-label>
                                 </q-item-section>
                                 <q-item-section side top>
@@ -35,10 +38,10 @@
                         </q-list>
                     </div>
                     <div class="row justify-center">
-                        <div>Total: {{ calculateTotal }}</div>
+                        <div>Tổng tiền: {{ calculateTotal }}</div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Create" />
+                        <q-btn type="submit" color="primary" label="Tạo mới" />
                     </div>
                 </q-form>
             </q-card-section>
@@ -69,6 +72,7 @@ const productCodeOptions = ref([]);
 const newProduct = reactive({
     product_code: '',
     qty: '',
+    image: '',
 });
 const { params } = useRoute();
 const store = params.store;
@@ -88,6 +92,7 @@ const addProduct = () => {
     if (selectedProductInfo) {
         selectedProduct.price_per_qty = selectedProductInfo.price_per_qty;
         selectedProduct.product_name = selectedProductInfo.product_name;
+        selectedProduct.image = selectedProductInfo.image
         selectedProducts.value.push(selectedProduct);
         newProduct.product_code = '';
         newProduct.qty = '';
@@ -113,17 +118,18 @@ const calculateTotal = computed(() => {
     }, 0);
 });
 
-const loadProductCodes = async (store) => {
+const loadProductCodes = async () => {
   try {
-    const response = await offlineOrderStore.getStoreProductCodes(store);
+    const response = await offlineOrderStore.getStoreProductCodes();
     productCodeOptions.value = response.data.map((item) => ({
       label: item.product_code,
       value: item.product_code,
       price_per_qty: item.product.price_per_qty,
       product_name: item.product_name,
+      image: item.image
     }));
   } catch (error) {
-    console.error('Error loading product codes:', error);
+    console.error('Lỗi khi tải dữ liệu', error);
   }
 };
 
@@ -136,7 +142,7 @@ const create = async () => {
             total,
         }, store);
         errors.value = {};
-        notify.success('Create data successfully');
+        notify.success('Tạo mới dữ liệu thành công');
         router.push({ name: 'offline-order' });
     } catch (error) {
         errors.value = error?.response?.data?.errors;

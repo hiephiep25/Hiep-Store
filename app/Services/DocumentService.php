@@ -77,7 +77,7 @@ class DocumentService
         $document = Document::create([
             ...$data,
         ]);
-        $this->notificationService->createNotification(2, 'create-document');
+        $this->notificationService->createNotification(1, 'create-document');
 
         return $document;
     }

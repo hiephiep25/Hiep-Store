@@ -7,7 +7,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use App\Models\OfflineOrder;
 use App\Models\Order;
-use App\Models\Store;
+use App\Models\ProductStore;
+use App\Models\Staff;
+use App\Models\Manager;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Models\OrderProduct;
 use App\Services\NotificationService;
@@ -23,48 +26,98 @@ class OfflineOrderService
 
     public function getAllOfflineOrders(array $params): LengthAwarePaginator
     {
+        $role = auth()->user()->role;
         $perPage = $params['per_page'] ?? PER_PAGE;
+        if($role == User::ROLE_STAFF) {
+            $staff = Staff::where('user_id', auth()->id())->firstOrFail();
+            $storeID = $staff->store_id;
 
-        $query = OfflineOrder::with('order')->orderBy('id', 'asc');
+            $query = OfflineOrder::with('order')
+                ->join('orders', 'offline_orders.order_id', '=', 'orders.id')
+                ->where('orders.store_id', $storeID)
+                ->orderBy('offline_orders.id', 'asc');
 
-        if (isset($params['from']) && isset($params['to'])) {
-            $query->whereBetween('created_at', [$params['from'], $params['to']]);
-        } else {
-            if (isset($params['from'])) {
-                $query->where('created_at', '>=', $params['from']);
-            } elseif (isset($params['to'])) {
-                $query->where('created_at', '<=', $params['to']);
+            if (isset($params['from']) && isset($params['to'])) {
+                $query->whereBetween('offline_orders.created_at', [$params['from'], $params['to']]);
+            } else {
+                if (isset($params['from'])) {
+                    $query->where('offline_orders.created_at', '>=', $params['from']);
+                } elseif (isset($params['to'])) {
+                    $query->where('offline_orders.created_at', '<=', $params['to']);
+                }
             }
-        }
 
-        if (isset($params['store'])) {
-            $query->where('store', $params['store']);
+            return $query->paginate($perPage);
         }
+        if($role == User::ROLE_MANAGER) {
+            $manager = Manager::where('user_id', auth()->id())->firstOrFail();
+            $storeID = $manager->store_id;
 
-        return $query->paginate($perPage);
+            $query = OfflineOrder::with('order')
+                ->join('orders', 'offline_orders.order_id', '=', 'orders.id')
+                ->where('orders.store_id', $storeID)
+                ->orderBy('offline_orders.id', 'asc');
+
+            if (isset($params['from']) && isset($params['to'])) {
+                $query->whereBetween('offline_orders.created_at', [$params['from'], $params['to']]);
+            } else {
+                if (isset($params['from'])) {
+                    $query->where('offline_orders.created_at', '>=', $params['from']);
+                } elseif (isset($params['to'])) {
+                    $query->where('offline_orders.created_at', '<=', $params['to']);
+                }
+            }
+
+            return $query->paginate($perPage);
+        }
+        if($role == User::ROLE_ADMIN) {
+
+            $query = OfflineOrder::all();
+
+            if (isset($params['from']) && isset($params['to'])) {
+                $query->whereBetween('created_at', [$params['from'], $params['to']]);
+            } else {
+                if (isset($params['from'])) {
+                    $query->where('created_at', '>=', $params['from']);
+                } elseif (isset($params['to'])) {
+                    $query->where('created_at', '<=', $params['to']);
+                }
+            }
+
+            return $query->paginate($perPage);
+        }
     }
 
 
-    public function getStoreProducts(int $store)
+    public function getStoreProducts()
     {
-        return Store::with('product')
-            ->where('store', $store)
-            ->get();
+        $role = auth()->user()->role;
+        if($role == User::ROLE_STAFF) {
+            $staff = Staff::where('user_id', auth()->id())->firstOrFail();
+            $storeID = $staff->store_id;
+
+            return ProductStore::with('product')
+                ->where('store_id', $storeID)
+                ->get();
+        }
     }
 
     public function createOfflineOrder(array $data)
     {
         DB::beginTransaction();
+        $staff = Staff::where('user_id', auth()->id())->firstOrFail();
+        $storeID = $staff->store_id;
         try {
             $order = Order::create([
                 'type' => Order::OFFLINE,
                 'payment_type' => $data['payment_type'],
                 'total' => $data['total'],
+                'store_id'=> $storeID
             ]);
 
             $offlineOrder = OfflineOrder::create([
                 'order_id' => $order->id,
-                'store' => $data['store'],
+                'staff_id' => auth()->id()
             ]);
 
             foreach ($data['products'] as $productData) {
@@ -82,7 +135,7 @@ class OfflineOrderService
                     ]);
 
                     $this->decreaseProductQuantity($product->code, $productData['qty']);
-                    $this->notificationService->createNotification(2, 'create-offline-order');
+                    $this->notificationService->createNotification(1, 'create-offline-order');
                 }
             }
 
@@ -97,7 +150,7 @@ class OfflineOrderService
 
     protected function decreaseProductQuantity($productCode, $quantity)
     {
-        Store::where('product_code', $productCode)->decrement('quantity', $quantity);
+        ProductStore::where('product_code', $productCode)->decrement('qty', $quantity);
         Product::where('code', $productCode)->decrement('qty', $quantity);
     }
 

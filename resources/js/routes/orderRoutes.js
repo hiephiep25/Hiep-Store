@@ -10,12 +10,12 @@ const orderRoutes = [
         component: () => import("@/pages/offline-order/Index.vue"),
     },
     {
-        path: "offline-order/:store/create",
+        path: "offline-order/create",
         name: "offline-order.create",
         meta: {
             title: "Quản lí đơn hàng tại quầy",
             isAuth: true,
-            requiredRole: ["ADMIN", "MANAGER", "STAFF"],
+            requiredRole: ["STAFF"],
         },
         component: () => import("@/pages/offline-order/Create.vue"),
     },

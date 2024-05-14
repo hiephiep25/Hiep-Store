@@ -4,29 +4,29 @@
             <q-card class="my-card bg-white q-pa-md">
                 <div class="row justify-center">
                     <div class="col">
-                        <h4>Order Details</h4>
+                        <h4>Chi tiết đơn hàng</h4>
                         <div>
-                            <strong>Type:</strong> {{ offlineOrder.type }}
+                            <strong>Loại:</strong> {{ offlineOrder.type }}
                         </div>
                         <div>
-                            <strong>Payment Type:</strong> {{ offlineOrder.payment_type }}
+                            <strong>Hình thức thanh toán:</strong> {{ offlineOrder.payment_type }}
                         </div>
                         <div>
-                            <strong>Total:</strong> {{ offlineOrder.total }}
+                            <strong>Tổng tiền:</strong> {{ offlineOrder.total }}
                         </div>
                         <div>
-                            <strong>Created At:</strong> {{ formatDate(offlineOrder.created_at) }}
+                            <strong>Thời gian mua:</strong> {{ formatDate(offlineOrder.created_at) }}
                         </div>
-                        <h5>Products</h5>
+                        <h5>Các sản phẩm</h5>
                         <div v-for="product in offlineOrder.products" :key="product.id">
                             <div>
-                                <strong>Product Name:</strong> {{ product.name }}
+                                <strong>Tên sản phẩm:</strong> {{ product.name }}
                             </div>
                             <div>
-                                <strong>Quantity:</strong> {{ product.pivot.qty }}
+                                <strong>Số lượng:</strong> {{ product.pivot.qty }}
                             </div>
                         </div>
-                        <q-btn class="q-mt-md" color="primary" label="Export to PDF" @click="exportToPdf" />
+                        <q-btn class="q-mt-md" color="primary" label="Xuất file PDF" @click="exportToPdf" />
                     </div>
                 </div>
             </q-card>

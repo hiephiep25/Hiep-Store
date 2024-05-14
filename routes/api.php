@@ -116,9 +116,13 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
     Route::middleware('check-role:ADMIN,MANAGER,STAFF')->group(function () {
         Route::prefix('offline-orders')->group(function () {
             Route::get('/', [Admin\OfflineOrderController::class, 'index']);
-            Route::get('/store-product/{store}', [Admin\OfflineOrderController::class, 'getStoreProducts']);
-            Route::post('/{store}/create', [Admin\OfflineOrderController::class, 'store']);
+            Route::get('/products', [Admin\OfflineOrderController::class, 'getStoreProducts']);
             Route::get('/{id}', [Admin\OfflineOrderController::class, 'getOfflineOrderDetail']);
+        });
+    });
+    Route::middleware('check-role:STAFF')->group(function () {
+        Route::prefix('offline-orders')->group(function () {
+            Route::post('/create', [Admin\OfflineOrderController::class, 'store']);
         });
     });
 

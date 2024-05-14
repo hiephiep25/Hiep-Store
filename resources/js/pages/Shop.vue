@@ -86,7 +86,6 @@ const errors = ref({});
 const storeStore = useStoreStore();
 const separator = ref("vertical");
 const { stores, productStores, pagination } = storeToRefs(storeStore);
-console.log(stores.value)
 const store = ref({ value: 1, label: 1 });
 const storeOptions = stores.value.map(store => ({ label: store.id, value: store.id }));
 

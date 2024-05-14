@@ -5,8 +5,27 @@
             {{ label }}
         </span>
         <div class="col-md-8 col-12 col-auto">
-            <q-select outlined v-model="modelValue[name]" :options="option" emit-value dense map-options
-                option-value="label" option-label="label" clearable>
+            <q-select
+                outlined
+                v-model="modelValue[name]"
+                :options="option"
+                emit-value
+                dense
+                map-options
+                option-value="value"
+                option-label="label"
+                clearable
+            >
+                <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
+                        <q-item-section avatar>
+                            <q-img :src="scope.opt.image" alt="Product Image" style="width: 50px; height: 50px;"></q-img>
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>{{ scope.opt.label }}</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </template>
             </q-select>
         </div>
         <div class="col-md-6 col-12 q-auto">
@@ -14,6 +33,7 @@
         </div>
     </div>
 </template>
+
 <script setup>
 defineProps({
     label: {
@@ -37,12 +57,12 @@ defineProps({
         default: false
     },
     option: {
-        type: Object,
-        default: []
+        type: Array,
+        default: () => []
     },
     errors: {
         type: Object,
-        default: {}
+        default: () => {}
     },
     modelValue: {
         type: Object,

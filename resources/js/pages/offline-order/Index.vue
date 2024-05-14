@@ -7,27 +7,25 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col-6">
-                                    <CommonSelectBox v-model:model-value="store" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Store" :select-options="storeOptions" />
+                                    <CommonInput v-model:model-value="from" type="date" width-common="col-12 q-ml-lg"
+                                        width-label="col-1" label="Từ ngày" />
                                 </div>
                                 <div class="col-6">
-                                    <CommonInput v-model:model-value="from" type="date" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="From" />
                                     <CommonInput v-model:model-value="to" type="date" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="To" />
+                                        width-label="col-1" label="Đến ngày" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-center q-mt-md">
-                        <q-btn type="reset" class="btn" color="primary" label="Reset" @click="resetSearch" />
-                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Search" />
+                        <q-btn type="reset" class="btn" color="primary" label="Đặt lại" @click="resetSearch" />
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Tìm kiếm" />
                     </div>
                 </q-form>
             </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
-                    <q-btn class="btn" color="primary" label="Create" @click="navigateToRegistrationPage(store.value)" />
+                    <q-btn class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage()" />
                 </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
@@ -70,7 +68,6 @@ import useNotify from "@/utils/notify";
 import { useOfflineOrderStore } from "@/store/offline-order";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
-import CommonSelectBox from "../../components/common/CommonSelectBox.vue";
 
 const router = useRouter();
 const offlineOrderStore = useOfflineOrderStore();
@@ -79,11 +76,7 @@ const from = ref("");
 const to = ref("");
 const { offlineOrders, pagination } = storeToRefs(offlineOrderStore);
 const notify = useNotify();
-const store = ref({ value: 1, label: 1 });
-const storeOptions = ref([
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-]);
+
 const columns = ref([
     {
         name: "id",
@@ -96,34 +89,34 @@ const columns = ref([
     {
         name: "order_id",
         align: "center",
-        label: "Order",
+        label: "Đơn hàng",
         field: "order_id",
         sortable: true,
     },
     {
         name: "payment_type",
         align: "center",
-        label: "Payment Type",
+        label: "Loại thanh toán",
         field: "payment_type",
         sortable: true,
     },
     {
         name: "total",
         align: "center",
-        label: "Total",
+        label: "Tổng tiền",
         field: "total",
         sortable: true,
     },
     {
         name: "created_at",
         align: "center",
-        label: "Created At",
+        label: "Thời gian tạo",
         field: "created_at",
         sortable: true,
     },
     {
         name: "actions",
-        label: "Actions",
+        label: "Hành động",
         field: "actions",
         align: "center",
         format: (val, row) => {
@@ -146,7 +139,6 @@ const formatDate = (dateString) => {
 
 const onRequest = async ({ pagination }) => {
     await offlineOrderStore.getOfflineOrders({
-        store: store.value.value,
         from: from.value,
         to: to.value,
         page: pagination.page,
@@ -166,7 +158,6 @@ const handleInfo = (offlineOrder) => {
 
 const onSubmit = async () => {
     await offlineOrderStore.getOfflineOrders({
-        store: store.value.value,
         from: from.value,
         to: to.value,
         page: pagination.value.page,
@@ -175,14 +166,14 @@ const onSubmit = async () => {
 };
 
 const navigateToRegistrationPage = (storeValue) => {
-    router.push({ name: 'offline-order.create', params: { store: storeValue } });
+    router.push({ name: 'offline-order.create'});
 };
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
-offlineOrderStore.getOfflineOrders({ store: store.value.value });
+offlineOrderStore.getOfflineOrders();
 </script>
 
 <style lang="scss" scoped>

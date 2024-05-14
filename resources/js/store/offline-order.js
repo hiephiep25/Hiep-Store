@@ -26,15 +26,15 @@ export const useOfflineOrderStore = defineStore('offlineOrder', {
                 throw error
             }
         },
-        async getStoreProductCodes(store) {
-            return request.get(`/offline-orders/store-product/${store}`);
+        async getStoreProductCodes() {
+            return request.get('/offline-orders/products');
         },
         async getDetailOfflineOrder(id) {
             return request.get(`/offline-orders/${id}`);
         },
         async create(formData, store) {
             try {
-                await request.post(`/offline-orders/${store}/create`, {
+                await request.post(`/offline-orders/create`, {
                     data: formData,
                 });
             } catch (error) {

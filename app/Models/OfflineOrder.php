@@ -10,7 +10,7 @@ class OfflineOrder extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_id', 'store', 'staff_id'
+        'order_id', 'staff_id'
     ];
 
     public function order()

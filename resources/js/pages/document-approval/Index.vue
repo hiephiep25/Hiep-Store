@@ -8,18 +8,18 @@
                             <div class="row">
                                 <div class="col-6">
                                     <CommonSelectBox v-model:model-value="status" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Status" :select-options="statusOptions" />
+                                        width-label="col-2" label="Trạng thái" :select-options="statusOptions" />
                                 </div>
                                 <div class="col-6">
                                     <CommonSelectBox v-model:model-value="supplier_id" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Supplier" :select-options="supplierOptions" />
+                                        width-label="col-2" label="Nhà cung cấp" :select-options="supplierOptions" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-center q-mt-md">
-                        <q-btn type="reset" class="btn" color="primary" label="Reset" @click="resetSearch" />
-                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Search" />
+                        <q-btn type="reset" class="btn" color="primary" label="Đặt lại" @click="resetSearch" />
+                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Tìm kiếm" />
                     </div>
                 </q-form>
             </q-card>
@@ -54,14 +54,14 @@
     <q-dialog v-model="dialogVisible">
         <q-card style="width: 700px;">
             <div class="q-dialog__content q-pa-md" style="height: 100%; width: 100%;">
-                <h4 class="text-h6">Document Details</h4>
+                <h4 class="text-h6">Chi tiết tài liệu nhập hàng</h4>
                 <div class="document-info">
-                    <p><strong>Product Name:</strong> {{ selectedDocument.product_name }}</p>
-                    <p><strong>Category:</strong> {{ selectedDocument.category }}</p>
-                    <p><strong>Quantity:</strong> {{ selectedDocument.qty }}</p>
-                    <p><strong>Price:</strong> {{ selectedDocument.price }}</p>
-                    <p><strong>Manufacture Day:</strong> {{ selectedDocument.manufacture_day }}</p>
-                    <p><strong>Expiry Day:</strong> {{ selectedDocument.expiry_day }}</p>
+                    <p><strong>Tên sản phẩm:</strong> {{ selectedDocument.product_name }}</p>
+                    <p><strong>Danh mục:</strong> {{ selectedDocument.category }}</p>
+                    <p><strong>Số lượng:</strong> {{ selectedDocument.qty }}</p>
+                    <p><strong>Giá:</strong> {{ selectedDocument.price }}</p>
+                    <p><strong>Ngày sản xuất:</strong> {{ selectedDocument.manufacture_day }}</p>
+                    <p><strong>Hạn sử dụng:</strong> {{ selectedDocument.expiry_day }}</p>
                 </div>
                 <div class="document-images">
                     <img :src="selectedDocument.image" alt="Product Image" />
@@ -72,11 +72,11 @@
                 <p><strong>Status:</strong> <strong>{{ selectedDocument.status }}</strong></p>
             </div>
             <q-card-actions align="center" v-if="selectedDocument.status == 'AWAIT_APPROVAL'">
-                <q-btn label="Approval" color="green" @click="approve" />
-                <q-btn label="Denied" color="red" @click="deny" />
+                <q-btn label="Chấp nhận" color="green" @click="approve" />
+                <q-btn label="Từ chối" color="red" @click="deny" />
             </q-card-actions>
             <q-card-actions align="right">
-                <q-btn label="Close" color="primary" @click="closeDialog" />
+                <q-btn label="Đóng" color="primary" @click="closeDialog" />
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -112,44 +112,44 @@ const columns = ref([
     {
         name: "product_name",
         align: "center",
-        label: "Product name",
+        label: "Tên sản phẩm",
         field: "product_name",
         sortable: true,
     },
     {
         name: "category",
         align: "center",
-        label: "Category",
+        label: "Danh mục",
         field: "category",
         sortable: true,
     },
     {
         name: "qty",
         align: "center",
-        label: "Qty",
+        label: "Số lượng",
         field: "qty",
     },
     {
         name: "price",
         align: "center",
-        label: "Price",
+        label: "Giá nhập hàng",
         field: "price",
     },
     {
         name: "image",
         align: "center",
-        label: "Image",
+        label: "Ảnh",
         field: "image",
     },
     {
         name: "status",
         align: "center",
-        label: "Status",
+        label: "Tình trạng",
         field: "status",
     },
     {
         name: "actions",
-        label: "Actions",
+        label: "Hành động",
         field: "actions",
         align: "center",
         format: (val, row) => {
@@ -170,9 +170,9 @@ const columns = ref([
 ]);
 
 const statusOptions = [
-    { label: 'APPROVED', value: 'APPROVED' },
-    { label: 'AWAIT_APPROVAL', value: 'AWAIT_APPROVAL' },
-    { label: 'DENIED', value: 'DENIED' },
+    { label: 'Được chấp nhận', value: 'APPROVED' },
+    { label: 'Đợi phê duyệt', value: 'AWAIT_APPROVAL' },
+    { label: 'Bị từ chối', value: 'DENIED' },
 ];
 
 const suppliers = ref([]);
@@ -211,7 +211,7 @@ const closeDialog = () => {
 const approve = async () => {
     try {
         await documentStore.approve(selectedDocument.value.id);
-        notify.success('Success');
+        notify.success('Thành công');
         dialogVisible.value = false;
         router.push({ name: 'document-approval.index' });
     } catch( error ) {
@@ -222,7 +222,7 @@ const approve = async () => {
 const deny = async () => {
     try {
         await documentStore.deny(selectedDocument.value.id);
-        notify.success('Success');
+        notify.success('Thành công');
         dialogVisible.value = false;
         router.push({ name: 'document-approval.index' });
     } catch( error ) {
