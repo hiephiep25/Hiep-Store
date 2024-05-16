@@ -6,6 +6,9 @@
                     <div class="col">
                         <h4>Chi tiết đơn hàng</h4>
                         <div>
+                            <strong>Thuộc cửa hàng:</strong> {{ offlineOrder.store_id }}
+                        </div>
+                        <div>
                             <strong>Loại:</strong> {{ offlineOrder.type }}
                         </div>
                         <div>

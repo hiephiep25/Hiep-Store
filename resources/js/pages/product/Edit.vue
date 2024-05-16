@@ -54,7 +54,7 @@ import FileInput from '../../components/common/FileInput.vue';
 const categories = ref([]);
 const categoryOptions = computed(() => {
     return categories.value.map((category) => ({
-        value: category.id,
+        value: category.name,
         label: category.name,
     }));
 });

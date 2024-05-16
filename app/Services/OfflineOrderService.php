@@ -72,7 +72,7 @@ class OfflineOrderService
         }
         if($role == User::ROLE_ADMIN) {
 
-            $query = OfflineOrder::all();
+            $query = OfflineOrder::with('order')->orderBy('id', 'asc');
 
             if (isset($params['from']) && isset($params['to'])) {
                 $query->whereBetween('created_at', [$params['from'], $params['to']]);

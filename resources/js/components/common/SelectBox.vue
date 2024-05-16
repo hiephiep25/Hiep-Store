@@ -19,7 +19,7 @@
                 <template v-slot:option="scope">
                     <q-item v-bind="scope.itemProps">
                         <q-item-section avatar>
-                            <q-img :src="scope.opt.image" alt="Product Image" style="width: 50px; height: 50px;"></q-img>
+                            <q-img :src="scope.opt.image" alt="Product Image" style="width: 50px; height: 5 0px;"></q-img>
                         </q-item-section>
                         <q-item-section>
                             <q-item-label>{{ scope.opt.label }}</q-item-label>
