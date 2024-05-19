@@ -75,7 +75,6 @@ const newProduct = reactive({
     image: '',
 });
 const { params } = useRoute();
-const store = params.store;
 const selectedProducts = ref([]);
 const errors = ref({});
 const router = useRouter();
@@ -140,7 +139,7 @@ const create = async () => {
             ...form,
             products: selectedProducts.value,
             total,
-        }, store);
+        });
         errors.value = {};
         notify.success('Tạo mới dữ liệu thành công');
         router.push({ name: 'offline-order' });
@@ -151,6 +150,6 @@ const create = async () => {
 };
 
 onMounted(() => {
-  loadProductCodes(store);
+  loadProductCodes();
 });
 </script>

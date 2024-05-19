@@ -165,7 +165,7 @@ const onSubmit = async () => {
     });
 };
 
-const navigateToRegistrationPage = (storeValue) => {
+const navigateToRegistrationPage = () => {
     router.push({ name: 'offline-order.create'});
 };
 

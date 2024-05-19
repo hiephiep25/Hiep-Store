@@ -150,6 +150,13 @@ const drawerContent = computed(() => {
             action: () => router.push({ name: "offline-order" }),
             show: user.value.role === "MANAGER" || user.value.role === "STAFF" || user.value.role === "ADMIN"
         },
+        {
+            label: "Lựa chọn xử lí",
+            icon: "settings",
+            active: /process/g.test(route.name.toString()),
+            action: () => router.push({ name: "process.index" }),
+            show: user.value.role === "MANAGER" || user.value.role === "ADMIN"
+        },
     ];
 });
 </script>

@@ -100,6 +100,10 @@ class OfflineOrderService
                 ->where('store_id', $storeID)
                 ->get();
         }
+        if($role == User::ROLE_ADMIN) {
+
+            return Product::all();
+        }
     }
 
     public function createOfflineOrder(array $data)

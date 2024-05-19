@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('process', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
+            $table->string('product_code');
             $table->string('qty');
             $table->enum('option', [Process::DESTROY, Process::DONATE, Process::COOKING, Process::SALEOFF])->default(Process::DESTROY);
             $table->timestamps();

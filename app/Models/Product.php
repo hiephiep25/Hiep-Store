@@ -34,6 +34,11 @@ class Product extends Model
             ->withTimestamps();
     }
 
+    public function processes()
+    {
+        return $this->hasMany(Process::class, 'product_code');
+    }
+
     public function getAvailabilityAttribute(): bool
     {
         $today = Carbon::now();

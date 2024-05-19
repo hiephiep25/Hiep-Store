@@ -32,7 +32,7 @@ export const useOfflineOrderStore = defineStore('offlineOrder', {
         async getDetailOfflineOrder(id) {
             return request.get(`/offline-orders/${id}`);
         },
-        async create(formData, store) {
+        async create(formData) {
             try {
                 await request.post(`/offline-orders/create`, {
                     data: formData,

@@ -47,6 +47,10 @@ class StoreService
     public function storeProductInStore($data)
     {
         $product = Product::where('code', $data['product_code'])->firstOrFail();
+        if (!$product->availability) {
+            throw new \Exception('Sản phẩm này hiện không khả dụng, hãy xử lý');
+        }
+
         if (!empty($data['add_quantity']) && !empty($data['sub_quantity'])) {
             throw new \Exception('Cả hai trường "số lượng thêm" và "số lượng bớt" không thể có giá trị cùng một lúc');
         }

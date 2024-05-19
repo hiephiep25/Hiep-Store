@@ -9,6 +9,7 @@ import orderRoutes from "@/routes/orderRoutes";
 import staffRoutes from "@/routes/staffRoutes";
 import managerRoutes from "@/routes/managerRoutes";
 import storeRoutes from "@/routes/storeRoutes";
+import processRoutes from "@/routes/processRoutes";
 const env = import.meta.env;
 
 const router = createRouter({
@@ -42,7 +43,8 @@ const router = createRouter({
                 ...staffRoutes,
                 ...managerRoutes,
                 ...storeRoutes,
-                //storage
+                ...processRoutes,
+                //shop
                 {
                     path: "shops",
                     name: "shop",

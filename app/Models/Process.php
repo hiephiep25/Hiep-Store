@@ -16,8 +16,13 @@ class Process extends Model
     protected $table = 'process';
 
     protected $fillable = [
-        'product_id',
+        'product_code',
         'qty',
         'option'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_code');
+    }
 }

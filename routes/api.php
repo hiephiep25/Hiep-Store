@@ -56,6 +56,14 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::post('/{id}', [Admin\StoreController::class, 'update']);
             Route::delete('/{id}', [Admin\StoreController::class, 'delete']);
         });
+
+        Route::prefix('categories')->group(function () {
+            Route::get('/', [Admin\CategoryController::class, 'index']);
+            Route::post('/create', [Admin\CategoryController::class, 'create']);
+            Route::get('/{id}', [Admin\CategoryController::class, 'show']);
+            Route::post('/{id}', [Admin\CategoryController::class, 'update']);
+            Route::delete('/{id}', [Admin\CategoryController::class, 'delete']);
+        });
     });
 
     // manager router
@@ -64,13 +72,6 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/', [Admin\StaffController::class, 'index']);
             Route::get('/{id}', [Admin\StaffController::class, 'show']);
             Route::post('/{id}', [Admin\StaffController::class, 'update']);
-        });
-        Route::prefix('categories')->group(function () {
-            Route::get('/', [Admin\CategoryController::class, 'index']);
-            Route::post('/create', [Admin\CategoryController::class, 'create']);
-            Route::get('/{id}', [Admin\CategoryController::class, 'show']);
-            Route::post('/{id}', [Admin\CategoryController::class, 'update']);
-            Route::delete('/{id}', [Admin\CategoryController::class, 'delete']);
         });
 
         Route::prefix('discounts')->group(function () {
@@ -99,6 +100,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
         Route::prefix('revenues')->group(function () {
             Route::get('/month', [Admin\OrderController::class, 'getRevenueByMonth']);
+        });
+        Route::prefix('process')->group(function () {
+            Route::get('/', [Admin\ProcessController::class, 'index']);
+            Route::post('/create', [Admin\ProcessController::class, 'create']);
         });
     });
 
