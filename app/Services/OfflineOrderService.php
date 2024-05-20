@@ -101,7 +101,6 @@ class OfflineOrderService
                 ->get();
         }
         if($role == User::ROLE_ADMIN) {
-
             return Product::all();
         }
     }
@@ -129,7 +128,7 @@ class OfflineOrderService
 
                 if ($product) {
                     if ($product->qty < $productData['qty']) {
-                        throw new \Exception("Insufficient quantity in store for product: {$product->code}");
+                        throw new \Exception("Số lượng sản phẩm không còn đủ để tạo đơn hàng: {$product->code}");
                     }
                     OrderProduct::create([
                         'order_id' => $order->id,

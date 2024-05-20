@@ -88,12 +88,12 @@ class DocumentService
         $document = $this->findDocumentById($id);
 
         if ($document->status == Document::APPROVED || $document->status == Document::DENIED) {
-            throw new Exception("Cannot edit a document that has been approved or denied.");
+            throw new Exception("Không thể chỉnh sửa tài liệu đã được phê duyệt hoặc từ chối");
         }
 
         $createdAtDiff = Carbon::now()->diffInDays($document->created_at);
         if ($createdAtDiff > 1) {
-            throw new Exception("Cannot edit a document created more than 1 day ago.");
+            throw new Exception("Không thể chỉnh sửa tài liệu đã tạo được hơn 1 ngày");
         }
 
         if (isset($data['license_company'])) {
@@ -145,7 +145,7 @@ class DocumentService
     {
         $document = $this->findMyDocumentById($id);
         if ($document->status == Document::APPROVED) {
-            throw new Exception("Cannot delete a document that has been approved");
+            throw new Exception("Không thể xóa tài liệu đã được phê duyệt");
         }
         $this->deleteImage($document->license_company);
         $this->deleteImage($document->license_product);
@@ -160,7 +160,7 @@ class DocumentService
             $document->save();
             $this->notificationService->createNotification($document->supplier_id, 'approve-document');
         } else {
-            abort(422, 'Cannot approve a document that is not in AWAIT_APPROVAL status.');
+            abort(422, 'Không thể phê duyệt tài liệu đang không có trạng thái chờ phê duyệt');
         }
     }
 
@@ -172,7 +172,7 @@ class DocumentService
             $document->save();
             $this->notificationService->createNotification($document->supplier_id, 'deny-document');
         } else {
-            abort(422, 'Cannot deny a document that is not in AWAIT_APPROVAL status.');
+            abort(422, 'Không thể từ chối tài liệu đang không có trạng thái chờ phê duyệt');
         }
     }
 }

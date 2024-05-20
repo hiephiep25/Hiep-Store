@@ -68,6 +68,8 @@ class NotificationService
                 return 'đã cung cấp tài liệu nhập hàng';
             case 'create-offline-order':
                 return 'đã tạo đơn hàng tại quầy';
+            case 'process':
+                return 'đã xử lí sản phẩm';
             default:
                 return '';
         }

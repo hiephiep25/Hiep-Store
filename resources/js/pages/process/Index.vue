@@ -3,7 +3,7 @@
         <div class="q-pa-md">
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
-                    <q-btn class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage()" />
+                    <q-btn v-if="isAdmin" class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage()" />
                 </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
@@ -34,11 +34,16 @@ import { useRouter } from "vue-router";
 import useNotify from "@/utils/notify";
 import { useProcessStore } from "@/store/process";
 import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/store/auth";
 
 const router = useRouter();
 const processStore = useProcessStore();
 const separator = ref("vertical");
 const { processes, pagination } = storeToRefs(processStore);
+
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+const isAdmin = ref(user.value.role == 'ADMIN')
 
 const columns = ref([
     {
@@ -48,6 +53,12 @@ const columns = ref([
         align: "left",
         field: "id",
         sortable: true,
+    },
+    {
+        name: "product_code",
+        align: "center",
+        label: "Mã sản phẩm",
+        field: "product_code",
     },
     {
         name: "qty",
@@ -89,7 +100,7 @@ const navigateToRegistrationPage = () => {
     router.push({ name: 'process.create'});
 };
 const handleEdit = (process) => {
-    // router.push(`/process/${process.id}`);
+    router.push(`/process/${process.id}`);
 };
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {

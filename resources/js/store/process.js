@@ -35,14 +35,14 @@ export const useProcessStore = defineStore('process', {
             throw error;
         }
     },
-    // async getProcess(id) {
-    //   try {
-    //     const response = await request.get(`/process/${id}`);
-    //     return response.data;
-    //   } catch (error) {
-    //     throw error;
-    //   }
-    // },
+    async getProcess(id) {
+      try {
+        const response = await request.get(`/process/${id}`);
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    },
     // async updateProcess(id, formData) {
     //   try {
     //     await request.post(`/process/${id}`, {

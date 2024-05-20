@@ -29,4 +29,10 @@ class ProcessController extends Controller
         $process = $this->processService->create($processData);
         return new JsonResource($process);
     }
+
+    public function show(int $id): JsonResource
+    {
+        $process = $this->processService->findProcessById($id);
+        return new JsonResource($process);
+    }
 }

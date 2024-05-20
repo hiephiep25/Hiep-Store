@@ -64,6 +64,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::post('/{id}', [Admin\CategoryController::class, 'update']);
             Route::delete('/{id}', [Admin\CategoryController::class, 'delete']);
         });
+
+        Route::prefix('process')->group(function () {
+            Route::post('/create', [Admin\ProcessController::class, 'create']);
+        });
     });
 
     // manager router
@@ -101,9 +105,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::prefix('revenues')->group(function () {
             Route::get('/month', [Admin\OrderController::class, 'getRevenueByMonth']);
         });
+
         Route::prefix('process')->group(function () {
             Route::get('/', [Admin\ProcessController::class, 'index']);
-            Route::post('/create', [Admin\ProcessController::class, 'create']);
+            Route::get('/{id}', [Admin\ProcessController::class, 'show']);
         });
     });
 
