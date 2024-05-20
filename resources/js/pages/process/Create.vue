@@ -5,6 +5,8 @@
                 <q-form class="q-gutter-md" @submit="create()">
                     <div class="row justify-center">
                         <div class="col-12">
+                            <SelectBox v-model:model-value="form" name="store_id" width-common="col-8 q-ml-lg"
+                                width-label="col-2" label="Cửa hàng" :option="storeOptions" :errors="errors" />
                             <SelectBox v-model:model-value="form" name="product_code" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Sản phẩm" :option="productCodeOptions" :errors="errors" />
                             <Input v-model:model-value="form" name="qty" type="number" width-common="col-8 q-ml-lg"
@@ -24,21 +26,28 @@
 
 <script setup>
 
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref } from 'vue';
 import { useProcessStore } from '@/store/process';
 import { useRouter } from 'vue-router';
 import useNotify from '@/utils/notify';
 import Input from '../../components/common/Input.vue';
 import SelectBox from '../../components/common/SelectBox.vue';
 import { useOfflineOrderStore } from '@/store/offline-order';
+import { useStoreStore } from "@/store/store";
+import { storeToRefs } from "pinia";
+
 const options = [
     { label: "SALEOFF", value: "SALEOFF" },
     { label: "COOKING", value: "COOKING" },
     { label: "DONATE", value: "DONATE" },
     { label: "DESTROY", value: "DESTROY" },
 ];
+const storeStore = useStoreStore();
+const { stores, productStores, pagination } = storeToRefs(storeStore);
+const storeOptions = stores.value.map(store => ({ label: store.id, value: store.id }));
 
 const form = reactive({
+    store_id: '',
     option: '',
     product_code: "",
     qty: "",
@@ -79,7 +88,8 @@ const create = async () => {
     }
 };
 
-onMounted(() => {
-  loadProductCodes();
-});
+
+storeStore.getStores();
+
+loadProductCodes();
 </script>

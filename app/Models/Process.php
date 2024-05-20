@@ -18,6 +18,7 @@ class Process extends Model
     protected $fillable = [
         'product_code',
         'qty',
+        'store_id',
         'option'
     ];
 

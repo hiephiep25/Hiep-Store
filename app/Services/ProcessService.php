@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Process;
 use App\Models\Product;
+use App\Models\ProductStore;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +37,19 @@ class ProcessService
         if($product->qty < $data['qty']) {
             throw new Exception("Số lượng sản phẩm xử lí không còn đủ");
         }
+
         $product->qty -= $data['qty'];
         $product->save();
+
+        if(isset($data['store_id'])) {
+            $productStore = ProductStore::where('store_id', $data['store_id'])->
+            where('product_code', $data['product_code'])->firstOrFail();
+            if($productStore->qty < $data['qty']) {
+                throw new Exception("Số lượng sản phẩm xử lí không còn đủ");
+            }
+            $productStore->qty -= $data['qty'];
+            $productStore->save();
+        }
 
         $managers = User::where('role', User::ROLE_MANAGER)->get();
 

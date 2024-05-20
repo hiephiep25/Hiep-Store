@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('receiver_id');
             $table->string('type');
             $table->text('content');
+            $table->string('redirect')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });

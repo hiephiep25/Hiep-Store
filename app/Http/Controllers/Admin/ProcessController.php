@@ -25,7 +25,7 @@ class ProcessController extends Controller
 
     public function create(Request $request): JsonResource
     {
-        $processData = $request->only(['product_code', 'qty', 'option']);
+        $processData = $request->only(['store_id', 'product_code', 'qty', 'option']);
         $process = $this->processService->create($processData);
         return new JsonResource($process);
     }

@@ -67,6 +67,12 @@ const columns = ref([
         field: "qty",
     },
     {
+        name: "store_id",
+        align: "center",
+        label: "Thuộc cửa hàng",
+        field: "store_id",
+    },
+    {
         name: "option",
         align: "center",
         label: "Lựa chọn xử lí",

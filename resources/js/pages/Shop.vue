@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, reactive } from "vue";
 import { useStoreStore } from "@/store/store";
 import { storeToRefs } from "pinia";
 import CommonSelectBox from "../components/common/CommonSelectBox.vue";
@@ -160,10 +160,8 @@ const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
-onMounted(async () => {
-    storeStore.getStores();
-    storeStore.getProductStores({ store_id: store.value.value });
-});
+storeStore.getStores();
+storeStore.getProductStores({ store_id: store.value.value });
 </script>
 
 <style lang="scss" scoped>

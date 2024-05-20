@@ -27,5 +27,12 @@ export const useNotificationStore = defineStore('notification', {
                 throw error
             }
         },
+        async readNotification(id) {
+            try {
+                await request.put(`/notifications/${id}/read`)
+            } catch (error) {
+                throw error
+            }
+        },
     },
 });

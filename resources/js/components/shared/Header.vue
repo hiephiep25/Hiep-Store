@@ -19,12 +19,27 @@
             >
                 <q-icon name="notifications" />
                 <span v-if="counts > 0" class="badge bg-white text-red-7">{{ counts }}</span>
-                <q-menu transition-show="scale" transition-hide="scale">
+                <q-menu transition-show="scale" transition-hide="scale" style="width: 370px;">
                     <q-list>
-                        <q-item v-for="(notification, index) in notifications" :key="index" clickable>
-                        <q-item-section>
-                            <b>{{ notification.sender.name }}</b>{{ notification.content }}
-                        </q-item-section>
+                        <q-item
+                            v-for="(notification, index) in notifications"
+                            :key="index"
+                            clickable
+                            @click="navigateToNotification(notification)"
+                        >
+                            <q-item-section>
+                                <span :class="{ 'text-grey-7': notification.is_read }" class="row" style="align-items: center;">
+                                    <b>{{ notification.sender.name }}</b>
+                                    <div class="q-ml-xs">{{ notification.content }}</div>
+                                    <span
+                                        class="status-dot q-ml-sm"
+                                        :class="{
+                                            'bg-blue': !notification.is_read,
+                                            'bg-grey': notification.is_read
+                                        }"
+                                    ></span>
+                                    </span>
+                            </q-item-section>
                         </q-item>
                     </q-list>
                 </q-menu>
@@ -60,7 +75,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useNotificationStore } from "@/store/notification";
 import { onMounted, ref } from 'vue';
-
+const env = import.meta.env;
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 const router = useRouter();
@@ -87,6 +102,15 @@ const dropdownItems = [
         },
     },
 ];
+
+const navigateToNotification = async (notification) => {
+    // console.log(env.VITE_APP_URL)
+    const appUrl = env.VITE_APP_URL;
+    const redirectUrl = `${appUrl}/${notification.redirect}`;
+    await notificationStore.readNotification(notification.id);
+    window.location.replace(redirectUrl);
+};
+
 onMounted(async () => {
   await notificationStore.countUnreadNotifications();
   await notificationStore.getNotifications();
@@ -106,5 +130,25 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.bg-blue {
+  background-color: blue;
+}
+
+.bg-grey {
+  background-color: grey;
+}
+
+.text-grey-7 {
+  color: rgba(0, 0, 0, 0.54);
 }
 </style>

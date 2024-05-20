@@ -49,7 +49,6 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::post('/store-product', [Admin\StoreController::class, 'storeProduct']);
 
         Route::prefix('stores')->group(function () {
-            Route::get('/', [Admin\StoreController::class, 'getStores']);
             Route::get('/products', [Admin\StoreController::class, 'getProductStores']);
             Route::post('/create', [Admin\StoreController::class, 'create']);
             Route::get('/{id}', [Admin\StoreController::class, 'show']);
@@ -72,6 +71,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
     // manager router
     Route::middleware('check-role:ADMIN,MANAGER')->group(function () {
+        Route::prefix('stores')->group(function () {
+            Route::get('/', [Admin\StoreController::class, 'getStores']);
+        });
+
         Route::prefix('staffs')->group(function () {
             Route::get('/', [Admin\StaffController::class, 'index']);
             Route::get('/{id}', [Admin\StaffController::class, 'show']);

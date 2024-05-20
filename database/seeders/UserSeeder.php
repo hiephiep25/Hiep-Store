@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
             ],
             [
-                'name' =>  'Manager',
+                'name' =>  'Người quản lí 1',
                 'email' => 'manager@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('25052002'),
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
             ],
             [
-                'name' =>  'Supplier',
+                'name' =>  'Nhà cung cấp 1',
                 'email' => 'supplier@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('25052002'),
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
             ],
             [
-                'name' =>  'Staff',
+                'name' =>  'Nhân viên 1',
                 'email' => 'staff@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('25052002'),

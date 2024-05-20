@@ -41,6 +41,8 @@ class NotificationService
 
         $content = $this->getNotificationContent($type);
 
+        $redirect = $this->getNotificationRedirect($type);
+
         if($userId != $receiverId) {
 
             $notification = Notification::create([
@@ -48,6 +50,7 @@ class NotificationService
                 'receiver_id' => $receiverId,
                 'type' => $type,
                 'content' => $content,
+                'redirect' => $redirect,
                 'is_read' => false,
             ]);
 
@@ -70,6 +73,24 @@ class NotificationService
                 return 'đã tạo đơn hàng tại quầy';
             case 'process':
                 return 'đã xử lí sản phẩm';
+            default:
+                return '';
+        }
+    }
+
+    private function getNotificationRedirect($type)
+    {
+        switch ($type) {
+            case 'approve-document':
+                return 'admin/documents';
+            case 'deny-document':
+                return 'admin/documents';
+            case 'create-document':
+                return 'admin/documents-approval';
+            case 'create-offline-order':
+                return 'admin/offline-order';
+            case 'process':
+                return 'admin/process';
             default:
                 return '';
         }
