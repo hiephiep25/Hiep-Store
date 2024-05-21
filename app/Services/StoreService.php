@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\User;
+use App\Models\Manager;
+use App\Models\Staff;
 use App\Models\Store;
 use App\Models\Product;
 use App\Models\ProductStore;
@@ -17,8 +20,19 @@ class StoreService
 
     public function getProductStores(array $params): LengthAwarePaginator
     {
-        $store = $params['store_id'];
+        $role = auth()->user()->role;
         $perPage = $params['per_page'] ?? PER_PAGE;
+        if($role == User::ROLE_ADMIN) {
+            $store = $params['store_id'];
+        }
+        if($role == User::ROLE_MANAGER) {
+            $manager = Manager::where('user_id', auth()->id())->firstOrFail();
+            $store = $manager->store_id;
+        }
+        if($role == User::ROLE_STAFF) {
+            $staff = Staff::where('user_id', auth()->id())->firstOrFail();
+            $store = $staff->store_id;
+        }
         return ProductStore::where('store_id', $store)->orderBy('id', 'asc')->paginate($perPage);
     }
 

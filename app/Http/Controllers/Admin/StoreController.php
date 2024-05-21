@@ -37,7 +37,7 @@ class StoreController extends Controller
 
     public function show(int $id): JsonResource
     {
-        $store = $this->storeService->findstoreById($id);
+        $store = $this->storeService->findStoreById($id);
         return new JsonResource($store);
     }
 

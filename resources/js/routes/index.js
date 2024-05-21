@@ -51,7 +51,7 @@ const router = createRouter({
                     meta: {
                         title: "Quản lí sản phẩm trong cửa hàng",
                         isAuth: true,
-                        requiredRole: ["ADMIN"],
+                        requiredRole: ["ADMIN", "MANAGER", "STAFF"],
                     },
                     component: () => import("@/pages/Shop.vue"),
                 },

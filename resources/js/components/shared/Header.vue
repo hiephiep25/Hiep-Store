@@ -19,7 +19,7 @@
             >
                 <q-icon name="notifications" />
                 <span v-if="counts > 0" class="badge bg-white text-red-7">{{ counts }}</span>
-                <q-menu transition-show="scale" transition-hide="scale" style="width: 370px;">
+                <q-menu transition-show="scale" transition-hide="scale">
                     <q-list>
                         <q-item
                             v-for="(notification, index) in notifications"
@@ -29,8 +29,10 @@
                         >
                             <q-item-section>
                                 <span :class="{ 'text-grey-7': notification.is_read }" class="row" style="align-items: center;">
-                                    <b>{{ notification.sender.name }}</b>
-                                    <div class="q-ml-xs">{{ notification.content }}</div>
+                                    <div class="row" style="width: 200px;">
+                                        <b>{{ notification.sender.name }}</b>
+                                        <div class="q-ml-xs">{{ notification.content }}</div>
+                                    </div>
                                     <span
                                         class="status-dot q-ml-sm"
                                         :class="{

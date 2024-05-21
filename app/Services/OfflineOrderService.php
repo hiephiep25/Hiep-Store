@@ -124,11 +124,15 @@ class OfflineOrderService
             ]);
 
             foreach ($data['products'] as $productData) {
-                $product = Product::where('code', $productData['product_code'])->first();
-
+                $product = ProductStore::where('product_code', $productData['product_code'])->first();
+                $prod = Product::where('code', $productData['product_code'])->first();
                 if ($product) {
                     if ($product->qty < $productData['qty']) {
-                        throw new \Exception("Số lượng sản phẩm không còn đủ để tạo đơn hàng: {$product->code}");
+                        throw new \Exception("Số lượng sản phẩm không còn đủ để tạo đơn hàng: {$prod->code}");
+                    }
+
+                    if (!$prod->availability) {
+                        throw new \Exception("Sản phẩm không khả dụng: {$prod->code}");
                     }
                     OrderProduct::create([
                         'order_id' => $order->id,
@@ -139,6 +143,10 @@ class OfflineOrderService
 
                     $this->decreaseProductQuantity($product->code, $productData['qty']);
                     $this->notificationService->createNotification(1, 'create-offline-order');
+                    $managers = Manager::where('store_id', $storeID)->get();
+                    foreach ($managers as $manager) {
+                        $this->notificationService->createNotification($manager->user_id, 'create-offline-order');
+                    }
                 }
             }
 

@@ -25,7 +25,7 @@
             </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
-                    <q-btn class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage()" />
+                    <q-btn v-if="isStaff" class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage()" />
                 </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
@@ -68,6 +68,7 @@ import useNotify from "@/utils/notify";
 import { useOfflineOrderStore } from "@/store/offline-order";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
+import { useAuthStore } from "@/store/auth";
 
 const router = useRouter();
 const offlineOrderStore = useOfflineOrderStore();
@@ -76,6 +77,10 @@ const from = ref("");
 const to = ref("");
 const { offlineOrders, pagination } = storeToRefs(offlineOrderStore);
 const notify = useNotify();
+
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+const isStaff = ref(user.value.role == 'STAFF')
 
 const columns = ref([
     {

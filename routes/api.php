@@ -25,6 +25,20 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
     Route::post('/update-profile', [Admin\ProfileController::class, 'updateProfile']);
     Route::get('/products/categories', [Admin\ProductController::class, 'getCategories']);
 
+    Route::middleware('check-role:ADMIN,MANAGER,STAFF')->group(function () {
+        Route::prefix('stores')->group(function () {
+            Route::get('/', [Admin\StoreController::class, 'getStores']);
+        });
+        Route::prefix('offline-orders')->group(function () {
+            Route::get('/', [Admin\OfflineOrderController::class, 'index']);
+            Route::get('/products', [Admin\OfflineOrderController::class, 'getStoreProducts']);
+            Route::get('/{id}', [Admin\OfflineOrderController::class, 'getOfflineOrderDetail']);
+        });
+        Route::prefix('stores')->group(function () {
+            Route::get('/products', [Admin\StoreController::class, 'getProductStores']);
+        });
+    });
+
     //admin router
     Route::middleware('check-role:ADMIN')->group(function () {
         Route::prefix('users')->group(function () {
@@ -49,7 +63,6 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::post('/store-product', [Admin\StoreController::class, 'storeProduct']);
 
         Route::prefix('stores')->group(function () {
-            Route::get('/products', [Admin\StoreController::class, 'getProductStores']);
             Route::post('/create', [Admin\StoreController::class, 'create']);
             Route::get('/{id}', [Admin\StoreController::class, 'show']);
             Route::post('/{id}', [Admin\StoreController::class, 'update']);
@@ -71,9 +84,6 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
     // manager router
     Route::middleware('check-role:ADMIN,MANAGER')->group(function () {
-        Route::prefix('stores')->group(function () {
-            Route::get('/', [Admin\StoreController::class, 'getStores']);
-        });
 
         Route::prefix('staffs')->group(function () {
             Route::get('/', [Admin\StaffController::class, 'index']);
@@ -126,13 +136,6 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         });
     });
 
-    Route::middleware('check-role:ADMIN,MANAGER,STAFF')->group(function () {
-        Route::prefix('offline-orders')->group(function () {
-            Route::get('/', [Admin\OfflineOrderController::class, 'index']);
-            Route::get('/products', [Admin\OfflineOrderController::class, 'getStoreProducts']);
-            Route::get('/{id}', [Admin\OfflineOrderController::class, 'getOfflineOrderDetail']);
-        });
-    });
     Route::middleware('check-role:STAFF')->group(function () {
         Route::prefix('offline-orders')->group(function () {
             Route::post('/create', [Admin\OfflineOrderController::class, 'store']);

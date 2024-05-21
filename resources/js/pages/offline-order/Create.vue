@@ -38,7 +38,7 @@
                         </q-list>
                     </div>
                     <div class="row justify-center">
-                        <div>Tổng tiền: {{ calculateTotal }}</div>
+                        <div>Tổng tiền: {{ calculateTotal }} VND</div>
                     </div>
                     <div class="row justify-center">
                         <q-btn type="submit" color="primary" label="Tạo mới" />
@@ -92,10 +92,17 @@ const addProduct = () => {
         selectedProduct.price_per_qty = selectedProductInfo.price_per_qty;
         selectedProduct.product_name = selectedProductInfo.product_name;
         selectedProduct.image = selectedProductInfo.image
-        selectedProducts.value.push(selectedProduct);
+        const existingProduct = selectedProducts.value.find(
+            (product) => product.product_code === selectedProduct.product_code
+        );
+
+        if (existingProduct) {
+            existingProduct.qty = Number(existingProduct.qty) + Number(selectedProduct.qty);
+        } else {
+            selectedProducts.value.push(selectedProduct);
+        }
         newProduct.product_code = '';
         newProduct.qty = '';
-        updateTotal();
     } else {
         console.error('Product info not found for code:', selectedProduct.product_code);
     }
@@ -103,11 +110,6 @@ const addProduct = () => {
 
 const removeProduct = (index) => {
     selectedProducts.value.splice(index, 1);
-    updateTotal();
-};
-
-const updateTotal = () => {
-    calculateTotal.value;
 };
 
 const calculateTotal = computed(() => {
@@ -144,8 +146,8 @@ const create = async () => {
         notify.success('Tạo mới dữ liệu thành công');
         router.push({ name: 'offline-order' });
     } catch (error) {
-        errors.value = error?.response?.data?.errors;
-        notify.error(error.response.data.message);
+        errors.value = error?.response?.data?.error;
+        notify.error(error.response.data.error);
     }
 };
 

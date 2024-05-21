@@ -15,7 +15,7 @@
                             <strong>Hình thức thanh toán:</strong> {{ offlineOrder.payment_type }}
                         </div>
                         <div>
-                            <strong>Tổng tiền:</strong> {{ offlineOrder.total }}
+                            <strong>Tổng tiền:</strong> {{ offlineOrder.total }} VND
                         </div>
                         <div>
                             <strong>Thời gian mua:</strong> {{ formatDate(offlineOrder.created_at) }}

@@ -1,7 +1,7 @@
 <template>
     <q-page>
         <div class="q-pa-md">
-            <q-card class="my-card bg-white text-white q-pa-md">
+            <q-card v-if="isAdmin" class="my-card bg-white text-white q-pa-md">
                 <q-form @submit="onSubmit">
                     <div class="row justify-center">
                         <div class="col">
@@ -18,7 +18,7 @@
                     </div>
                 </q-form>
             </q-card>
-            <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
+            <q-card v-if="isAdmin" class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <q-form @submit="onUpdate">
                     <div class="row justify-center">
                         <div class="col">
@@ -80,6 +80,7 @@ import { storeToRefs } from "pinia";
 import CommonSelectBox from "../components/common/CommonSelectBox.vue";
 import CommonInput from "../components/common/CommonInput.vue";
 import useNotify from '@/utils/notify';
+import { useAuthStore } from "@/store/auth";
 
 const notify = useNotify();
 const errors = ref({});
@@ -88,6 +89,10 @@ const separator = ref("vertical");
 const { stores, productStores, pagination } = storeToRefs(storeStore);
 const store = ref({ value: 1, label: 1 });
 const storeOptions = stores.value.map(store => ({ label: store.id, value: store.id }));
+
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+const isAdmin = ref(user.value.role == 'ADMIN')
 
 const form = reactive({
     store_id : store.value.value,

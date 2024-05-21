@@ -106,7 +106,7 @@ const drawerContent = computed(() => {
             icon: "shop",
             active: /shop/g.test(route.name.toString()),
             action: () => router.push({ name: "shop" }),
-            show: user.value.role === "ADMIN"
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER" || user.value.role === "STAFF"
         },
         {
             label: "Danh mục sản phẩm",
