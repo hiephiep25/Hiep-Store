@@ -30,7 +30,7 @@
                             <q-item-section>
                                 <span :class="{ 'text-grey-7': notification.is_read }" class="row" style="align-items: center;">
                                     <div class="row" style="width: 200px;">
-                                        <b>{{ notification.sender.name }}</b>
+                                        <b>{{ notification.sender_id ? notification.sender.name : 'Hệ thống:' }}</b>
                                         <div class="q-ml-xs">{{ notification.content }}</div>
                                     </div>
                                     <span

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->integer('sender_id');
+            $table->integer('sender_id')->nullable();
             $table->integer('receiver_id');
             $table->string('type');
             $table->text('content');

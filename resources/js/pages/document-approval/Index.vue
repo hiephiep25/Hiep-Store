@@ -59,7 +59,7 @@
                     <p><strong>Tên sản phẩm:</strong> {{ selectedDocument.product_name }}</p>
                     <p><strong>Danh mục:</strong> {{ selectedDocument.category }}</p>
                     <p><strong>Số lượng:</strong> {{ selectedDocument.qty }}</p>
-                    <p><strong>Giá:</strong> {{ selectedDocument.price }}</p>
+                    <p><strong>Giá:</strong> {{ selectedDocument.price }} VND</p>
                     <p><strong>Ngày sản xuất:</strong> {{ selectedDocument.manufacture_day }}</p>
                     <p><strong>Hạn sử dụng:</strong> {{ selectedDocument.expiry_day }}</p>
                 </div>
