@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin;
 
 Route::get('verify', [Admin\Auth\LoginController::class, 'verify']);
 Route::post('login', [Admin\Auth\LoginController::class, 'login']);
+Route::post('/forgot-password', [Admin\Auth\LoginController::class, 'forgotPassword']);
+Route::post('/reset-password', [Admin\Auth\LoginController::class, 'resetPassword']);
 
 Route::middleware('auth:sanctum', 'have-permission')->group(function () {
     Route::get('/profile', [Admin\ProfileController::class, 'profile']);

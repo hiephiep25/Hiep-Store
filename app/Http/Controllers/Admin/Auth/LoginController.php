@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\Auth\LoginService;
 use Illuminate\Http\Request;
+use App\Http\Requests\ChangePasswordRequest;
+use Illuminate\Http\JsonResponse;
 
 class LoginController extends Controller
 {
@@ -46,5 +48,33 @@ class LoginController extends Controller
     {
         $this->loginService->logout($request);
         return response()->json();
+    }
+
+    public function forgotPassword(Request $request) : JsonResponse
+    {
+        $email = $request->input('email');
+        $result = $this->loginService->forgotPassword($email);
+
+        if ($result) {
+
+            return response()->json(['message' => 'Thư đã được gửi, hãy kiểm tra email của bạn'], 200);
+        }
+
+        return response()->json(['message' => 'Không tìm thấy email'], 401);
+    }
+
+    public function resetPassword(ChangePasswordRequest $request) : JsonResponse
+    {
+        $token = $request->token;
+        $password = $request->password;
+
+        $result = $this->loginService->resetPassword($token, $password);
+
+        if ($result['status'] === 'error') {
+
+            return response()->json(['message' => $result['message']], 401);
+        }
+
+        return response()->json(['message' => $result['message']], 200);
     }
 }
