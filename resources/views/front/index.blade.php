@@ -178,11 +178,11 @@
     <div class="container">
         <div class="col-lg-6 text-center">
             <div class="section-title">
-                <h2>Deal of the week</h2>
-                <p>Something great</p>
+                <h2>Khuyến mãi đặc biệt trong tuần</h2>
+                <p>Giảm giá sản phẩm</p>
                 <div class="product-price">
                     $35
-                    <span>/ HanBag</span>
+                    <span>/ Tương ớt chinsu</span>
                 </div>
             </div>
             <div class="countdown-timer" id="countdown">
