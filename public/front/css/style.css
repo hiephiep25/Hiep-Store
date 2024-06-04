@@ -1172,6 +1172,7 @@ ol {
 
 .product-item .pi-pic img {
 	min-width: 100%;
+    height: 120px;
 }
 
 .product-item .pi-pic .sale {

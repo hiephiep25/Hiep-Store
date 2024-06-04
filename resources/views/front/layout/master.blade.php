@@ -84,7 +84,7 @@
                             </li>
                             <li class="cart-icon">
                                 <a href="#">
-                                    <i class="icon_bag_alt"></i>
+                                    <i class="icon_cart_alt"></i>
                                     <span>3</span>
                                 </a>
                                 <div class="cart-hover">
@@ -212,8 +212,8 @@
                         <h5>Thông tin khuyến mại, giảm giá</h5>
                         <p>Nhập email để biết thêm về ưu đãi đặc biệt của chúng tôi</p>
                         <form action="#" class="subscribe-form">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="button">Subscribe</button>
+                            <input type="text" placeholder="Nhập email">
+                            <button type="button">Nhận thông tin</button>
                         </form>
                     </div>
                 </div>
