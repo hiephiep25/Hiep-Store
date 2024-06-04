@@ -18,4 +18,6 @@ Route::get('/admin/{any?}', function () {
     return view('app');
 })->where('any', '.*');
 
-Route::get('/', [Web\HomeController::class, 'index']);
+Route::get('/', function() {
+    return view('front.index');
+});

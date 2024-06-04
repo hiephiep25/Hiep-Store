@@ -40,11 +40,11 @@
                                 {{ "Đăng nhập" }}
                             </q-btn>
                         </div>
-                        <!-- <div class="row justify-center q-mt-md">
-                <router-link :to="{ name: 'forgot-password' }" class="custom-link">{{
-                  $t("login.text.forgot_password")
-                }}</router-link>
-              </div> -->
+                        <div class="row justify-center q-mt-md">
+                            <router-link :to="{ name: 'forgot-password' }" class="custom-link">{{
+                            "Quên mật khẩu"
+                            }}</router-link>
+                        </div>
                     </q-form>
                 </q-card-section>
             </q-card>
