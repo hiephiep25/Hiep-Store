@@ -136,10 +136,10 @@ const columns = ref([
         sortable: true,
     },
     {
-        name: "category",
+        name: "category_id",
         align: "center",
         label: "Danh mục",
-        field: "category",
+        field: "category_id",
         sortable: true,
     },
     {
@@ -213,7 +213,7 @@ const onRequest = async ({ pagination }) => {
         name: name.value,
         code: code.value,
         brand: brand.value,
-        category: category.value.label,
+        category_id: category.value.value,
         page: pagination.page,
         per_page: pagination.rowsPerPage,
     });
@@ -253,7 +253,7 @@ const onSubmit = async () => {
         name: name.value,
         code: code.value,
         brand: brand.value,
-        category: category.value.label,
+        category_id: category.value.value,
         page: pagination.value.page,
         per_page: pagination.value.rowsPerPage,
     });

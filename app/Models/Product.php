@@ -11,7 +11,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code', 'name', 'brand', 'category', 'description', 'qty', 'price_per_qty',
+        'code', 'name', 'brand', 'category_id', 'description', 'qty', 'price_per_qty',
         'manufacture_day', 'expiry_day', 'image'
     ];
 
@@ -19,7 +19,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function productStores()
@@ -44,5 +44,13 @@ class Product extends Model
         $today = Carbon::now();
 
         return $this->expiry_day > $today && $this->qty > 0;
+    }
+
+    public function scopeAvailable($query)
+    {
+        $today = Carbon::now();
+
+        return $query->where('expiry_day', '>', $today)
+                     ->where('qty', '>', 0);
     }
 }

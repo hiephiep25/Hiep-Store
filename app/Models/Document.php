@@ -18,7 +18,7 @@ class Document extends Model
         'supplier_id',
         'product_name',
         'qty',
-        'category',
+        'category_id',
         'description',
         'price',
         'manufacture_day',

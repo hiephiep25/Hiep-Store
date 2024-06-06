@@ -24,7 +24,6 @@ class CategorySeeder extends Seeder
             ['name' => 'Đồ ăn vặt'],
             ['name' => 'Gia vị và nước sốt'],
             ['name' => 'Đồ uống'],
-            ['name' => 'Thực phẩm đông lạnh']
         ];
         DB::table('categories')->insert($categories);
     }

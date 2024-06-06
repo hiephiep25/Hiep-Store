@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class ProductService
 {
@@ -15,7 +16,7 @@ class ProductService
         $name = $params['name'] ?? '';
         $code = $params['code'] ?? '';
         $brand = $params['brand'] ?? '';
-        $category = $params['category'] ?? '';
+        $category = $params['category_id'] ?? '';
         $perPage = $params['per_page'] ?? PER_PAGE;
         return Product::where(function ($query) use ($name, $code, $brand, $category) {
             if (!empty($name)) {
@@ -28,7 +29,7 @@ class ProductService
                 $query->where('brand', 'like', "%$brand%");
             }
             if (!empty($category)) {
-                $query->where('category', $category);
+                $query->where('category_id', $category);
             }
         })->orderBy('id', 'asc')->paginate($perPage);
     }
@@ -61,6 +62,10 @@ class ProductService
     public function update(int $id, array $productData): Product
     {
         $product = $this->findProductById($id);
+        $twoDaysAgo = Carbon::now()->subDays(1);
+        if ($product->created_at < $twoDaysAgo) {
+            throw new \Exception('Không thể chỉnh sửa sản phẩm đã tạo cách đây 1 ngày');
+        }
         if (!empty($productData['image'])) {
             $imagePath = str_replace(url('/storage'), '', $product->image);
             $image = public_path('storage' . $imagePath);

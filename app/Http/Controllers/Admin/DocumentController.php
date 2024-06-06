@@ -39,7 +39,7 @@ class DocumentController extends Controller
 
     public function create(DocumentRequest $request): JsonResource
     {
-        $documentData = $request->only(['supplier_id', 'product_name', 'category', 'description', 'qty', 'price',
+        $documentData = $request->only(['supplier_id', 'product_name', 'category_id', 'description', 'qty', 'price',
                                 'manufacture_day', 'expiry_day', 'image', 'license_company', 'license_product']);
         $document = $this->documentService->create($documentData);
         return new JsonResource($document);
@@ -59,7 +59,7 @@ class DocumentController extends Controller
 
     public function update(DocumentRequest $request, string $id): JsonResource
     {
-        $documentData = $request->only(['supplier_id', 'product_name', 'category', 'description', 'qty', 'price',
+        $documentData = $request->only(['supplier_id', 'product_name', 'category_id', 'description', 'qty', 'price',
                                 'manufacture_day', 'expiry_day', 'image', 'license_company', 'license_product']);
         $document = $this->documentService->update($documentData, $id);
         return new JsonResource($document);

@@ -2,6 +2,7 @@
 <html lang="zxx">
 
 <head>
+    <base href="{{ asset('/') }}">
     <meta charset="UTF-8">
     <meta name="description" content="codelean Template">
     <meta name="keywords" content="codelean, unica, creative, html">
@@ -37,7 +38,7 @@
             <div class="chatbox__support">
                 <div class="chatbox__header">
                     <div class="chatbox__image--header">
-                        <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+                        <img src="front/img/chat/chatbot.png" alt="image">
                     </div>
                     <div class="chatbox__content--header">
                         <h4 class="chatbox__heading--header">Chat support</h4>
@@ -94,7 +95,7 @@
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
-                            <button type="button" class="category-btn">Thực phẩm</button>
+                            <button type="button" class="category-btn">Tìm kiếm</button>
                             <div class="input-group">
                                 <input type="text" placeholder="Bạn cần mua gì?">
                                 <button type="button"><i class="ti-search"></i></button>
@@ -170,27 +171,20 @@
                         <i class="ti-menu"></i>
                         <span>Các thực phẩm nổi bật</span>
                         <ul class="depart-hover">
-                            <li class="acvtive"><a href="#">Thịt bò Mỹ</a></li>
-                            <li><a href="#">Thịt thăn lợn</a></li>
-                            <li><a href="#">Thịt lợn ba chỉ</a></li>
-                            <li><a href="#">Táo đỏ Mỹ</a></li>
-                            <li><a href="#">Thịt lợn nạc vai</a></li>
+                            @foreach ($categories as $category)
+                                <li class="{{ $category->id === 1 ? 'active' : '' }}">
+                                    <a href="">{{ $category->name }}</a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="index.html">Trang chủ</a></li>
-                        <li><a href="shop.html">Cửa hàng</a></li>
-                        <li><a href="contact.html">Liên hệ</a></li>
-                        <li><a href="">Khác</a>
-                            <ul class="dropdown">
-                                <li><a href="shopping-cart.html">Giỏ hàng</a></li>
-                                <li><a href="check-out.html">Thanh toán</a></li>
-                                <li><a href="register.html">Đăng kí</a></li>
-                                <li><a href="login.html">Đăng nhập</a></li>
-                            </ul>
-                        </li>
+                        <li class="{{ (request()->segment(1)=='') ? 'active' :'' }}"><a href="./">Trang chủ</a></li>
+                        <li class="{{ (request()->segment(1)=='shop') ? 'active' :'' }}"><a href="./shop">Cửa hàng</a></li>
+                        <li class="{{ (request()->segment(1)=='') ? 'contact' :'' }}"><a href="./contact">Liên hệ</a></li>
+                        <li class="{{ (request()->segment(1)=='') ? 'cart' :'' }}"><a href="./cart">Giỏ hàng</a></li>
                     </ul>
                 </nav>
                 <div class="mobile-menu-wrap"></div>
@@ -224,7 +218,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 offset-lg-1">
+                <div class="col-lg-4 offset-lg-1">
                     <div class="footer-widget">
                         <h5>Thông tin cửa hàng</h5>
                         <ul>
@@ -274,6 +268,7 @@
     <script src="front/js/jquery.dd.min.js"></script>
     <script src="front/js/jquery.slicknav.js"></script>
     <script src="front/js/owl.carousel.min.js"></script>
+    <script src="front/js/owlcarousel2-filter.min.js"></script>
     <script src="front/js/main.js"></script>
 </body>
 

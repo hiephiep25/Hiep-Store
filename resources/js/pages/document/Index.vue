@@ -103,10 +103,10 @@ const columns = ref([
         sortable: true,
     },
     {
-        name: "category",
+        name: "category_id",
         align: "center",
         label: "Danh mục",
-        field: "category",
+        field: "category_id",
         sortable: true,
     },
     {

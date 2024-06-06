@@ -7,21 +7,34 @@
 <section class="hero-section">
     <div class="hero-items owl-carousel">
         <div class="single-hero-items set-bg" data-setbg="front/img/hero-1.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5">
-                    <span>Khuyến mại</span>
-                    <h1>Black Friday</h1>
-                    <p>Giảm giá cực ưu đãi</p>
-                    <a href="#" class="primary-btn">Mua hàng</a>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <span>Khuyến mại</span>
+                        <h1>Black Friday</h1>
+                        <p>Giảm giá cực ưu đãi</p>
+                        <a href="#" class="primary-btn">Mua hàng</a>
+                    </div>
+                </div>
+                <div class="off-card">
+                    <h2>SALE<span>50%</span></h2>
                 </div>
             </div>
-            <div class="off-card">
-                <h2>SALE<span>50%</span></h2>
+        </div>
+        <div class="single-hero-items set-bg" data-setbg="front/img/hero-1.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <span>Khuyến mại</span>
+                        <h1>Sinh nhật cửa hàng</h1>
+                        <p>Giảm giá cực ưu đãi</p>
+                        <a href="#" class="primary-btn">Mua hàng</a>
+                    </div>
+                </div>
+                <div class="off-card">
+                    <h2>SALE<span>40%</span></h2>
+                </div>
             </div>
-        </div>
-        </div>
-        <div class="single-hero-items set-bg" data-setbg="front/img/hero-2.jpg">
         </div>
     </div>
 </section>
@@ -62,112 +75,127 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="product-large set-bg" data-setbg="front/img/products/meat.jpg">
-                    <h2>Thực phẩm thịt</h2>
+                    <h2>Thực phẩm dinh dưỡng</h2>
                     <a href="#">Nhiều hơn</a>
                 </div>
             </div>
             <div class="col-lg-8 offset-lg-1">
                 <div class="filter-control">
                     <ul>
-                        <li class="active">Bò</li>
-                        <li>Lợn</li>
-                        <li>Gà</li>
-                        <li>Khác</li>
+                        <li class="item active" data-tag="*" data-category="meat">Tất cả</li>
+                        <li class="item" data-tag=".5" data-category="meat">Thịt</li>
+                        <li class="item" data-tag=".4" data-category="meat">Trứng</li>
+                        <li class="item" data-tag=".3" data-category="meat">Bơ sữa</li>
+                        <li class="item" data-tag=".6" data-category="meat">Hải sản</li>
+                        <li class="item" data-tag=".7" data-category="meat">Thực phẩm đóng hộp</li>
                     </ul>
                 </div>
-                <div class="product-slider owl-carousel">
-                    <div class="product-item">
+                <div class="product-slider owl-carousel meat">
+                    @foreach ($meats as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product-1.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Bò</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Thăn Bò</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
-                    <div class="product-item">
+                    @endforeach
+                    @foreach ($eggs as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product-2.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Bò</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Nạc bò</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
-                    <div class="product-item">
+                    @endforeach
+                    @foreach ($dairies as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product-3.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Bò</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Steak bò</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
-                    <div class="product-item">
+                    @endforeach
+                    @foreach ($seafoods as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product-4.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Bò</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Ba chỉ bò thái mỏng</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
+                    @endforeach
+                    @foreach ($cannedFoods as $product)
+                    <div class="product-item item {{ $product->category_id }}">
+                        <div class="pi-pic">
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
+                            <div class="icon"><i class="icon_heart_alt"></i></div>
+                            <ul>
+                                <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="category-name">{{ $product->description }}</div>
+                            <a href="">
+                                <h5>{{ $product->name }}</h5>
+                            </a>
+                            <div class="product-price">
+                                {{ $product->price }}
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -203,7 +231,7 @@
                     <p>Secs</p>
                 </div>
             </div>
-            <a href="" class="primary-btn">Shop now</a>
+            <a href="" class="primary-btn">Mua ngay</a>
         </div>
     </div>
 </section>
@@ -214,110 +242,129 @@
             <div class="col-lg-8">
                 <div class="filter-control">
                     <ul>
-                        <li class="active">Hoa quả</li>
-                        <li>Rau sạch</li>
-                        <li>Rau ăn kèm</li>
-                        <li>Khác</li>
+                        <li class="item active" data-tag="*" data-category="fruits">Tất cả</li>
+                        <li class="item" data-tag=".1" data-category="fruits">Hoa quả</li>
+                        <li class="item" data-tag=".2" data-category="fruits">Rau</li>
+                        <li class="item" data-tag=".8" data-category="fruits">Đồ ăn vặt</li>
+                        <li class="item" data-tag=".10" data-category="fruits">Đồ uống</li>
+                        <li class="item" data-tag=".9" data-category="fruits">Gia vị và nước sốt</li>
                     </ul>
                 </div>
-                <div class="product-slider owl-carousel">
-                    <div class="product-item">
+                <div class="product-slider owl-carousel fruits">
+                    @foreach ($fruits as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product1.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Coat</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Pure Pineapple</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
-                    <div class="product-item">
+                    @endforeach
+
+                    @foreach ($vegetables as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product2.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Coat</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Pure Pineapple</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
-                    <div class="product-item">
+                    @endforeach
+
+                    @foreach ($snacks as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product3.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Coat</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Pure Pineapple</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
-                    <div class="product-item">
+                    @endforeach
+
+                    @foreach ($drinks as $product)
+                    <div class="product-item item {{ $product->category_id }}">
                         <div class="pi-pic">
-                            <img src="front/img/products/product4.jpg" alt="">
-                            <div class="sale">Sale</div>
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
                             <div class="icon"><i class="icon_heart_alt"></i></div>
                             <ul>
                                 <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
-                                <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                                <li class="w-icon"><a href=""><i class="fa fa-random"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
                             </ul>
                         </div>
                         <div class="pi-text">
-                            <div class="category-name">Coat</div>
+                            <div class="category-name">{{ $product->description }}</div>
                             <a href="">
-                                <h5>Pure Pineapple</h5>
+                                <h5>{{ $product->name }}</h5>
                             </a>
                             <div class="product-price">
-                                $14
-                                <span>$35</span>
+                                {{ $product->price }}
                             </div>
                         </div>
-
                     </div>
+                    @endforeach
+
+                    @foreach ($spices as $product)
+                    <div class="product-item item {{ $product->category_id }}">
+                        <div class="pi-pic">
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
+                            <div class="icon"><i class="icon_heart_alt"></i></div>
+                            <ul>
+                                <li class="w-icon active"><a href=""><i class="icon_cart_alt"></i></a></li>
+                                <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="category-name">{{ $product->description }}</div>
+                            <a href="">
+                                <h5>{{ $product->name }}</h5>
+                            </a>
+                            <div class="product-price">
+                                {{ $product->price }}
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-lg-3 offset-lg-1">
                 <div class="product-large set-bg" data-setbg="front/img/products/vegetables.jpg">
-                    <h2>Rau củ quả</h2>
+                    <h2>Thực phẩm sạch</h2>
                     <a href="#">Nhiều hơn</a>
                 </div>
             </div>

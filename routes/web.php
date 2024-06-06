@@ -18,6 +18,6 @@ Route::get('/admin/{any?}', function () {
     return view('app');
 })->where('any', '.*');
 
-Route::get('/', function() {
-    return view('front.index');
-});
+Route::get('/', [Web\HomeController::class, 'index']);
+Route::get('/shop/product/{id}', [Web\ShopController::class, 'show']);
+Route::get('/shop', [Web\ShopController::class, 'index']);

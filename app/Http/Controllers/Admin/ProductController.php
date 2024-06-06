@@ -20,7 +20,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $params = $request->only(['name', 'code', 'brand', 'category', 'per_page']);
+        $params = $request->only(['name', 'code', 'brand', 'category_id', 'per_page']);
         $products = $this->productService->get($params);
         return JsonResource::collection($products);
     }
@@ -33,7 +33,7 @@ class ProductController extends Controller
 
     public function create(ProductCreateRequest $request): JsonResource
     {
-        $productData = $request->only(['code', 'name', 'brand','category', 'description', 'qty', 'price_per_qty', 'manufacture_day', 'expiry_day', 'image']);
+        $productData = $request->only(['code', 'name', 'brand','category_id', 'description', 'qty', 'price_per_qty', 'manufacture_day', 'expiry_day', 'image']);
         $product = $this->productService->create($productData);
         return new JsonResource($product);
     }
@@ -46,7 +46,7 @@ class ProductController extends Controller
 
     public function update(string $id, ProductUpdateRequest $request): JsonResource
     {
-        $productData = $request->only(['code', 'name', 'brand','category', 'description', 'qty', 'price_per_qty', 'manufacture_day', 'expiry_day', 'image']);
+        $productData = $request->only(['code', 'name', 'brand','category_id', 'description', 'qty', 'price_per_qty', 'manufacture_day', 'expiry_day', 'image']);
         $product = $this->productService->update($id, $productData);
         return new JsonResource($product);
     }

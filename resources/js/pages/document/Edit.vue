@@ -7,7 +7,7 @@
                         <div class="col-12">
                             <Input v-model:model-value="form" name="product_name" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Tên sản phẩm" :errors="errors" />
-                            <SelectBox v-model:model-value="form" name="category" width-common="col-8 q-ml-lg"
+                            <SelectBox v-model:model-value="form" name="category_id" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Danh mục" :option="categoryOptions" :errors="errors" />
                             <Input v-model:model-value="form" name="description" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Mô tả" :errors="errors" />
@@ -75,7 +75,7 @@ const categoryOptions = computed(() => {
 const form = reactive({
     suppplier_id: "",
     product_name: "",
-    category: "",
+    category_id: "",
     description: "",
     qty: "",
     price: "",
@@ -131,7 +131,7 @@ const getDocument = async () => {
     try {
         const document = await documentStore.getDocument(id);
         form.product_name = document.product_name;
-        form.category = document.category;
+        form.category_id = document.category_id;
         form.description = document.description;
         form.qty = document.qty;
         form.price = document.price;

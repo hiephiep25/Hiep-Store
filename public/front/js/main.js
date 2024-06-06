@@ -56,7 +56,7 @@
         Product Slider
     --------------------*/
    $(".product-slider").owlCarousel({
-        loop: true,
+        loop: false,
         margin: 25,
         nav: true,
         items: 4,
@@ -189,12 +189,12 @@
         max: maxPrice,
 		values: [minPrice, maxPrice],
 		slide: function (event, ui) {
-			minamount.val('$' + ui.values[0]);
-			maxamount.val('$' + ui.values[1]);
+			minamount.val(ui.values[0]);
+			maxamount.val(ui.values[1]);
 		}
 	});
-	minamount.val('$' + rangeSlider.slider("values", 0));
-    maxamount.val('$' + rangeSlider.slider("values", 1));
+	minamount.val(rangeSlider.slider("values", 0));
+    maxamount.val(rangeSlider.slider("values", 1));
 
     /*-------------------
 		Radio Btn
@@ -246,6 +246,26 @@
 		}
 		$button.parent().find('input').val(newVal);
 	});
+
+    // Product filter
+
+    const product_meat = $('.product-slider.meat');
+    const product_fruits = $('.product-slider.fruits');
+    $('.filter-control').on('click','.item',function(){
+        const $item = $(this);
+        const filter=$item.data('tag');
+        const category=$item.data('category');
+
+        $item.siblings().removeClass('active');
+        $item.addClass('active');
+
+        if(category === 'meat'){
+            product_meat.owlcarousel2_filter(filter);
+        }
+        if(category === 'fruits'){
+            product_fruits.owlcarousel2_filter(filter);
+        }
+    })
 
 })(jQuery);
 
