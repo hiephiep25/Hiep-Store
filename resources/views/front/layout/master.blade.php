@@ -104,12 +104,6 @@
                     </div>
                     <div class="col-lg-3 col-md-3 text-right">
                         <ul class="nav-right">
-                            <li class="heart-icon">
-                                <a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
-                            </li>
                             <li class="cart-icon">
                                 <a href="#">
                                     <i class="icon_cart_alt"></i>
@@ -169,12 +163,10 @@
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
-                        <span>Các thực phẩm nổi bật</span>
+                        <span>Danh mục sản phẩm</span>
                         <ul class="depart-hover">
                             @foreach ($categories as $category)
-                                <li class="{{ $category->id === 1 ? 'active' : '' }}">
-                                    <a href="">{{ $category->name }}</a>
-                                </li>
+                                <li><a href="{{ url('shop/' . $category->id) }}">{{ $category->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -183,8 +175,8 @@
                     <ul>
                         <li class="{{ (request()->segment(1)=='') ? 'active' :'' }}"><a href="./">Trang chủ</a></li>
                         <li class="{{ (request()->segment(1)=='shop') ? 'active' :'' }}"><a href="./shop">Cửa hàng</a></li>
-                        <li class="{{ (request()->segment(1)=='') ? 'contact' :'' }}"><a href="./contact">Liên hệ</a></li>
-                        <li class="{{ (request()->segment(1)=='') ? 'cart' :'' }}"><a href="./cart">Giỏ hàng</a></li>
+                        <li class="{{ (request()->segment(1)=='contact') ? 'active' :'' }}"><a href="./contact">Liên hệ</a></li>
+                        <li class="{{ (request()->segment(1)=='cart') ? 'active' :'' }}"><a href="./cart">Giỏ hàng</a></li>
                     </ul>
                 </nav>
                 <div class="mobile-menu-wrap"></div>

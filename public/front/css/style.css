@@ -2011,7 +2011,6 @@ ol {
 	position: absolute;
 	right: 48px;
 	top: 0;
-	content: "09";
 	font-size: 16px;
 	color: #252525;
 }
@@ -4514,4 +4513,8 @@ body {
     border-bottom-left-radius: 50px;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+}
+
+.text-bold {
+    font-weight: bold;
 }

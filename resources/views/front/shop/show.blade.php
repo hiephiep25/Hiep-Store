@@ -91,27 +91,7 @@
         <div class="row">
             @foreach ($relatedProducts as $relatedProduct)
             <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="{{ $relatedProduct->image }}" alt="">
-                        <div class="icon">
-                            <i class="icon_heart_alt"></i>
-                        </div>
-                        <ul>
-                            <li class="w-icon active"><a href="#"><i class="icon_cart_alt"></i></a></li>
-                            <li class="quick-view"><a href="product.html">Chi tiết</a></li>
-                        </ul>
-                    </div>
-                    <div class="pi-text">
-                        <div class="catagory-name">{{ $relatedProduct->description }}</div>
-                        <a href="#">
-                            <h5>{{ $relatedProduct->name }}</h5>
-                        </a>
-                        <div class="product-price">
-                            {{ $relatedProduct->price_per_qty }} VND
-                        </div>
-                    </div>
-                </div>
+                @include('front.components.product-item', ['product' => $relatedProduct])
             </div>
             @endforeach
         </div>

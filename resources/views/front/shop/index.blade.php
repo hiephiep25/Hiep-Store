@@ -1,3 +1,7 @@
+@php
+    $currentCategoryId = request()->segment(2);
+@endphp
+
 @extends('front.layout.master')
 
 @section('title', 'Cửa hàng')
@@ -21,44 +25,27 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
-                <div class="filter-widget">
-                    <h4 class="fw-title">Loại thực phẩm</h4>
-                    <ul class="filter-catagories">
-                        @foreach ($categories as $category)
-                            <li><a href="#">{{ $category->name }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="filter-widget">
-                    <h4 class="fw-title">Giá (nghìn VND)</h4>
-                    <div class="filter-range-wrap">
-                        <div class="range-slider">
-                            <div class="price-input">
-                                <input type="text" id="minamount">
-                                <input type="text" id="maxamount">
-                            </div>
-                        </div>
-                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="5" data-max="1000">
-                            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                            <span tabindex="8" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                            <span tabindex="8" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                        </div>
-                    </div>
-                    <a href="#" class="filter-btn">Lọc</a>
-                </div>
+                @include('front.components.products-sidebar-filter')
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="product-show-option">
                     <div class="row">
                         <div class="col-lg-7 col-md-7">
-                            <div class="select-option">
-                                <select class="sorting">
-                                    <option value="">Default sorting</option>
-                                </select>
-                                <select class="p-show">
-                                    <option value="">Hiển thị</option>
-                                </select>
-                            </div>
+
+                                <div class="select-option">
+                                    <select name=sort_by class="sorting" onchange="this.form.submit()">
+                                        <option {{request('sort_by')=='lastest'?'selected':''}} value="lastest">Mới nhất</option>
+                                        <option {{request('sort_by')=='oldest'?'selected':''}} value="oldest">Cũ nhất</option>
+                                        <option {{request('sort_by')=='price-ascending'?'selected':''}} value="price-ascending">Rẻ nhất</option>
+                                        <option {{request('sort_by')=='price-descending'?'selected':''}} value="price-descending">Đắt nhất</option>
+                                    </select>
+                                    <select name="show" class="p-show" onchange="this.form.submit()">
+                                        <option {{request('show')=='9'?'selected':''}} value="9">Hiển thị: 9</option>
+                                        <option {{request('show')=='12'?'selected':''}} value="12">Hiển thị: 12</option>
+                                        <option {{request('show')=='15'?'selected':''}} value="15">Hiển thị: 15</option>
+                                    </select>
+                                </div>
+
                         </div>
                     </div>
                 </div>
@@ -66,27 +53,7 @@
                     <div class="row">
                         @foreach ($products as $product)
                         <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="{{ $product->image }}" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_cart_alt"></i></a></li>
-                                        <li class="quick-view"><a href="shop/product/{{ $product->id }}">Chi tiết</a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">{{ $product->description }}</div>
-                                    <a href="#">
-                                        <h5>{{ $product->name }}</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        {{ $product->price_per_qty }} VND
-                                    </div>
-                                </div>
-                            </div>
+                            @include('front.components.product-item', ['product' => $product])
                         </div>
                         @endforeach
                     </div>

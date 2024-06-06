@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class ShopController extends Controller
 {
@@ -15,7 +16,7 @@ class ShopController extends Controller
     }
 
     public function index(Request $request) {
-        $perPage = $request->show ?? 3;
+        $perPage = $request->show ?? 9;
         $sortBy = $request->sort_by ?? 'lastest';
         $search = $request->search ?? '';
         $products = Product::available()->with('category')->where('name','like','%' . $search .'%');
@@ -34,18 +35,12 @@ class ShopController extends Controller
             case 'oldest' :
                 $products = $products->orderByDesc('id');
                 break;
-            case 'name-ascending':
-                $products = $products->orderBy('name');
-                break;
-            case 'name-descending':
-                $products = $products->orderByDesc('name');
-                break;
             case 'price-ascending':
-                $products = $products->orderBy('price');
+                $products = $products->orderByRaw('CAST(price_per_qty AS UNSIGNED) DESC');
                 break;
             case 'price-descending':
-                $products = $products->orderByDesc('price');
-                break;
+                $products = $products->orderByRaw('CAST(price_per_qty AS UNSIGNED) DESC');
+            break;
             default:
             $products = $products->orderBy('id');
             break;
@@ -57,10 +52,23 @@ class ShopController extends Controller
 
     public function filter($products, Request $request){
 
-        $priceMin = $request->price_min;
-        $priceMax = $request->price_max;
+        $priceMin = $request->price_min * 1000;
+        $priceMax = $request->price_max * 1000;
         $products = ($priceMin != null && $priceMax != null) ? $products->whereBetween('price_per_qty',[$priceMin, $priceMax]): $products;
 
         return $products;
+    }
+
+    public function category($categoryId, Request $request){
+
+        $perPage = $request->show ?? 9;
+        $sortBy = $request->sort_by ?? 'lastest';
+
+        $products = Product::available()->where('category_id', $categoryId);
+
+        $products = $this->filter($products, $request);
+
+        $products = $this->sortAndPagination($products,$sortBy,$perPage);
+        return view('front.shop.index', compact('products'));
     }
 }
