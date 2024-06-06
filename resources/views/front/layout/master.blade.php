@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="ht-right">
-                <a href="login.html" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
+                <a href="./login" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
                 <div class="top-social">
                     <a href="#"><i class="ti-facebook"></i></a>
                     <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -107,54 +107,42 @@
                     <div class="col-lg-3 col-md-3 text-right">
                         <ul class="nav-right">
                             <li class="cart-icon">
-                                <a href="#">
+                                <a href="./cart">
                                     <i class="icon_cart_alt"></i>
-                                    <span>3</span>
+                                    <span>{{Cart::count()}}</span>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
                                         <table>
                                             <tbody>
+                                                @foreach(Cart::content() as $cart)
                                                 <tr>
-                                                    <td class="si-pic"><img src="front/img/products/product-1.jpg"
-                                                            alt=""></td>
+                                                    <td class="si-pic"><img style="height:50px" src="{{$cart->options->image}}" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60 x 1</p>
-                                                            <h6>Thịt thăn bò</h6>
+                                                            <p>{{number_format($cart->price)}} x {{$cart->qty}}</p>
+                                                            <h6>{{$cart->name}}</h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
-                                                        <i class="ti-close"></i>
+                                                        <i onclick="window.location='./cart/delete/{{$cart->rowId}}'" class="ti-close"></i>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="front/img/products/product1.jpg"
-                                                            alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60 x 1</p>
-                                                            <h6>Dứa</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120</h5>
+                                        <span>Tổng tiền:</span>
+                                        <h5>{{ number_format((float)str_replace(',', '', Cart::total()), 0, '.', ',') }} VND</h5>
                                     </div>
                                     <div class="select-button">
-                                        <a href="shopping-cart.html" class="primary-btn view-card">View Card</a>
-                                        <a href="check-out.html" class="primary-btn checkout-btn">Check out</a>
+                                        <a href="./cart" class="primary-btn view-card">Xem giỏ hàng</a>
+                                        <a href="check-out.html" class="primary-btn checkout-btn">Thanh toán</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">$150</li>
+                            <li class="cart-price">{{ number_format((float)str_replace(',', '', Cart::subtotal()), 0, '.', ',') }} VND</li>
                         </ul>
                     </div>
                 </div>
@@ -237,13 +225,7 @@
         <div class="copyright-reserved">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            Copyright
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>
-                        </div>
+                    <div class="col-lg-8">
                         <div class="payment-pic">
                             <img src="front/img/payment-method.png" alt="">
                         </div>
