@@ -1,4 +1,4 @@
-<form action="">
+<form action="shop">
     <div class="filter-widget">
         <h4 class="fw-title">Loại thực phẩm</h4>
         <ul class="filter-catagories">

@@ -41,16 +41,16 @@
                         <img src="front/img/chat/chatbot.png" alt="image">
                     </div>
                     <div class="chatbox__content--header">
-                        <h4 class="chatbox__heading--header">Chat support</h4>
-                        <p class="chatbox__description--header">Hi. My name is ChatBot. How can I help you?</p>
+                        <h4 class="chatbox__heading--header">Bot</h4>
+                        <p class="chatbox__description--header">Xin chào, tôi là Bot, tôi có thể giúp gì được cho bạn?</p>
                     </div>
                 </div>
                 <div class="chatbox__messages">
                     <div></div>
                 </div>
                 <div class="chatbox__footer">
-                    <input type="text" placeholder="Write a message...">
-                    <button class="chatbox__send--footer send__button">Send</button>
+                    <input type="text" placeholder="Nhập câu hỏi...">
+                    <button class="chatbox__send--footer send__button">Gửi</button>
                 </div>
             </div>
             <div class="chatbox__button">
@@ -94,13 +94,15 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">Tìm kiếm</button>
-                            <div class="input-group">
-                                <input type="text" placeholder="Bạn cần mua gì?">
-                                <button type="button"><i class="ti-search"></i></button>
+                        <form action="shop">
+                            <div class="advanced-search">
+                                <button type="button" class="category-btn">Tìm kiếm</button>
+                                <div class="input-group">
+                                    <input name="search" type="text" value="{{request('search')}}" placeholder="Bạn cần mua gì?">
+                                    <button type="submit"><i class="ti-search"></i></button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="col-lg-3 col-md-3 text-right">
                         <ul class="nav-right">

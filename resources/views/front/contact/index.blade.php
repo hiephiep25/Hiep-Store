@@ -43,6 +43,23 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact-title">
+                    <h4>Thông tin cửa hàng</h4>
+                </div>
+                <div class="contact-widget">
+                    @foreach($stores as $store)
+                        <div class="cw-item">
+                            <b> Chi nhánh {{ $loop->index + 1 }} </b><br>
+                            <p>Địa chỉ: {{ $store->address }}</p>
+                            <p>SDT cửa hàng: {{ $store->phone_contact }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
