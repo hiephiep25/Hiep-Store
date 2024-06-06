@@ -24,6 +24,24 @@ export const useAuthStore = defineStore("auth", {
                 throw error;
             }
         },
+        async forgotPassword(formData) {
+            try {
+                await request.post("/forgot-password", {
+                    data: formData,
+                });
+            } catch (error) {
+                throw error;
+            }
+        },
+        async resetPassword(formData) {
+            try {
+                await request.post("/reset-password", {
+                    data: formData,
+                });
+            } catch (error) {
+                throw error;
+            }
+        },
         async getLoginUser() {
             try {
                 const { data } = await request.get("/profile");

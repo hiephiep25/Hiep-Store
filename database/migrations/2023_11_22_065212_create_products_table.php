@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('brand');
-            $table->string('category');
+            $table->integer('category_id');
             $table->text('description')->nullable();
             $table->integer('qty');
             $table->string('price_per_qty')->nullable();

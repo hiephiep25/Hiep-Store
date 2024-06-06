@@ -19,3 +19,9 @@ Route::get('/admin/{any?}', function () {
 })->where('any', '.*');
 
 Route::get('/', [Web\HomeController::class, 'index']);
+Route::get('/shop/product/{id}', [Web\ShopController::class, 'show']);
+Route::get('/shop', [Web\ShopController::class, 'index']);
+Route::get('/shop/{id}', [Web\ShopController::class, 'category']);
+
+
+Route::get('/contact',[Web\ContactController::class, 'index']);

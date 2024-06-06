@@ -11,7 +11,7 @@
                                 width-label="col-2" label="Mã Code" :errors="errors" />
                             <Input v-model:model-value="form" name="brand" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Brand" :errors="errors" />
-                            <SelectBox v-model:model-value="form" name="category" width-common="col-8 q-ml-lg"
+                            <SelectBox v-model:model-value="form" name="category_id" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Danh mục" :option="categoryOptions" :errors="errors" />
                             <Input v-model:model-value="form" name="description" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Mô tả" :errors="errors" />
@@ -51,7 +51,7 @@ import FileInput from '../../components/common/FileInput.vue';
 const categories = ref([]);
 const categoryOptions = computed(() => {
   return categories.value.map((category) => ({
-    value: category.name,
+    value: category.id,
     label: category.name,
   }));
 });
@@ -60,7 +60,7 @@ const form = reactive({
     name: "",
     code: "",
     brand: "",
-    category: "",
+    category_id: "",
     description: "",
     qty: "",
     price_per_qty: "",
@@ -97,7 +97,7 @@ const create = async () => {
         formData.append('name', form.name);
         formData.append('code', form.code);
         formData.append('brand', form.brand);
-        formData.append('category', form.category);
+        formData.append('category_id', form.category_id);
         formData.append('description', form.description);
         formData.append('qty', form.qty);
         formData.append('price_per_qty', form.price_per_qty);

@@ -92,6 +92,24 @@ const router = createRouter({
                     },
                     component: () => import("@/pages/Login.vue"),
                 },
+                {
+                    path: '/password-reset',
+                    name: 'forgot-password',
+                    meta: {
+                        title: "Quên mật khẩu",
+                        isAuth: false,
+                    },
+                    component: () => import('@/pages/ForgotPassword.vue'),
+                },
+                {
+                    path: '/password-change/:token',
+                    name: 'change-password',
+                    meta: {
+                        title: "Đặt lại mật khẩu",
+                        isAuth: false,
+                    },
+                    component: () => import('@/pages/NewPassword.vue'),
+                  },
             ],
         },
         {
