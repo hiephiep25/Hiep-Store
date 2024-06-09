@@ -72,8 +72,8 @@
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
                             <ul>
-                                <li class="subtotal">Tổng tiền <span> {{$total}} VND</span></li>
-                                <li class="cart-total">Thành tiền <span> {{$subtotal}} VND</span></li>
+                                <li class="subtotal">Tổng tiền <span> {{$subtotal}} VND</span></li>
+                                <li class="cart-total">Thành tiền <span> {{$total}} VND</span></li>
                             </ul>
                             <a href="./checkout" class="proceed-btn">Thanh toán</a>
                         </div>

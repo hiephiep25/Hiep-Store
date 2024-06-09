@@ -7,8 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Env;
+use App\Models\User;
 
-class SendMail extends Mailable implements ShouldQueue
+class SendMailResetPassword extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -22,7 +23,11 @@ class SendMail extends Mailable implements ShouldQueue
     public function __construct($data, $token)
     {
         $this->data = $data;
-        $this->url = env('APP_URL') . '/admin/password-change/' . urlencode($token);
+        if($this->data->role == User::ROLE_CUSTOMER) {
+            $this->url = env('APP_URL') . '/password-change/' . urlencode($token);
+        } else {
+            $this->url = env('APP_URL') . '/admin/password-change/' . urlencode($token);
+        }
     }
     /**
      * Build the message.
@@ -32,6 +37,6 @@ class SendMail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->subject('Gửi thư đặt lại mật khẩu')
-            ->markdown('Mails.send_mail');
+            ->markdown('Mails.send_mail_reset_password');
     }
 }

@@ -35,11 +35,6 @@
                                 :pagination-label="getPaginationLabel" :rows="offlineOrders" :columns="columns"
                                 :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
                                 @request="onRequest">
-                                <template v-slot:body-cell-payment_type="props">
-                                    <q-td :props="props">
-                                        {{ props.row.order.payment_type }}
-                                    </q-td>
-                                </template>
                                 <template v-slot:body-cell-total="props">
                                     <q-td :props="props">{{ props.row.order.total }}</q-td>
                                 </template>

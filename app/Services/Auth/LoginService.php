@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
-use App\Mail\SendMail;
+use App\Mail\SendMailResetPassword;
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Models\PasswordReset;
@@ -66,7 +66,7 @@ class LoginService
             'created_at' => Carbon::now()
         ]);
 
-        Mail::to($user->email)->send(new SendMail($user, $token));
+        Mail::to($user->email)->send(new SendMailResetPassword($user, $token));
 
         return true;
     }

@@ -74,7 +74,14 @@
                 </div>
             </div>
             <div class="ht-right">
-                <a href="./login" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
+                @if(Auth::check())
+                    <a href="./login/logout" class="login-panel">
+                        <i class="fa fa-user"></i>
+                        {{Auth::user()->name}} - Đăng xuất
+                    </a>
+                @else
+                    <a href="./login" class="login-panel"><i class="fa fa-user"></i>Đăng nhập</a>
+                @endif
                 <div class="top-social">
                     <a href="#"><i class="ti-facebook"></i></a>
                     <a href="#"><i class="ti-twitter-alt"></i></a>
@@ -134,15 +141,15 @@
                                     </div>
                                     <div class="select-total">
                                         <span>Tổng tiền:</span>
-                                        <h5>{{ number_format((float)str_replace(',', '', Cart::total()), 0, '.', ',') }} VND</h5>
+                                        <h5>{{ number_format((float)str_replace(',', '', Cart::subtotal()), 0, '.', ',') }} VND</h5>
                                     </div>
                                     <div class="select-button">
                                         <a href="./cart" class="primary-btn view-card">Xem giỏ hàng</a>
-                                        <a href="check-out.html" class="primary-btn checkout-btn">Thanh toán</a>
+                                        <a href="./checkout" class="primary-btn checkout-btn">Thanh toán</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="cart-price">{{ number_format((float)str_replace(',', '', Cart::subtotal()), 0, '.', ',') }} VND</li>
+                            <li class="cart-price">{{ number_format((float)str_replace(',', '', Cart::total()), 0, '.', ',') }} VND</li>
                         </ul>
                     </div>
                 </div>

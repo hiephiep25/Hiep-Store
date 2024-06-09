@@ -34,7 +34,7 @@ Route::prefix('cart')->group(function(){
 });
 
 Route::prefix('login')->group(function(){
-    Route::get('/',[Web\LoginController::class, 'index']);
+    Route::get('/',[Web\LoginController::class, 'index'])->name('login');;
     Route::post('/',[Web\LoginController::class, 'checkLogin']);
     Route::get('/logout',[Web\LoginController::class, 'logout']);
 });
@@ -42,4 +42,20 @@ Route::prefix('login')->group(function(){
 Route::prefix('register')->group(function(){
     Route::get('/',[Web\RegisterController::class, 'index']);
     Route::post('/',[Web\RegisterController::class, 'register']);
+});
+
+Route::prefix('forgot-password')->group(function(){
+    Route::get('/',[Web\ForgotPasswordController::class, 'index']);
+    Route::post('/',[Web\ForgotPasswordController::class, 'forgotPassword']);
+});
+
+Route::prefix('/password-change')->group(function(){
+    Route::get('/{token}',[Web\ForgotPasswordController::class, 'show']);
+    Route::post('/{token}',[Web\ForgotPasswordController::class, 'resetPassword']);
+});
+
+Route::prefix('checkout')->group(function(){
+    Route::get('/',[Web\CheckOutController::class, 'index']);
+    Route::post('/',[Web\CheckOutController::class, 'addOrder']);
+    Route::get('/result',[Web\CheckOutController::class,'result']);
 });

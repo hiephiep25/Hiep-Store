@@ -1,5 +1,5 @@
 <?php
-
+use App\Models\OfflineOrder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('offline_orders', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
+            $table->enum('payment_type', [OfflineOrder::CASH, OfflineOrder::CARD, OfflineOrder::E_WALLET]);
             $table->integer('staff_id');
             $table->timestamps();
         });

@@ -9,8 +9,12 @@ class OfflineOrder extends Model
 {
     use HasFactory;
 
+    const CASH = 'CASH';
+    const CARD = 'CARD';
+    const E_WALLET = 'E_WALLET';
+
     protected $fillable = [
-        'order_id', 'staff_id'
+        'order_id', 'staff_id', 'payment_type'
     ];
 
     public function order()

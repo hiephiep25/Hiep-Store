@@ -113,13 +113,13 @@ class OfflineOrderService
         try {
             $order = Order::create([
                 'type' => Order::OFFLINE,
-                'payment_type' => $data['payment_type'],
                 'total' => $data['total'],
                 'store_id'=> $storeID
             ]);
 
             $offlineOrder = OfflineOrder::create([
                 'order_id' => $order->id,
+                'payment_type' => $data['payment_type'],
                 'staff_id' => auth()->id()
             ]);
 

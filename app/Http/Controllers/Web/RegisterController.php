@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMailRegister;
 class RegisterController extends Controller
 {
     public function index(){
@@ -27,8 +29,9 @@ class RegisterController extends Controller
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
-        $user->level= $data['level'];
+        $user->role= $data['role'];
         $user->save();
+        Mail::to($user->email)->send(new SendMailRegister());
        return redirect('./login')->with('notification', 'Đăng kí thành công!');
     }
 

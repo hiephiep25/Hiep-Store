@@ -44,7 +44,7 @@
                                 <input type="checkbox" id="save-pass" name="remember">
                                 <span class="checkmark"></span>
                             </label>
-                            <a href="./admin/password-reset" class="forget-pass">Bạn quên mật khẩu?</a>
+                            <a href="./forgot-password" class="forget-pass">Bạn quên mật khẩu?</a>
                             </div>
                         </div>
                         <button type="submit" class="site-btn login-btn">Đăng nhập</button>
