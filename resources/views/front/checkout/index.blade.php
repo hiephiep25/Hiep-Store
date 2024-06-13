@@ -68,6 +68,22 @@
                                 <li class="fw-normal">Tổng tiền <span>{{$subtotal}} VND</span></li>
                                 <li class="total-price">Thành tiền <span>{{$total}} VND</span></li>
                             </ul>
+                            <div class="payment-check">
+                                <div class="pc-item">
+                                    <label for="pc-check">
+                                        Thanh toán sau khi nhận hàng
+                                        <input type="radio" id="pc-check" name="payment_type" value="pay_later" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="pc-item">
+                                    <label for="pc-paypal">
+                                        Thanh toán đơn hàng trực tuyến
+                                        <input type="radio" id="pc-paypal" name="payment_type" value="online_payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
                             <div class="order-btn">
                                 @if(Auth::check())
                                 <button type="submit" class="site-btn place-btn">Đặt hàng</button>

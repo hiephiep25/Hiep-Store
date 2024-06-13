@@ -16,6 +16,9 @@ return new class extends Migration
             $table->id();
             $table->integer('order_id');
             $table->integer('user_id');
+            $table->string('customer_phone')->nullable();
+            $table->string('customer_address')->nullable();
+            $table->enum('payment_type', [OnlineOrder::ONLINE_PAYMENT, OnlineOrder::PAY_LATER])->default(OnlineOrder::ONLINE_PAYMENT);
             $table->datetime('order_date')->nullable();
             $table->datetime('delivery_date')->nullable();
             $table->date('actual_delivery_date')->nullable();

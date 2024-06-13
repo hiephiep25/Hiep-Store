@@ -58,4 +58,5 @@ Route::prefix('checkout')->group(function(){
     Route::get('/',[Web\CheckOutController::class, 'index']);
     Route::post('/',[Web\CheckOutController::class, 'addOrder']);
     Route::get('/result',[Web\CheckOutController::class,'result']);
+    Route::get('/vnPayCheck',[Web\CheckOutController::class, 'vnPayCheck']);
 });

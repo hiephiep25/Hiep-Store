@@ -46,18 +46,18 @@
                     <div class="row mt-5" style="margin-top: 35px; display: flex;">
                         <div class="col-6"
                              style="margin-bottom: 25px; flex: 0 0 50%; width: 50%; box-sizing: border-box;">
-                            <b>{{ $request->name }}</b>
+                            <b>{{ $request['name'] }}</b>
                             <br>
                             <span>
-                                <a style="color: white !important;" href="mailto:{{ $request->email }}" target="_blank">{{ $request->email }}</a>
+                                <a style="color: white !important;" href="mailto:{{ $request['email'] }}" target="_blank">{{ $request['email'] }}</a>
                             </span>
                             <br>
-                            <span>{{ $request->phone }}</span>
+                            <span>{{ $request['phone'] }}</span>
                         </div>
                         <div class="col-6" style="flex: 0 0 50%; width: 50%; box-sizing: border-box;">
                             <b>Ngày mua hàng:</b> {{ date('d/m/yy H:i', strtotime($order->created_at)) }}
                             <br>
-                            <b>Địa chỉ:</b> {{ $request->address }}
+                            <b>Địa chỉ:</b> {{ $request['address'] }}
                         </div>
                     </div>
                 </div>
@@ -66,33 +66,23 @@
             <div class="row mt-2 p-4" style="background-color: white; margin-top: 15px; padding: 20px;">
                 <table>
                     <tr>
-                        <td>
-                            <img
-                                src="https://ci6.googleusercontent.com/proxy/8eUxMUXMkvgUKX8veBCRQM5N7-jXP0Wx8KjQLaGDch2DnV_5HYw9PMgJXsoqgSR_jonTY9jAftWPKNsN5W9cUUneQ9hz7IhxH4rIXNzHMm0ijbsNjHB9m7g6XfJJ=s0-d-e1-ft#https://www.bambooairways.com/reservation/common/hosted-images/tickets.jpg"
-                                alt="">
-                        </td>
-
-                        {{-- @if($order->payment_type == "pay_later")
+                        @if($request['payment_type'] == "pay_later")
                             <td class="pl-3" style=" padding-left:15px;">
                                 <span class="d-inline"
                                       style="color:#424853; font-family:trebuchet,sans-serif; font-size:16px; font-weight:normal; line-height:22px;">
-                                    You will pay on delivery. We have just handed over your order to a shipping partner.
+                                    Bạn sẽ thanh toán sau khi nhận được hàng. Chúng tôi vừa bàn giao đơn hàng của bạn cho đối tác vận chuyển.
                                 </span>
                             </td>
-                        @endif --}}
+                        @endif
 
-                        {{-- @if($order->payment_type == "online_payment") --}}
+                        @if($request['payment_type'] == "online_payment")
                             <td class="pl-3" style=" padding-left:15px;">
                                 <span class="d-inline"
                                       style="color:#424853; font-family:trebuchet,sans-serif; font-size:16px; font-weight:normal; line-height:22px;">
-                                      Đơn hàng của bạn đã được thanh toán online.
-                                </span>
+                                    Đơn hàng của bạn đã được thanh toán trực tuyến. Chúng tôi vừa bàn giao đơn hàng của bạn cho đối tác vận chuyển.
+                                    </span>
                             </td>
-                            <td class="pl-3" style=" padding-left:10px;">
-                                <img src="https://vnpay.vn/wp-content/uploads/2020/07/Logo-VNPAYQR-update.png"
-                                     width="130px" style="margin-top: 10px;" alt="">
-                            </td>
-                        {{-- @endif --}}
+                        @endif
 
                     </tr>
                 </table>
@@ -116,7 +106,7 @@
                             @foreach($carts as $cart)
                                 <tr>
                                     <td style="border-top: 1px solid #dee2e6; padding: 5px 0;">
-                                        {{ $cart->name . ' (x' . $cart->qty . ')'}}
+                                        {!! $cart->name . ' (x' . $cart->qty . ')' !!}
                                     </td>
                                     <td style="border-top: 1px solid #dee2e6; padding: 5px 20px 5px 0; text-align: right;">
                                         {{ $cart->subtotal }} VND

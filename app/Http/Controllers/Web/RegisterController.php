@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailRegister;
@@ -31,6 +32,9 @@ class RegisterController extends Controller
         $user->password = Hash::make($data['password']);
         $user->role= $data['role'];
         $user->save();
+        $customer = new Customer();
+        $customer->user_id = $user->id;
+        $customer->number_of_order = 0;
         Mail::to($user->email)->send(new SendMailRegister());
        return redirect('./login')->with('notification', 'Đăng kí thành công!');
     }
