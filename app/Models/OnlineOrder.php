@@ -13,9 +13,15 @@ class OnlineOrder extends Model
     const IN_PROGRESS = 'in progress';
     const COMPLETE = 'complete';
 
+    const ONLINE_PAYMENT = 'online_payment';
+    const PAY_LATER = 'pay_later';
+
     protected $fillable = [
         'order_id',
         'user_id',
+        'payment_type',
+        'customer_address',
+        'customer_phone',
         'order_date',
         'delivery_date',
         'actual_delivery_date',

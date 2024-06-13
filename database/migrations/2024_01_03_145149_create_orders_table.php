@@ -15,9 +15,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->enum('type', [Order::ONLINE, Order::OFFLINE]);
-            $table->enum('payment_type', [Order::CASH, Order::CARD, Order::E_WALLET]);
             $table->string('total');
-            $table->integer('store_id');
+            $table->integer('store_id')->nullable();
             $table->timestamps();
         });
     }

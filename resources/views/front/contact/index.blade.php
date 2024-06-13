@@ -52,7 +52,7 @@
                 <div class="contact-widget">
                     @foreach($stores as $store)
                         <div class="cw-item">
-                            <b> Chi nhánh {{ $loop->index + 1 }} </b><br>
+                            <b>Chi nhánh {{ $loop->index + 1 }} </b><br>
                             <p>Địa chỉ: {{ $store->address }}</p>
                             <p>SDT cửa hàng: {{ $store->phone_contact }}</p>
                         </div>

@@ -12,13 +12,8 @@ class Order extends Model
     const ONLINE = 'ONLINE';
     const OFFLINE = 'OFFLINE';
 
-    const CASH = 'CASH';
-    const CARD = 'CARD';
-    const E_WALLET = 'E_WALLET';
-
     protected $fillable = [
         'type',
-        'payment_type',
         'total',
         'store_id'
     ];

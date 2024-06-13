@@ -245,7 +245,28 @@
 			}
 		}
 		$button.parent().find('input').val(newVal);
+        // Update Cart
+        const rowId = $button.parent().find('input').data('rowid');
+        updateCart(rowId, newVal);
 	});
+
+    function updateCart(rowId, qty){
+        $.ajax({
+            type: "GET",
+            url: "cart/update",
+            data: {rowId: rowId, qty: qty},
+            success: function(response){
+                alert('Cập nhật giỏ hàng thành công !');
+                console.log(response);
+                location.reload();
+            },
+            error: function(error){
+                alert('Cập nhật giỏ hàng bị lỗi.');
+                console.log(error);
+
+            },
+        });
+    }
 
     // Product filter
 
