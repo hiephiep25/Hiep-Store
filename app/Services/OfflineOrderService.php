@@ -114,7 +114,8 @@ class OfflineOrderService
             $order = Order::create([
                 'type' => Order::OFFLINE,
                 'total' => $data['total'],
-                'store_id'=> $storeID
+                'store_id'=> $storeID,
+                'status' => Order::COMPLETE
             ]);
 
             $offlineOrder = OfflineOrder::create([

@@ -12,10 +12,15 @@ class Order extends Model
     const ONLINE = 'ONLINE';
     const OFFLINE = 'OFFLINE';
 
+    const PENDING = 'pending';
+    const IN_PROGRESS = 'in_progress';
+    const COMPLETE = 'complete';
+
     protected $fillable = [
         'type',
         'total',
-        'store_id'
+        'store_id',
+        'status'
     ];
 
     public function onlineOrder()

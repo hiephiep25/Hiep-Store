@@ -30,6 +30,7 @@ class CheckOutController extends Controller
         $order = new Order();
         $order->type = Order::ONLINE;
         $order->total = $total;
+        $order->status = Order::PENDING;
         $order->save();
 
         OnlineOrder::create([

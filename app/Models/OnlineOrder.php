@@ -9,10 +9,6 @@ class OnlineOrder extends Model
 {
     use HasFactory;
 
-    const PENDING = 'pending';
-    const IN_PROGRESS = 'in progress';
-    const COMPLETE = 'complete';
-
     const ONLINE_PAYMENT = 'online_payment';
     const PAY_LATER = 'pay_later';
 
@@ -22,10 +18,8 @@ class OnlineOrder extends Model
         'payment_type',
         'customer_address',
         'customer_phone',
-        'order_date',
         'delivery_date',
         'actual_delivery_date',
-        'status',
     ];
 
     public function order()

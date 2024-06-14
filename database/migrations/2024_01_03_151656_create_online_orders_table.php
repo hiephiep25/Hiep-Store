@@ -19,10 +19,8 @@ return new class extends Migration
             $table->string('customer_phone')->nullable();
             $table->string('customer_address')->nullable();
             $table->enum('payment_type', [OnlineOrder::ONLINE_PAYMENT, OnlineOrder::PAY_LATER])->default(OnlineOrder::ONLINE_PAYMENT);
-            $table->datetime('order_date')->nullable();
             $table->datetime('delivery_date')->nullable();
-            $table->date('actual_delivery_date')->nullable();
-            $table->enum('status', [OnlineOrder::IN_PROGRESS, OnlineOrder::COMPLETE, OnlineOrder::PENDING])->default(OnlineOrder::COMPLETE);
+            $table->datetime('actual_delivery_date')->nullable();
             $table->timestamps();
         });
     }
