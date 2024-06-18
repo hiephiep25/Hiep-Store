@@ -29,7 +29,7 @@ class CheckOutController extends Controller
         $subtotal = number_format((float)str_replace(',', '', Cart::subtotal()), 0, '.', ',');
         $order = new Order();
         $order->type = Order::ONLINE;
-        $order->total = $total;
+        $order->total = intval(str_replace(',', '', Cart::total()));;
         $order->status = Order::PENDING;
         $order->save();
 

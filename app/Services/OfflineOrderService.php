@@ -138,17 +138,18 @@ class OfflineOrderService
                     OrderProduct::create([
                         'order_id' => $order->id,
                         'product_id' => $product->id,
-                        'product_code' => $product->code,
+                        'product_code' => $prod->code,
                         'qty' => $productData['qty'],
                     ]);
 
                     $this->decreaseProductQuantity($product->code, $productData['qty']);
-                    $this->notificationService->createNotification(1, 'create-offline-order');
-                    $managers = Manager::where('store_id', $storeID)->get();
-                    foreach ($managers as $manager) {
-                        $this->notificationService->createNotification($manager->user_id, 'create-offline-order');
-                    }
                 }
+            }
+
+            $this->notificationService->createNotification(1, 'create-offline-order');
+            $managers = Manager::where('store_id', $storeID)->get();
+            foreach ($managers as $manager) {
+                $this->notificationService->createNotification($manager->user_id, 'create-offline-order');
             }
 
             DB::commit();
