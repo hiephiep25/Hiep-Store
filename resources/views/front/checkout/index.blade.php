@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="phone"> Địa chỉ <span>*</span></label>
-                            <input type="text" id="address" name="address" value="{{Auth::user()->phone ?? ''}}">
+                            <input type="text" id="address" name="address" value="{{Auth::user()->address ?? ''}}">
                         </div>
                     </div>
                 </div>

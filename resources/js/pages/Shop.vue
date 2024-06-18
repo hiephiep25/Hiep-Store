@@ -22,10 +22,15 @@
                 <q-form @submit="onUpdate">
                     <div class="row justify-center">
                         <div class="col">
-                            <div class="row">
+                            <div class="row justify-center">
                                 <div class="col-6">
-                                    <CommonInput v-model:model-value="form.product_code" type="text" width-common="col-12 q-ml-lg"
-                                        width-label="col-2" label="Mã sản phẩm" />
+                                    <q-select
+                                        outlined
+                                        :dense="true"
+                                        hide-bottom-space
+                                        class="q-pa-sm q-pl-sm q-ml-lg col-12 self-center" v-model="selectedProduct" :options="availableProductOptions"
+                                        label="Mã sản phẩm" filled>
+                                    </q-select>
                                 </div>
                             </div>
                         </div>
@@ -74,8 +79,9 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useStoreStore } from "@/store/store";
+import { useProductStore } from "@/store/product";
 import { storeToRefs } from "pinia";
 import CommonSelectBox from "../components/common/CommonSelectBox.vue";
 import CommonInput from "../components/common/CommonInput.vue";
@@ -85,10 +91,13 @@ import { useAuthStore } from "@/store/auth";
 const notify = useNotify();
 const errors = ref({});
 const storeStore = useStoreStore();
+const productStore = useProductStore();
 const separator = ref("vertical");
 const { stores, productStores, pagination } = storeToRefs(storeStore);
+const { availableProducts } = storeToRefs(productStore);
 const store = ref({ value: 1, label: 1 });
 const storeOptions = stores.value.map(store => ({ label: store.id, value: store.id }));
+const selectedProduct = ref(null);
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -148,6 +157,7 @@ const onRequest = async ({ pagination }) => {
 const onUpdate = async () => {
     try {
         form.store_id = store.value.value;
+        form.product_code = selectedProduct.value?.value || '';
         await storeStore.updateProductStores(form)
         errors.value = {};
         form.product_code = "";
@@ -161,12 +171,17 @@ const onUpdate = async () => {
     }
 }
 
+const availableProductOptions = computed(() =>
+    availableProducts.value.map(product => ({ label: product.name + ' - ' + product.code, value: product.code }))
+);
+
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
     return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
 storeStore.getStores();
 storeStore.getProductStores({ store_id: store.value.value });
+productStore.getAvailableProducts();
 </script>
 
 <style lang="scss" scoped>

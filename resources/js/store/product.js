@@ -6,6 +6,7 @@ export const useProductStore = defineStore('product', {
     user: {},
     isAuth: true,
     products: [],
+    availableProducts: [],
     pagination: {},
   }),
   getters: {
@@ -26,6 +27,19 @@ export const useProductStore = defineStore('product', {
         throw error
       }
     },
+    async getAvailableProducts() {
+        try {
+          const { data } = await request.get('/products/available')
+          this.availableProducts = data.data
+          this.pagination = {
+            page: data.meta.current_page,
+            rowsPerPage: data.meta.per_page,
+            rowsNumber: data.meta.total,
+          };
+        } catch (error) {
+          throw error
+        }
+      },
     async getCategories() {
         return request.get('/products/categories');
     },
