@@ -36,6 +36,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/products', [Admin\OfflineOrderController::class, 'getStoreProducts']);
             Route::get('/{id}', [Admin\OfflineOrderController::class, 'getOfflineOrderDetail']);
         });
+        Route::prefix('online-orders')->group(function () {
+            Route::get('/', [Admin\OnlineOrderController::class, 'index']);
+            Route::get('/{id}', [Admin\OnlineOrderController::class, 'getOnlineOrderDetail']);
+        });
         Route::prefix('stores')->group(function () {
             Route::get('/products', [Admin\StoreController::class, 'getProductStores']);
         });

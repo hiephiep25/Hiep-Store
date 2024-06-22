@@ -37,19 +37,19 @@
                         <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id  ?? ''}}">
                         <div class="col-lg-6">
                             <label for="fir"> Họ tên <span>*</span></label>
-                            <input type="text" id="first_name" name="name" value="{{Auth::user()->name ?? ''}}">
+                            <input type="text" id="first_name" name="name" value="{{Auth::user()->name ?? ''}}" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="email"> Email <span>*</span></label>
-                            <input type="text" id="email" name="email" value="{{Auth::user()->email ?? ''}}">
+                            <input type="text" id="email" name="email" value="{{Auth::user()->email ?? ''}}" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="phone"> SDT <span>*</span></label>
-                            <input type="text" id="phone" name="phone" value="{{Auth::user()->phone ?? ''}}">
+                            <input type="text" id="phone" name="phone" value="{{Auth::user()->phone ?? ''}}" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="phone"> Địa chỉ <span>*</span></label>
-                            <input type="text" id="address" name="address" value="{{Auth::user()->address ?? ''}}">
+                            <input type="text" id="address" name="address" value="{{Auth::user()->address ?? ''}}" required>
                         </div>
                     </div>
                 </div>

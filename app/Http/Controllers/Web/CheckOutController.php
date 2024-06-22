@@ -9,6 +9,7 @@ use App\Models\OnlineOrder;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Customer;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Utils\VNPay;
@@ -30,7 +31,7 @@ class CheckOutController extends Controller
         $order = new Order();
         $order->type = Order::ONLINE;
         $order->total = intval(str_replace(',', '', Cart::total()));;
-        $order->status = Order::PENDING;
+        $order->status = Order::COMPLETE;
         $order->save();
 
         OnlineOrder::create([
@@ -54,6 +55,8 @@ class CheckOutController extends Controller
             $product->qty -= $cart->qty;
             $product->save();
         }
+        $customer = Customer::where('user_id', $request->user_id)->firstOrFail();
+        $customer->number_of_order += 1 ;
         if($request->payment_type == OnlineOrder::ONLINE_PAYMENT) {
             $data_url = VNPay::vnpay_create_payment([
                 'vnp_TxnRef' => $order->id,
@@ -109,9 +112,12 @@ class CheckOutController extends Controller
                     $product->qty += $cart->qty;
                     $product->save();
                 }
+                $customer = Customer::where('user_id', $user->id)->firstOrFail();
                 OrderProduct::where('order_id', $vnp_TxnRef)->delete();
                 OnlineOrder::where('order_id', $vnp_TxnRef)->delete();
                 Order::find($vnp_TxnRef)->delete();
+                $customer->number_of_order -= 1 ;
+
                 return redirect('checkout/result')->with('notification', 'Có lỗi, đơn hàng đã bị hủy');
             }
         }

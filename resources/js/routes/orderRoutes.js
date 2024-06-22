@@ -29,6 +29,26 @@ const orderRoutes = [
         },
         component: () => import("@/pages/offline-order/Detail.vue"),
     },
+    {
+        path: "online-order",
+        name: "online-order",
+        meta: {
+            title: "Quản lí đơn hàng trực tuyến",
+            isAuth: true,
+            requiredRole: ["ADMIN", "MANAGER", "STAFF"],
+        },
+        component: () => import("@/pages/online-order/Index.vue"),
+    },
+    {
+        path: "online-order/:id",
+        name: "online-order.detail",
+        meta: {
+            title: "Quản lí đơn hàng trực tuyến",
+            isAuth: true,
+            requiredRole: ["ADMIN", "MANAGER", "STAFF"],
+        },
+        component: () => import("@/pages/online-order/Detail.vue"),
+    },
 ];
 
 export default orderRoutes;
