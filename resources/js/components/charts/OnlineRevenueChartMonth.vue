@@ -16,7 +16,7 @@ import Chart from 'chart.js/auto';
 import { useOrderStore } from '../../store/order';
 
 export default {
-    name: 'RevenueChartMonth',
+    name: 'OnlineRevenueChartMonth',
     setup() {
         const orderStore = useOrderStore();
         const chart = ref(null);
@@ -24,7 +24,7 @@ export default {
         let currentChart = null;
 
         const updateChart = async () => {
-            const data = await orderStore.getRevenuesByMonth(selectedYear.value);
+            const data = await orderStore.getOnlineRevenuesByMonth(selectedYear.value);
             console.log(data.data);
 
             const labels = data.data.map((entry) => `Tháng ${entry.month}`);
@@ -42,10 +42,10 @@ export default {
                     labels,
                     datasets: [
                         {
-                            label: `Doanh thu theo tháng của năm ${selectedYear.value}`,
+                            label: `Doanh thu online theo tháng của năm ${selectedYear.value}`,
                             data: values,
-                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                            borderColor: 'rgba(255, 159, 64, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1,
                         },
                     ],

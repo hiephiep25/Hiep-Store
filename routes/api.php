@@ -124,6 +124,8 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
         Route::prefix('revenues')->group(function () {
             Route::get('/month', [Admin\OrderController::class, 'getRevenueByMonth']);
+            Route::get('/online', [Admin\OrderController::class, 'getOnlineRevenueByMonth']);
+            Route::get('/offline', [Admin\OrderController::class, 'getOfflineRevenueByMonth']);
         });
 
         Route::prefix('process')->group(function () {

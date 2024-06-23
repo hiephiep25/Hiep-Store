@@ -12,5 +12,17 @@ export const useOrderStore = defineStore('order', {
         async getRevenuesByMonth(year) {
             return request.get('/revenues/month', { params: { year } });
         },
+
+        async getOnlineRevenuesByMonth(year) {
+            return request.get('/revenues/online', { params: { year } });
+        },
+
+        async getOfflineRevenuesByMonth(year) {
+            return request.get('/revenues/offline', { params: { year } });
+        },
+
+        async getOfflineRevenuesByStore(year) {
+            return request.get('/revenues/by-store', { params: { year } });
+        },
     },
 });
