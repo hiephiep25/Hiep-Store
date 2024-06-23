@@ -23,15 +23,6 @@
             <div class="row">
                 @if(Cart::count()>0)
                 <div class="col-lg-6">
-                    @if(!Auth::check())
-                    <div class="checkout-content">
-                        <a href="./login" class="content-btn">Đăng nhập</a>
-                    </div>
-                    @else
-                    <div class="checkout-content">
-
-                    </div>
-                    @endif
                     <h4>Thông tin đơn hàng</h4>
                     <div class="row">
                         <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id  ?? ''}}">
@@ -54,9 +45,6 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="checkout-content">
-                        <input type="text" placeholder="Nhập mã giảm giá">
-                    </div>
                     <div class="place-order">
                         <h4>Đơn hàng của bạn</h4>
                         <div class="order-total">
@@ -88,7 +76,7 @@
                                 @if(Auth::check())
                                 <button type="submit" class="site-btn place-btn">Đặt hàng</button>
                                 @else
-                                Bạn cần đăng nhập để có thể thanh toán
+                                Bạn cần <a href="./login">đăng nhập</a> để có thể thanh toán
                                 @endif
                             </div>
                         </div>

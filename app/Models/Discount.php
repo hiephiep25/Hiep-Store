@@ -11,7 +11,7 @@ class Discount extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code', 'name', 'value', 'description', 'quantity', 'expiration_date'
+        'code', 'name', 'value', 'description', 'start_date', 'expiration_date'
     ];
 
     protected $appends = ['availability'];
@@ -20,8 +20,6 @@ class Discount extends Model
     {
         $today = Carbon::now();
 
-        $quantity = (int)$this->quantity;
-
-        return $this->expiration_date > $today && $quantity > 0;
+        return $this->expiration_date > $today;
     }
 }

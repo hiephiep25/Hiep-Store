@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('value');
             $table->text('description')->nullable();
-            $table->integer('quantity')->nullable();
+            $table->datetime('start_date')->nullable();
             $table->datetime('expiration_date')->nullable();
             $table->timestamps();
         });

@@ -26,7 +26,7 @@ class DiscountCreateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'code' => ['required', 'string', 'max:32', 'unique:discounts,code'],
             'value' => ['required', 'string', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'quantity' => ['required', 'numeric', 'min:0'],
+            'start_date' => ['required', 'date', 'after_or_equal:today' ],
             'expiration_date' => ['required', 'date', 'after_or_equal:today' ],
         ];
     }
@@ -41,9 +41,9 @@ class DiscountCreateRequest extends FormRequest
             'code.unique' => 'Mã code đã tồn tại trong hệ thống',
             'value.required' => 'Giá trị là trường bắt buộc',
             'value.regex' => 'Giá trị không hợp lệ',
-            'quantity.required' => 'Số lượng là trường bắt buộc',
-            'quantity.numeric' => 'Số lượng phải là một số',
-            'quantity.min' => 'Số lượng không được nhỏ hơn 0',
+            'start_date.required' => 'Vui lòng nhập ngày bắt đầu',
+            'start_date.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
+            'start_date.after_or_equal' => 'Ngày bắt đầu phải sau hoặc bằng ngày hiện tại',
             'expiration_date.required' => 'Ngày hết hạn là trường bắt buộc',
             'expiration_date.date' => 'Ngày hết hạn phải là một ngày hợp lệ',
             'expiration_date.after_or_equal' => 'Ngày hết hạn phải sau hoặc bằng ngày hiện tại'

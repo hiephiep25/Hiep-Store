@@ -8,7 +8,7 @@
                             <SelectBox v-model:model-value="form" name="store_id" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Cửa hàng" :option="storeOptions" :errors="errors" />
                             <SelectBox v-model:model-value="form" name="product_code" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Sản phẩm" :option="productCodeOptions" :errors="errors" />
+                                width-label="col-2" label="Sản phẩm (chọn cửa hàng trước)" :option="productCodeOptions" :errors="errors" />
                             <Input v-model:model-value="form" name="qty" type="number" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Số lượng" :errors="errors" />
                             <SelectBox v-model:model-value="form" name="option" width-common="col-8 q-ml-lg"
@@ -25,8 +25,7 @@
 </template>
 
 <script setup>
-
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted, watch } from 'vue';
 import { useProcessStore } from '@/store/process';
 import { useRouter } from 'vue-router';
 import useNotify from '@/utils/notify';
@@ -37,14 +36,13 @@ import { useStoreStore } from "@/store/store";
 import { storeToRefs } from "pinia";
 
 const options = [
-    { label: "SALEOFF", value: "SALEOFF" },
     { label: "COOKING", value: "COOKING" },
     { label: "DONATE", value: "DONATE" },
     { label: "DESTROY", value: "DESTROY" },
 ];
 const storeStore = useStoreStore();
-const { stores, productStores, pagination } = storeToRefs(storeStore);
-const storeOptions = stores.value.map(store => ({ label: store.id, value: store.id }));
+const { stores } = storeToRefs(storeStore);
+const storeOptions = ref([]);
 
 const form = reactive({
     store_id: '',
@@ -61,14 +59,22 @@ const processStore = useProcessStore();
 const notify = useNotify();
 const offlineOrderStore = useOfflineOrderStore();
 
-const loadProductCodes = async () => {
+const loadStores = async () => {
+    try {
+        await storeStore.getStores();
+        storeOptions.value = stores.value.map(store => ({ label: store.id, value: store.id }));
+    } catch (error) {
+        console.error('Lỗi khi tải dữ liệu cửa hàng', error);
+    }
+};
+
+const loadProductCodes = async (storeId) => {
   try {
-    const response = await offlineOrderStore.getStoreProductCodes();
+    const response = await offlineOrderStore.getStoreProductCodes({ store_id: storeId });
     productCodeOptions.value = response.data.map((item) => ({
-      label: item.code,
-      value: item.code,
-      price_per_qty: item.price_per_qty,
-      product_name: item.name,
+      label: item.product_code,
+      value: item.product_code,
+      product_name: item.product_name,
       image: item.image
     }));
   } catch (error) {
@@ -83,13 +89,21 @@ const create = async () => {
         notify.success('Tạo mới dữ liệu thành công');
         router.push({ name: 'process.index' });
     } catch (error) {
-        errors.value = error?.response?.data?.errors
+        errors.value = error?.response?.data?.errors;
         notify.error(error.response.data.message);
     }
 };
 
+watch(() => form.store_id, async (newStoreId) => {
+    if (newStoreId) {
+        await loadProductCodes(newStoreId);
+    } else {
+        productCodeOptions.value = [];
+    }
+});
 
-storeStore.getStores();
-
-loadProductCodes();
+onMounted(async () => {
+    await loadStores();
+});
 </script>
+

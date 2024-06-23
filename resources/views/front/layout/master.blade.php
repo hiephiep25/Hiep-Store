@@ -183,64 +183,6 @@
 
     @yield('body')
 
-    <!-- Footer -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="index.html">
-                                <img src="front/img/logo.png" height="100" alt="">
-                            </a>
-                        </div>
-                        <ul>
-                            <li>Hà Nội</li>
-                            <li>SDT: 0366125502</li>
-                            <li>Email: hiep.nd200213@sis.hust.edu.vn</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Thông tin cửa hàng</h5>
-                        <ul>
-                            <li><a href="">Về chúng tôi</a></li>
-                            <li><a href="">Thủ tục thanh toán</a></li>
-                            <li><a href="">Liên hệ</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newslatter-item">
-                        <h5>Thông tin khuyến mại, giảm giá</h5>
-                        <p>Nhập email để biết thêm về ưu đãi đặc biệt của chúng tôi</p>
-                        <form action="#" class="subscribe-form">
-                            <input type="text" placeholder="Nhập email">
-                            <button type="button">Nhận thông tin</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-reserved">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="payment-pic">
-                            <img src="front/img/payment-method.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
     <!-- Js Plugins -->
     <script src="front/js/jquery-3.3.1.min.js"></script>
     <script src="front/js/bootstrap.min.js"></script>

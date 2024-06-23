@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('product_code');
             $table->string('qty');
             $table->integer('store_id')->nullable();
-            $table->enum('option', [Process::DESTROY, Process::DONATE, Process::COOKING, Process::SALEOFF])->default(Process::DESTROY);
+            $table->enum('option', [Process::DESTROY, Process::DONATE, Process::COOKING])->default(Process::DESTROY);
             $table->timestamps();
         });
     }

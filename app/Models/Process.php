@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Process extends Model
 {
-    const SALEOFF= 'SALEOFF';
     const COOKING = 'COOKING';
     const DONATE = 'DONATE';
     const DESTROY = 'DESTROY';

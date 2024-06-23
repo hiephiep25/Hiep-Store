@@ -53,6 +53,12 @@
                                             @click="handleDelete(props.row)" />
                                     </q-td>
                                 </template>
+                                <template v-slot:body-cell-start_date="props">
+                                    <q-td :props="props">{{ formatDate(props.row.start_date) }}</q-td>
+                                </template>
+                                <template v-slot:body-cell-expiration_date="props">
+                                    <q-td :props="props">{{ formatDate(props.row.expiration_date) }}</q-td>
+                                </template>
                             </q-table>
                         </q-markup-table>
                     </div>
@@ -124,10 +130,17 @@ const columns = ref([
         sortable: true,
     },
     {
-        name: "quantity",
+        name: "start_date",
         align: "center",
-        label: "Số lượng",
-        field: "quantity",
+        label: "Thời gian bắt đầu",
+        field: "start_date",
+        sortable: true,
+    },
+    {
+        name: "expiration_date",
+        align: "center",
+        label: "Thời gian hết hạn",
+        field: "expiration_date",
         sortable: true,
     },
     {
@@ -157,6 +170,12 @@ const columns = ref([
         },
     },
 ]);
+
+const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options);
+};
 
 const onRequest = async ({ pagination }) => {
     await discountStore.getDiscounts({

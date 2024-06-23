@@ -13,8 +13,8 @@
                                 width-label="col-2" label="Giá trị khuyến mãi" :errors="errors" />
                             <Input v-model:model-value="form" name="description" type="text" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Mô tả" :errors="errors" />
-                            <Input v-model:model-value="form" name="quantity" type="text" width-common="col-8 q-ml-lg"
-                                width-label="col-2" label="Số lượng" :errors="errors" />
+                            <Input v-model:model-value="form" name="start_date" type="date" width-common="col-8 q-ml-lg"
+                                width-label="col-2" label="Ngày bắt đầu" :errors="errors" />
                             <Input v-model:model-value="form" name="expiration_date" type="date" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Hạn sử dụng" :errors="errors" />
                         </div>
@@ -41,7 +41,7 @@ const form = reactive({
     code: "",
     value: "",
     description: "",
-    quantity: "",
+    start_date: "",
     expiration_date: "",
 });
 const errors = ref({});

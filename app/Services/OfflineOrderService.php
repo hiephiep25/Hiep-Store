@@ -89,7 +89,7 @@ class OfflineOrderService
     }
 
 
-    public function getStoreProducts()
+    public function getStoreProducts($storeId)
     {
         $role = auth()->user()->role;
         if($role == User::ROLE_STAFF) {
@@ -101,7 +101,9 @@ class OfflineOrderService
                 ->get();
         }
         if($role == User::ROLE_ADMIN) {
-            return Product::all();
+            return ProductStore::with('product')
+                ->where('store_id', $storeId)
+                ->get();
         }
     }
 
