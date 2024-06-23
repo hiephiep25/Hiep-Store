@@ -36,6 +36,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/products', [Admin\OfflineOrderController::class, 'getStoreProducts']);
             Route::get('/{id}', [Admin\OfflineOrderController::class, 'getOfflineOrderDetail']);
         });
+        Route::prefix('online-orders')->group(function () {
+            Route::get('/', [Admin\OnlineOrderController::class, 'index']);
+            Route::get('/{id}', [Admin\OnlineOrderController::class, 'getOnlineOrderDetail']);
+        });
         Route::prefix('stores')->group(function () {
             Route::get('/products', [Admin\StoreController::class, 'getProductStores']);
         });
@@ -103,6 +107,7 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
         Route::prefix('products')->group(function () {
             Route::get('/', [Admin\ProductController::class, 'index']);
+            Route::get('/available', [Admin\ProductController::class, 'getAvailable']);
             Route::post('/create', [Admin\ProductController::class, 'create']);
             Route::get('/{id}', [Admin\ProductController::class, 'show']);
             Route::post('/{id}', [Admin\ProductController::class, 'update']);
@@ -119,6 +124,8 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
         Route::prefix('revenues')->group(function () {
             Route::get('/month', [Admin\OrderController::class, 'getRevenueByMonth']);
+            Route::get('/online', [Admin\OrderController::class, 'getOnlineRevenueByMonth']);
+            Route::get('/offline', [Admin\OrderController::class, 'getOfflineRevenueByMonth']);
         });
 
         Route::prefix('process')->group(function () {

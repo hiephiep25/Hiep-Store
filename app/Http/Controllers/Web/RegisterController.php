@@ -35,6 +35,7 @@ class RegisterController extends Controller
         $customer = new Customer();
         $customer->user_id = $user->id;
         $customer->number_of_order = 0;
+        $customer->save();
         Mail::to($user->email)->send(new SendMailRegister());
        return redirect('./login')->with('notification', 'Đăng kí thành công!');
     }

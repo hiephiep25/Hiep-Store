@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('type', [Order::ONLINE, Order::OFFLINE]);
             $table->string('total');
             $table->integer('store_id')->nullable();
+            $table->enum('status', [Order::IN_PROGRESS, Order::COMPLETE, Order::PENDING])->default(Order::PENDING);
             $table->timestamps();
         });
     }

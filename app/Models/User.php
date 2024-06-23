@@ -61,11 +61,16 @@ class User extends Authenticatable
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'user_id', 'id');
+        return $this->hasOne(Supplier::class, 'user_id', 'id');
     }
 
     public function staff()
     {
-        return $this->belongsTo(Staff::class, 'user_id', 'id');
+        return $this->hasOne(Staff::class, 'user_id', 'id');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'user_id', 'id');
     }
 }

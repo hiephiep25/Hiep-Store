@@ -4,7 +4,7 @@
 
 @section('body')
 <!-- Hero Section -->
-<section class="hero-section">
+{{-- <section class="hero-section">
     <div class="hero-items owl-carousel">
         <div class="single-hero-items set-bg" data-setbg="front/img/hero-1.jpg">
             <div class="container">
@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- Banner -->
 <div class="banner-section spad">
     <div class="container-fluid">
@@ -112,7 +112,7 @@
     </div>
 </div>
 <!-- Deal -->
-<section class="deal-of-week set-bg spad" data-setbg="front/img/time-bg.jpg">
+{{-- <section class="deal-of-week set-bg spad" data-setbg="front/img/time-bg.jpg">
     <div class="container">
         <div class="col-lg-6 text-center">
             <div class="section-title">
@@ -144,7 +144,7 @@
             <a href="" class="primary-btn">Mua ngay</a>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- banner -->
 <div class="vegetables-banner spad">
     <div class="container-fluid">

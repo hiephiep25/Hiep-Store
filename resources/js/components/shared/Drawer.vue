@@ -5,7 +5,30 @@
             marginTop: headerHeight,
         }">
             <q-list padding>
-                <q-item v-for="content in drawerContent.filter((d) => d.show)"
+                <q-item v-for="content in drawerContent.filter((d) => d.label === 'Trang chủ')"
+                    :class="{ 'bg-primary text-white': content.active }" :active="content.active" :key="content.label"
+                    v-ripple clickable @click="content.action">
+                    <q-item-section avatar>
+                        <q-icon :name="content.icon" />
+                    </q-item-section>
+
+                    <q-item-section>{{ content.label }}</q-item-section>
+                </q-item>
+
+                <q-expansion-item v-for="group in drawerGroups.filter((g) => g.show)" :key="group.label" :label="group.label" :icon="group.icon">
+                    <q-list class="q-ml-lg">
+                        <q-item v-for="content in group.items.filter((d) => d.show)"
+                            :class="{ 'bg-primary text-white': content.active }" :active="content.active" :key="content.label"
+                            v-ripple clickable @click="content.action">
+                            <q-item-section avatar>
+                                <q-icon :name="content.icon" />
+                            </q-item-section>
+
+                            <q-item-section>{{ content.label }}</q-item-section>
+                        </q-item>
+                    </q-list>
+                </q-expansion-item>
+                <q-item v-for="content in drawerContent.filter((d) => d.show && d.label !== 'Trang chủ')"
                     :class="{ 'bg-primary text-white': content.active }" :active="content.active" :key="content.label"
                     v-ripple clickable @click="content.action">
                     <q-item-section avatar>
@@ -33,6 +56,7 @@
         </q-img>
     </q-drawer>
 </template>
+
 <script setup>
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -72,34 +96,6 @@ const drawerContent = computed(() => {
             active: /home/g.test(route.name.toString()),
             action: () => router.push({ name: "home" }),
             show: true,
-        },
-        {
-            label: "User",
-            icon: "group",
-            active: /user/g.test(route.name.toString()),
-            action: () => router.push({ name: "user.index" }),
-            show: user.value.role === "ADMIN",
-        },
-        {
-            label: "Người quản lí",
-            icon: "group",
-            active: /manager/g.test(route.name.toString()),
-            action: () => router.push({ name: "manager.index" }),
-            show: user.value.role === "ADMIN",
-        },
-        {
-            label: "Nhân viên",
-            icon: "group",
-            active: /staff/g.test(route.name.toString()),
-            action: () => router.push({ name: "staff.index" }),
-            show: user.value.role === "ADMIN" || user.value.role === "MANAGER",
-        },
-        {
-            label: "Quản lí cửa hàng",
-            icon: "store",
-            active: /admin-store/g.test(route.name.toString()),
-            action: () => router.push({ name: "admin-store.index" }),
-            show: user.value.role === "ADMIN"
         },
         {
             label: "Sản phẩm trong cửa hàng",
@@ -151,12 +147,52 @@ const drawerContent = computed(() => {
             show: user.value.role === "MANAGER" || user.value.role === "STAFF" || user.value.role === "ADMIN"
         },
         {
+            label: "Đơn hàng trực tuyến",
+            icon: "shopping_cart_checkout",
+            active: /online-order/g.test(route.name.toString()),
+            action: () => router.push({ name: "online-order" }),
+            show: user.value.role === "MANAGER" || user.value.role === "STAFF" || user.value.role === "ADMIN"
+        },
+        {
             label: "Lựa chọn xử lí",
             icon: "settings",
             active: /process/g.test(route.name.toString()),
             action: () => router.push({ name: "process.index" }),
             show: user.value.role === "MANAGER" || user.value.role === "ADMIN"
         },
+    ];
+});
+
+const drawerGroups = computed(() => {
+    return [
+        {
+            label: "Quản lí nhân viên",
+            icon: "group",
+            show: user.value.role === "ADMIN" || user.value.role === "MANAGER",
+            items: [
+                {
+                    label: "User",
+                    icon: "person",
+                    active: /user/g.test(route.name.toString()),
+                    action: () => router.push({ name: "user.index" }),
+                    show: user.value.role === "ADMIN",
+                },
+                {
+                    label: "Người quản lí",
+                    icon: "person",
+                    active: /manager/g.test(route.name.toString()),
+                    action: () => router.push({ name: "manager.index" }),
+                    show: user.value.role === "ADMIN",
+                },
+                {
+                    label: "Nhân viên",
+                    icon: "person",
+                    active: /staff/g.test(route.name.toString()),
+                    action: () => router.push({ name: "staff.index" }),
+                    show: user.value.role === "ADMIN" || user.value.role === "MANAGER",
+                },
+            ]
+        }
     ];
 });
 </script>

@@ -34,6 +34,21 @@ class ProductService
         })->orderBy('id', 'asc')->paginate($perPage);
     }
 
+    public function getAvailable(array $params): LengthAwarePaginator
+    {
+        $name = $params['name'] ?? '';
+        $code = $params['code'] ?? '';
+        $perPage = $params['per_page'] ?? PER_PAGE;
+        return Product::available()->where(function ($query) use ($name, $code) {
+            if (!empty($name)) {
+                $query->where('name', 'like', "%$name%");
+            }
+            if (!empty($code)) {
+                $query->where('code', 'like', "%$code%");
+            }
+        })->orderBy('id', 'asc')->paginate($perPage);
+    }
+
     public function getCategories()
     {
         return Category::all();
