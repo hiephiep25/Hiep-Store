@@ -1,59 +1,103 @@
 <template>
-    <q-page>
-        <div class="q-pa-md">
-            <q-card class="my-card bg-white text-white q-pa-md">
-                <q-form @submit="onSubmit">
-                    <div class="row justify-center">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col-6">
-                                    <CommonInput v-model:model-value="from" type="date" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="Từ ngày" />
-                                </div>
-                                <div class="col-6">
-                                    <CommonInput v-model:model-value="to" type="date" width-common="col-12 q-ml-lg"
-                                        width-label="col-1" label="Đến ngày" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-center q-mt-md">
-                        <q-btn type="reset" class="btn" color="primary" label="Đặt lại" @click="resetSearch" />
-                        <q-btn type="submit" class="btn q-ml-sm" color="primary" label="Tìm kiếm" />
-                    </div>
-                </q-form>
-            </q-card>
-            <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
-                <div class="row">
-                    <q-btn v-if="isStaff" class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage()" />
+  <q-page>
+    <div class="q-pa-md">
+      <q-card class="my-card bg-white text-white q-pa-md">
+        <q-form @submit="onSubmit">
+          <div class="row justify-center">
+            <div class="col">
+              <div class="row">
+                <div class="col-6">
+                  <CommonInput
+                    v-model:model-value="from"
+                    type="date"
+                    width-common="col-12 q-ml-lg"
+                    width-label="col-1"
+                    label="Từ ngày"
+                  />
                 </div>
-                <div class="row">
-                    <div class="col-12 q-mt-md">
-                        <q-markup-table :separator="separator" flat bordered>
-                            <q-table flat bordered virtual-scroll no-data-label="không có dữ liệu"
-                                class="header-table-custom" rows-per-page-label="Số lượng trên 1 trang"
-                                :pagination-label="getPaginationLabel" :rows="offlineOrders" :columns="columns"
-                                :virtual-scroll-sticky-size-start="48" row-key="id" v-model:pagination="pagination"
-                                @request="onRequest">
-                                <template v-slot:body-cell-total="props">
-                                    <q-td :props="props">{{ props.row.order.total }}</q-td>
-                                </template>
-                                <template v-slot:body-cell-created_at="props">
-                                    <q-td :props="props">{{ formatDate(props.row.created_at) }}</q-td>
-                                </template>
-                                <template v-slot:body-cell-actions="props">
-                                    <q-td :props="props">
-                                        <q-btn class="q-ml-sm" icon="info" color="primary" size="sm"
-                                            @click="handleInfo(props.row)" />
-                                    </q-td>
-                                </template>
-                            </q-table>
-                        </q-markup-table>
-                    </div>
+                <div class="col-6">
+                  <CommonInput
+                    v-model:model-value="to"
+                    type="date"
+                    width-common="col-12 q-ml-lg"
+                    width-label="col-1"
+                    label="Đến ngày"
+                  />
                 </div>
-            </q-card>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-center q-mt-md">
+            <q-btn
+              type="reset"
+              class="btn"
+              color="primary"
+              label="Đặt lại"
+              @click="resetSearch"
+            />
+            <q-btn
+              type="submit"
+              class="btn q-ml-sm"
+              color="primary"
+              label="Tìm kiếm"
+            />
+          </div>
+        </q-form>
+      </q-card>
+      <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
+        <div class="row">
+          <q-btn
+            v-if="isStaff"
+            class="btn"
+            color="primary"
+            label="Tạo mới"
+            @click="navigateToRegistrationPage()"
+          />
         </div>
-    </q-page>
+        <div class="row">
+          <div class="col-12 q-mt-md">
+            <q-markup-table :separator="separator" flat bordered>
+              <q-table
+                flat
+                bordered
+                virtual-scroll
+                no-data-label="không có dữ liệu"
+                class="header-table-custom"
+                rows-per-page-label="Số lượng trên 1 trang"
+                :pagination-label="getPaginationLabel"
+                :rows="offlineOrders"
+                :columns="columns"
+                :virtual-scroll-sticky-size-start="48"
+                row-key="id"
+                v-model:pagination="pagination"
+                @request="onRequest"
+              >
+                <template v-slot:body-cell-total="props">
+                  <q-td :props="props">{{ props.row.order.total }}</q-td>
+                </template>
+                <template v-slot:body-cell-created_at="props">
+                  <q-td :props="props">{{
+                    formatDate(props.row.created_at)
+                  }}</q-td>
+                </template>
+                <template v-slot:body-cell-actions="props">
+                  <q-td :props="props">
+                    <q-btn
+                      class="q-ml-sm"
+                      icon="info"
+                      color="primary"
+                      size="sm"
+                      @click="handleInfo(props.row)"
+                    />
+                  </q-td>
+                </template>
+              </q-table>
+            </q-markup-table>
+          </div>
+        </div>
+      </q-card>
+    </div>
+  </q-page>
 </template>
 
 <script setup>
@@ -75,102 +119,102 @@ const notify = useNotify();
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
-const isStaff = ref(user.value.role == 'STAFF')
+const isStaff = ref(user.value.role == "STAFF");
 
 const columns = ref([
-    {
-        name: "id",
-        required: true,
-        label: "ID",
-        align: "left",
-        field: "id",
-        sortable: true,
-    },
-    {
-        name: "order_id",
-        align: "center",
-        label: "Đơn hàng",
-        field: "order_id",
-        sortable: true,
-    },
-    {
-        name: "payment_type",
-        align: "center",
-        label: "Loại thanh toán",
-        field: "payment_type",
-        sortable: true,
-    },
-    {
-        name: "total",
-        align: "center",
-        label: "Tổng tiền",
-        field: "total",
-        sortable: true,
-    },
-    {
-        name: "created_at",
-        align: "center",
-        label: "Thời gian tạo",
-        field: "created_at",
-        sortable: true,
-    },
-    {
-        name: "actions",
-        label: "Hành động",
-        field: "actions",
-        align: "center",
-        format: (val, row) => {
-            return [
-                {
-                    label: "Info",
-                    onClick: () => handleInfo(row),
-                    icon: "info_square",
-                },
-            ];
+  {
+    name: "id",
+    required: true,
+    label: "ID",
+    align: "left",
+    field: "id",
+    sortable: true,
+  },
+  {
+    name: "order_id",
+    align: "center",
+    label: "Đơn hàng",
+    field: "order_id",
+    sortable: true,
+  },
+  {
+    name: "payment_type",
+    align: "center",
+    label: "Loại thanh toán",
+    field: "payment_type",
+    sortable: true,
+  },
+  {
+    name: "total",
+    align: "center",
+    label: "Tổng tiền",
+    field: "total",
+    sortable: true,
+  },
+  {
+    name: "created_at",
+    align: "center",
+    label: "Thời gian tạo",
+    field: "created_at",
+    sortable: true,
+  },
+  {
+    name: "actions",
+    label: "Hành động",
+    field: "actions",
+    align: "center",
+    format: (val, row) => {
+      return [
+        {
+          label: "Info",
+          onClick: () => handleInfo(row),
+          icon: "info_square",
         },
+      ];
     },
+  },
 ]);
 
 const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "numeric", day: "numeric" };
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", options);
+  const options = { year: "numeric", month: "numeric", day: "numeric" };
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", options);
 };
 
 const onRequest = async ({ pagination }) => {
-    await offlineOrderStore.getOfflineOrders({
-        from: from.value,
-        to: to.value,
-        page: pagination.page,
-        per_page: pagination.rowsPerPage,
-    });
+  await offlineOrderStore.getOfflineOrders({
+    from: from.value,
+    to: to.value,
+    page: pagination.page,
+    per_page: pagination.rowsPerPage,
+  });
 };
 
 const resetSearch = () => {
-    from.value = "";
-    to.value = ""
-    offlineOrderStore.getOfflineOrders();
+  from.value = "";
+  to.value = "";
+  offlineOrderStore.getOfflineOrders();
 };
 
 const handleInfo = (offlineOrder) => {
-    router.push(`/offline-order/${offlineOrder.id}`);
+  router.push(`/offline-order/${offlineOrder.id}`);
 };
 
 const onSubmit = async () => {
-    await offlineOrderStore.getOfflineOrders({
-        from: from.value,
-        to: to.value,
-        page: pagination.value.page,
-        per_page: pagination.value.rowsPerPage,
-    });
+  await offlineOrderStore.getOfflineOrders({
+    from: from.value,
+    to: to.value,
+    page: pagination.value.page,
+    per_page: pagination.value.rowsPerPage,
+  });
 };
 
 const navigateToRegistrationPage = () => {
-    router.push({ name: 'offline-order.create'});
+  router.push({ name: "offline-order.create" });
 };
 
 const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
-    return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
+  return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
 offlineOrderStore.getOfflineOrders();
@@ -178,14 +222,14 @@ offlineOrderStore.getOfflineOrders();
 
 <style lang="scss" scoped>
 .btn {
-    box-sizing: border-box;
-    justify-content: center;
-    padding: 10px;
-    width: 100px;
-    height: 30px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
+  box-sizing: border-box;
+  justify-content: center;
+  padding: 10px;
+  width: 100px;
+  height: 30px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
 }
 </style>

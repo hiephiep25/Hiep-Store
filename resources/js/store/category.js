@@ -1,34 +1,33 @@
-import { defineStore } from 'pinia';
-import request from '@/utils/request';
+import { defineStore } from "pinia";
+import request from "@/utils/request";
 
-export const useCategoryStore = defineStore('category', {
+export const useCategoryStore = defineStore("category", {
   state: () => ({
     user: {},
     isAuth: true,
     categories: [],
     pagination: {},
   }),
-  getters: {
-  },
+  getters: {},
   actions: {
     async getCategories(params) {
       try {
-        const { data } = await request.get('/categories', {
-          params: params
-        })
-        this.categories = data.data
+        const { data } = await request.get("/categories", {
+          params: params,
+        });
+        this.categories = data.data;
         this.pagination = {
           page: data.meta.current_page,
           rowsPerPage: data.meta.per_page,
           rowsNumber: data.meta.total,
         };
       } catch (error) {
-        throw error
+        throw error;
       }
     },
     async create(formData) {
       try {
-        await request.post('/categories/create', {
+        await request.post("/categories/create", {
           data: formData,
         });
       } catch (error) {

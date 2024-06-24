@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
-import request from '@/utils/request';
+import { defineStore } from "pinia";
+import request from "@/utils/request";
 
-export const useProductStore = defineStore('product', {
+export const useProductStore = defineStore("product", {
   state: () => ({
     user: {},
     isAuth: true,
@@ -9,43 +9,42 @@ export const useProductStore = defineStore('product', {
     availableProducts: [],
     pagination: {},
   }),
-  getters: {
-  },
+  getters: {},
   actions: {
     async getProducts(params) {
       try {
-        const { data } = await request.get('/products', {
-          params: params
-        })
-        this.products = data.data
+        const { data } = await request.get("/products", {
+          params: params,
+        });
+        this.products = data.data;
         this.pagination = {
           page: data.meta.current_page,
           rowsPerPage: data.meta.per_page,
           rowsNumber: data.meta.total,
         };
       } catch (error) {
-        throw error
+        throw error;
       }
     },
     async getAvailableProducts() {
-        try {
-          const { data } = await request.get('/products/available')
-          this.availableProducts = data.data
-          this.pagination = {
-            page: data.meta.current_page,
-            rowsPerPage: data.meta.per_page,
-            rowsNumber: data.meta.total,
-          };
-        } catch (error) {
-          throw error
-        }
-      },
+      try {
+        const { data } = await request.get("/products/available");
+        this.availableProducts = data.data;
+        this.pagination = {
+          page: data.meta.current_page,
+          rowsPerPage: data.meta.per_page,
+          rowsNumber: data.meta.total,
+        };
+      } catch (error) {
+        throw error;
+      }
+    },
     async getCategories() {
-        return request.get('/products/categories');
+      return request.get("/products/categories");
     },
     async create(formData) {
       try {
-        await request.post('/products/create', {
+        await request.post("/products/create", {
           data: formData,
         });
       } catch (error) {
