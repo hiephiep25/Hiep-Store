@@ -5,7 +5,7 @@
             {{ label }}
         </span>
         <div class="col-md-8 col-12 col-auto">
-            <q-input :type="type" outlined dense :disable="disable" :placeholder="placeholder" v-model="modelValue[name]"
+            <q-input :for="name" :type="type" outlined dense :disable="disable" :placeholder="placeholder" v-model="modelValue[name]"
                 :rules="rules">
             </q-input>
         </div>

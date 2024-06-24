@@ -6,6 +6,7 @@
         </span>
         <div class="col-md-8 col-12 col-auto">
             <q-select
+                :for="name"
                 outlined
                 v-model="modelValue[name]"
                 :options="option"

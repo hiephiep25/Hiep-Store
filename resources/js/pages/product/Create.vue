@@ -23,14 +23,14 @@
                                 width-common="col-8 q-ml-lg" width-label="col-2" label="Ngày sản xuất" :errors="errors" />
                             <Input v-model:model-value="form" name="expiry_day" type="date" width-common="col-8 q-ml-lg"
                                 width-label="col-2" label="Hạn sử dụng" :errors="errors" />
-                            <FileInput v-model:model-value="form" name="image" label="Ảnh sản phẩm" :errors="errors" />
+                            <FileInput id="image" v-model:model-value="form" name="image" label="Ảnh sản phẩm" :errors="errors" />
                             <div class="row justify-center" v-if="form.image">
                                 <img :src="imageSrc" alt="Ảnh" style="max-width: 100%; max-height: 100px;">
                             </div>
                         </div>
                     </div>
                     <div class="row justify-center">
-                        <q-btn type="submit" color="primary" label="Tạo mới" />
+                        <q-btn id="submit" type="submit" color="primary" label="Tạo mới" />
                     </div>
                 </q-form>
             </q-card-section>

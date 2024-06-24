@@ -39,7 +39,7 @@
             </q-card>
             <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
                 <div class="row">
-                    <q-btn class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage" />
+                    <q-btn id="create-new-product-button" class="btn" color="primary" label="Tạo mới" @click="navigateToRegistrationPage" />
                 </div>
                 <div class="row">
                     <div class="col-12 q-mt-md">
