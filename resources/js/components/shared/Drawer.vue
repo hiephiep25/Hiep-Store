@@ -203,6 +203,13 @@ const drawerContent = computed(() => {
       action: () => router.push({ name: "process.index" }),
       show: user.value.role === "MANAGER" || user.value.role === "ADMIN",
     },
+    {
+      label: "Quản lí cửa hàng",
+      icon: "store",
+      active: /store/g.test(route.name.toString()),
+      action: () => router.push({ name: "admin-store.index" }),
+      show: user.value.role === "ADMIN",
+    },
   ];
 });
 
