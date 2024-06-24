@@ -9,8 +9,8 @@
                     <div class="text-center text-red" v-if="invalid">
                         Sai thông tin đăng nhập
                     </div>
-                    <q-form class="q-px-md" @submit="login()">
-                        <q-input class="q-mt-md" outlined v-model="loginForm.email" dense>
+                    <q-form id="login-form" class="q-px-md" @submit="login">
+                        <q-input for="email-input" class="q-mt-md" outlined v-model="loginForm.email" dense>
                             <template v-slot:prepend>
                                 <q-icon name="email" />
                             </template>
@@ -18,7 +18,7 @@
                         <p class="text-red custom-error" v-if="errors && errors['email']">
                             {{ errors["email"][0] }}
                         </p>
-                        <q-input class="q-mt-md" outlined v-model="loginForm.password" dense type="password">
+                        <q-input for="password-input" class="q-mt-md" outlined v-model="loginForm.password" dense type="password">
                             <template v-slot:prepend>
                                 <q-icon name="key" />
                             </template>
@@ -27,16 +27,8 @@
                             {{ errors["password"][0] }}
                         </p>
 
-                        <!-- <q-checkbox
-                  class="q-mb-md"
-                  size="sm"
-                  outlined
-                  v-model="remember"
-                  val
-                  dense
-                  label="Remember me!" /> -->
                         <div class="row justify-center q-mt-md">
-                            <q-btn no-caps class="col-12" :loading="isSubmitting" type="submit" color="primary">
+                            <q-btn id="login-button" no-caps class="col-12" :loading="isSubmitting" type="submit" color="primary">
                                 {{ "Đăng nhập" }}
                             </q-btn>
                         </div>
