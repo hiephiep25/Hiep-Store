@@ -5,8 +5,10 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
       config.specPattern = [
-        // "cypress/e2e/admin/login.cy.js",
+        "cypress/e2e/admin/login.cy.js",
         "cypress/e2e/admin/product/create-product.cy.js",
+        "cypress/e2e/admin/discount/create-discount.cy.js",
+        "cypress/e2e/admin/shop/export.cy.js",
       ];
       return config;
     },

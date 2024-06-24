@@ -28,8 +28,8 @@ describe("Create Product Test", () => {
     cy.get("#code").type("TEST123");
     cy.get("#brand").type("Test Brand");
     cy.get("#category_id").click();
-    cy.get(".q-menu").should("be.visible");
-    cy.get(".q-item").contains("Hoa quả").click();
+    cy.get('.q-menu', { timeout: 20000 }).should('be.visible');
+    cy.get('.q-item').contains('Hoa quả').click();
     cy.get("#description").type("This is a test product.");
     cy.get("#qty").type("10");
     cy.get("#price_per_qty").type("100");

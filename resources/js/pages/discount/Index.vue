@@ -62,6 +62,7 @@
       <q-card class="my-card bg-white text-white q-pa-sm q-mt-lg">
         <div class="row">
           <q-btn
+            id="create-new"
             class="btn"
             color="primary"
             label="Tạo mới"

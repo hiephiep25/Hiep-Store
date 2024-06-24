@@ -38,6 +38,7 @@
               <div class="row justify-center">
                 <div class="col-6">
                   <q-select
+                    for="code"
                     outlined
                     :dense="true"
                     hide-bottom-space
@@ -57,6 +58,7 @@
               <div class="row">
                 <div class="col-6">
                   <CommonInput
+                    name="add"
                     v-model:model-value="form.add_quantity"
                     type="text"
                     width-common="col-12 q-ml-lg"
@@ -66,6 +68,7 @@
                 </div>
                 <div class="col-6">
                   <CommonInput
+                    name="sub"
                     v-model:model-value="form.sub_quantity"
                     type="text"
                     width-common="col-12 q-ml-lg"
@@ -78,6 +81,7 @@
           </div>
           <div class="row justify-center q-mt-md">
             <q-btn
+              id="export"
               type="submit"
               class="btn q-ml-sm"
               color="primary"

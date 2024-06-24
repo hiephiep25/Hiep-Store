@@ -7,6 +7,7 @@
       </div>
       <div :class="widthInput" class="q-pl-sm self-center">
         <q-input
+          :for="name"
           outlined
           v-model="inputValue"
           :type="type"
@@ -27,6 +28,10 @@
 import { computed } from "vue";
 
 const props = defineProps({
+  name: {
+    type: String,
+    default: "",
+  },
   label: {
     type: String,
     default: "",

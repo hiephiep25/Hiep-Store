@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="row justify-center">
-            <q-btn type="submit" color="primary" label="Tạo mới" />
+            <q-btn id="submit" type="submit" color="primary" label="Tạo mới" />
           </div>
         </q-form>
       </q-card-section>

@@ -5,6 +5,7 @@
       <q-toolbar-title>{{ $route.meta.title }}</q-toolbar-title>
       <q-space></q-space>
       <q-btn
+        id="icon"
         dense
         flat
         round
@@ -12,10 +13,8 @@
         class="position-relative"
       >
         <q-icon name="notifications" />
-        <span v-if="counts > 0" class="badge bg-white text-red-7">{{
-          counts
-        }}</span>
-        <q-menu transition-show="scale" transition-hide="scale">
+        <span v-if="counts > 0" class="badge bg-white text-red-7">{{ counts }}</span>
+        <q-menu id="menu" transition-show="scale" transition-hide="scale">
           <q-list>
             <q-item
               v-for="(notification, index) in notifications"
@@ -30,19 +29,12 @@
                   style="align-items: center"
                 >
                   <div class="row" style="width: 200px">
-                    <b>{{
-                      notification.sender_id
-                        ? notification.sender.name
-                        : "Hệ thống:"
-                    }}</b>
+                    <b>{{ notification.sender_id ? notification.sender.name : "Hệ thống:" }}</b>
                     <div class="q-ml-xs">{{ notification.content }}</div>
                   </div>
                   <span
                     class="status-dot q-ml-sm"
-                    :class="{
-                      'bg-blue': !notification.is_read,
-                      'bg-grey': notification.is_read,
-                    }"
+                    :class="{ 'bg-blue': !notification.is_read, 'bg-grey': notification.is_read }"
                   ></span>
                 </span>
               </q-item-section>
@@ -50,13 +42,7 @@
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn-dropdown
-        class="q-ml-sm"
-        unelevated
-        no-caps
-        :label="user.name"
-        icon="perm_identity"
-      >
+      <q-btn-dropdown class="q-ml-sm" unelevated no-caps :label="user.name" icon="perm_identity">
         <q-list>
           <q-item
             clickable
@@ -81,6 +67,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useNotificationStore } from "@/store/notification";
 import { onMounted, ref } from "vue";
+
 const env = import.meta.env;
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -110,7 +97,6 @@ const dropdownItems = [
 ];
 
 const navigateToNotification = async (notification) => {
-  // console.log(env.VITE_APP_URL)
   const appUrl = env.VITE_APP_URL;
   const redirectUrl = `${appUrl}/${notification.redirect}`;
   await notificationStore.readNotification(notification.id);
