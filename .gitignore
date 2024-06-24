@@ -20,3 +20,4 @@ yarn-error.log
 
 cypress/videos
 package-lock.json
+composer.lock
