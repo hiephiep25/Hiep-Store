@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 const ApiMethod = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  PATCH: 'PATCH',
-  DELETE: 'DELETE',
+  GET: "GET",
+  POST: "POST",
+  PUT: "PUT",
+  PATCH: "PATCH",
+  DELETE: "DELETE",
 };
 
 const instance = () => {
@@ -22,11 +22,11 @@ const request = (method) => (path, options) => {
   // Ex: add Authorization, ....
 
   const headers = {
-    Accept: 'application/json',
+    Accept: "application/json",
   };
 
   //convert to object.
-  options = { ...(options && { ...options }) }
+  options = { ...(options && { ...options }) };
   //add config header.
   options.headers = { ...options.headers, ...headers };
 

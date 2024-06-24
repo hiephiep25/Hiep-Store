@@ -1,29 +1,28 @@
-import { defineStore } from 'pinia';
-import request from '@/utils/request';
+import { defineStore } from "pinia";
+import request from "@/utils/request";
 
-export const useManagerStore = defineStore('manager', {
+export const useManagerStore = defineStore("manager", {
   state: () => ({
     user: {},
     isAuth: true,
     managers: [],
     pagination: {},
   }),
-  getters: {
-  },
+  getters: {},
   actions: {
     async getManagers(params) {
       try {
-        const { data } = await request.get('/managers', {
-          params: params
-        })
-        this.managers = data.data
+        const { data } = await request.get("/managers", {
+          params: params,
+        });
+        this.managers = data.data;
         this.pagination = {
           page: data.meta.current_page,
           rowsPerPage: data.meta.per_page,
           rowsNumber: data.meta.total,
         };
       } catch (error) {
-        throw error
+        throw error;
       }
     },
     async getManager(id) {

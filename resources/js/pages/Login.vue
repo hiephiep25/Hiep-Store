@@ -1,63 +1,81 @@
 <template>
-    <q-page>
-        <div class="row height-inherit justify-center items-center login-page">
-            <q-card class="col-xs-10 col-md-4 height-fit">
-                <q-card-section class="q-pb-none">
-                    <div class="text-h6 text-center">{{ env.VITE_APP_NAME }}</div>
-                </q-card-section>
-                <q-card-section>
-                    <div class="text-center text-red" v-if="invalid">
-                        Sai thông tin đăng nhập
-                    </div>
-                    <q-form id="login-form" class="q-px-md" @submit="login">
-                        <q-input for="email-input" class="q-mt-md" outlined v-model="loginForm.email" dense>
-                            <template v-slot:prepend>
-                                <q-icon name="email" />
-                            </template>
-                        </q-input>
-                        <p class="text-red custom-error" v-if="errors && errors['email']">
-                            {{ errors["email"][0] }}
-                        </p>
-                        <q-input for="password-input" class="q-mt-md" outlined v-model="loginForm.password" dense type="password">
-                            <template v-slot:prepend>
-                                <q-icon name="key" />
-                            </template>
-                        </q-input>
-                        <p class="text-red custom-error" v-if="errors && errors['password']">
-                            {{ errors["password"][0] }}
-                        </p>
+  <q-page>
+    <div class="row height-inherit justify-center items-center login-page">
+      <q-card class="col-xs-10 col-md-4 height-fit">
+        <q-card-section class="q-pb-none">
+          <div class="text-h6 text-center">{{ env.VITE_APP_NAME }}</div>
+        </q-card-section>
+        <q-card-section>
+          <div class="text-center text-red" v-if="invalid">Sai thông tin đăng nhập</div>
+          <q-form id="login-form" class="q-px-md" @submit="login">
+            <q-input
+              for="email-input"
+              class="q-mt-md"
+              outlined
+              v-model="loginForm.email"
+              dense
+            >
+              <template v-slot:prepend>
+                <q-icon name="email" />
+              </template>
+            </q-input>
+            <p class="text-red custom-error" v-if="errors && errors['email']">
+              {{ errors["email"][0] }}
+            </p>
+            <q-input
+              for="password-input"
+              class="q-mt-md"
+              outlined
+              v-model="loginForm.password"
+              dense
+              type="password"
+            >
+              <template v-slot:prepend>
+                <q-icon name="key" />
+              </template>
+            </q-input>
+            <p class="text-red custom-error" v-if="errors && errors['password']">
+              {{ errors["password"][0] }}
+            </p>
 
-                        <div class="row justify-center q-mt-md">
-                            <q-btn id="login-button" no-caps class="col-12" :loading="isSubmitting" type="submit" color="primary">
-                                {{ "Đăng nhập" }}
-                            </q-btn>
-                        </div>
-                        <div class="row justify-center q-mt-md">
-                            <router-link :to="{ name: 'forgot-password' }" class="custom-link">{{
-                            "Quên mật khẩu"
-                            }}</router-link>
-                        </div>
-                    </q-form>
-                </q-card-section>
-            </q-card>
-        </div>
-    </q-page>
+            <div class="row justify-center q-mt-md">
+              <q-btn
+                id="login-button"
+                no-caps
+                class="col-12"
+                :loading="isSubmitting"
+                type="submit"
+                color="primary"
+              >
+                {{ "Đăng nhập" }}
+              </q-btn>
+            </div>
+            <div class="row justify-center q-mt-md">
+              <router-link :to="{ name: 'forgot-password' }" class="custom-link">{{
+                "Quên mật khẩu"
+              }}</router-link>
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </div>
+  </q-page>
 </template>
 
 <script setup>
-import { useAuthStore } from '@/store/auth';
-import { reactive, ref, watch } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+import { useAuthStore } from "@/store/auth";
+import { reactive, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 const env = import.meta.env;
 
 const errors = ref();
 const invalid = ref();
 
 const loginForm = reactive({
-    email: '',
-    password: '',
-    remember: true
+  email: "",
+  password: "",
+  remember: true,
 });
 
 const isSubmitting = ref(false);
@@ -67,52 +85,52 @@ const { isAuth } = storeToRefs(authStore);
 const { isAdmin } = storeToRefs(authStore);
 
 const redirect = () => {
-    router.push({ name: 'home' });
+  router.push({ name: "home" });
 };
 
 const login = async () => {
-    try {
-        isSubmitting.value = true;
-        errors.value = undefined;
-        await authStore.login(loginForm);
-        redirect();
-    } catch (error) {
-        console.log(error);
-        if (error?.response?.data.status === 422) {
-            errors.value = error?.response?.data?.errors;
-        } else {
-            invalid.value = true;
-        }
-    } finally {
-        isSubmitting.value = false;
+  try {
+    isSubmitting.value = true;
+    errors.value = undefined;
+    await authStore.login(loginForm);
+    redirect();
+  } catch (error) {
+    console.log(error);
+    if (error?.response?.data.status === 422) {
+      errors.value = error?.response?.data?.errors;
+    } else {
+      invalid.value = true;
     }
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 
 watch(
-    isAuth,
-    (val) => {
-        if (val) {
-            redirect();
-        }
-    },
-    { immediate: true }
+  isAuth,
+  (val) => {
+    if (val) {
+      redirect();
+    }
+  },
+  { immediate: true }
 );
 </script>
 <style scoped lang="scss">
 .height-inherit {
-    min-height: inherit;
+  min-height: inherit;
 }
 
 .height-fit {
-    height: fit-content;
+  height: fit-content;
 }
 
 .custom-link {
-    text-decoration: none;
-    color: $blue-7;
+  text-decoration: none;
+  color: $blue-7;
 }
 
 .q-page {
-    min-height: 100vh !important;
+  min-height: 100vh !important;
 }
 </style>

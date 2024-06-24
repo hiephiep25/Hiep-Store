@@ -1,8 +1,8 @@
 {
-    "user": {
-      "one": {
-        "name": "Admin",
-        "email": "admin@gmail.com"
-      }
+  "user": {
+    "one": {
+      "name": "Admin",
+      "email": "admin@gmail.com"
     }
   }
+}
