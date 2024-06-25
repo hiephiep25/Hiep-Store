@@ -8,6 +8,8 @@ use App\Http\Requests\Discount\DiscountCreateRequest;
 use App\Services\DiscountService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
+use App\Models\Discount;
 
 class DiscountController extends Controller
 {
@@ -50,5 +52,25 @@ class DiscountController extends Controller
         $this->discountService->delete($id);
 
         return $this->success();
+    }
+
+    public function updateDiscountProducts(Request $request, $id)
+    {
+        $discount = Discount::findOrFail($id);
+        $products = $request->all();
+
+        $syncData = [];
+        foreach ($products as $product) {
+            if (isset($product['pivot'])) {
+                $syncData[$product['id']] = [
+                    'value' => $product['pivot']['value'],
+                    'qty' => $product['pivot']['qty'],
+                ];
+            }
+        }
+
+        $discount->products()->sync($syncData);
+
+        return response()->json(['message' => 'Cập nhật thành công']);
     }
 }

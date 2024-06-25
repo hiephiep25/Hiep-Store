@@ -14,7 +14,7 @@ class DiscountService
         $name = $params['name'] ?? '';
         $code = $params['code'] ?? '';
         $perPage = $params['per_page'] ?? PER_PAGE;
-        return Discount::where(function ($query) use ($name, $code) {
+        return Discount::with('products')->where(function ($query) use ($name, $code) {
             if (!empty($name)) {
                 $query->where('name', 'like', "%$name%");
             }

@@ -34,8 +34,7 @@ class ProductController extends Controller
 
     public function getAllAvailable(Request $request)
     {
-        $params = $request->only(['name', 'code', 'per_page']);
-        $products = $this->productService->getAllAvailable($params);
+        $products = $this->productService->getAllAvailable();
         return JsonResource::collection($products);
     }
 

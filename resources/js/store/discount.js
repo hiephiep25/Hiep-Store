@@ -54,5 +54,15 @@ export const useDiscountStore = defineStore("discount", {
     deleteDiscount(id) {
       return request.delete(`/discounts/${id}`);
     },
+
+    async updateDiscountProducts(id, formData) {
+      try {
+        await request.post(`/discounts/${id}/update-products`, {
+          data: formData,
+        });
+      } catch (error) {
+        throw error;
+      }
+    },
   },
 });
