@@ -20,14 +20,14 @@ class DiscountController extends Controller
 
     public function index(Request $request)
     {
-        $params = $request->only(['name', 'code', 'value', 'per_page']);
+        $params = $request->only(['name', 'code', 'per_page']);
         $discounts = $this->discountService->get($params);
         return JsonResource::collection($discounts);
     }
 
     public function create(DiscountCreateRequest $request): JsonResource
     {
-        $discountData = $request->only(['name', 'code', 'value', 'description', 'quantity', 'expiration_date']);
+        $discountData = $request->only(['name', 'code', 'description', 'start', 'end', 'image']);
         $discount = $this->discountService->create($discountData);
         return new JsonResource($discount);
     }
@@ -40,7 +40,7 @@ class DiscountController extends Controller
 
     public function update(string $id, DiscountUpdateRequest $request): JsonResource
     {
-        $discountData = $request->only(['name', 'code', 'value', 'description', 'quantity', 'expiration_date']);
+        $discountData = $request->only(['name', 'code', 'description', 'start', 'end', 'image']);
         $discount = $this->discountService->update($id, $discountData);
         return new JsonResource($discount);
     }

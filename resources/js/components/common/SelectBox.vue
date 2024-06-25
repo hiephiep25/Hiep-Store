@@ -21,7 +21,7 @@
           <q-item v-bind="scope.itemProps">
             <q-item-section avatar>
               <q-img
-                :src="scope.opt.image"
+                :src="getUrl(scope.opt.image)"
                 alt="Product Image"
                 style="width: 50px; height: 5 0px"
               ></q-img>
@@ -76,4 +76,9 @@ defineProps({
     required: false,
   },
 });
+
+const env = import.meta.env;
+const getUrl = (path) => {
+  return path ? `${env.VITE_APP_URL}/${path}` : "";
+};
 </script>

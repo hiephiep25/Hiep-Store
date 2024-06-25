@@ -66,7 +66,7 @@
                 <template v-slot:body-cell-image="props">
                   <q-td :props="props">
                     <img
-                      :src="props.row.image"
+                      :src="getUrl(props.row.image)"
                       alt="Product Image"
                       style="width: 50px; height: auto"
                     />
@@ -108,9 +108,9 @@
           <p><strong>Hạn sử dụng:</strong> {{ selectedDocument.expiry_day }}</p>
         </div>
         <div class="document-images">
-          <img :src="selectedDocument.image" alt="Product Image" />
-          <img :src="selectedDocument.license_company" alt="License Company" />
-          <img :src="selectedDocument.license_product" alt="License Product" />
+          <img :src="getUrl(selectedDocument.image)" alt="Product Image" />
+          <img :src="getUrl(selectedDocument.license_company)" alt="License Company" />
+          <img :src="getUrl(selectedDocument.license_product)" alt="License Product" />
         </div>
         <p></p>
         <p>
@@ -140,7 +140,7 @@ import { useDocumentApprovalStore } from "@/store/document-approval";
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import CommonSelectBox from "../../components/common/CommonSelectBox.vue";
-
+const env = import.meta.env;
 const router = useRouter();
 const documentStore = useDocumentApprovalStore();
 const authStore = useAuthStore();
@@ -218,7 +218,9 @@ const columns = ref([
     },
   },
 ]);
-
+const getUrl = (path) => {
+  return path ? `${env.VITE_APP_URL}/${path}` : "";
+};
 const statusOptions = [
   { label: "Được chấp nhận", value: "APPROVED" },
   { label: "Đợi phê duyệt", value: "AWAIT_APPROVAL" },

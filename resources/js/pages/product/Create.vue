@@ -174,7 +174,7 @@ const create = async () => {
     formData.append("code", form.code);
     formData.append("brand", form.brand);
     formData.append("category_id", form.category_id);
-    formData.append("description", form.description);
+    formData.append("description", form.description || '');
     formData.append("qty", form.qty);
     formData.append("price_per_qty", form.price_per_qty);
     formData.append("manufacture_day", form.manufacture_day);

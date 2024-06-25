@@ -34,7 +34,6 @@
                 v-model="authStore.user.email"
                 label="Email"
                 :rules="[
-                  (val) => !!val.trim() || 'Email không được bỏ trống!',
                   (val) =>
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) ||
                     'Email không hợp lệ',
@@ -51,7 +50,6 @@
                 v-model="authStore.user.name"
                 label="Tên"
                 :rules="[
-                  (val) => !!val.trim() || 'Tên không được bỏ trống!',
                   (val) =>
                     (val && val.length <= 256) ||
                     'Tên không được có nhiều hơn 256 kí tự',
@@ -67,14 +65,6 @@
                 dense
                 v-model="authStore.user.phone"
                 label="Số điện thoại"
-                :rules="[
-                  (val) => !!val.trim() || 'Số điện thoại không được bỏ trống!',
-                  (val) =>
-                    val === null ||
-                    val === '' ||
-                    /^[0-9]*$/.test(val) ||
-                    'Số điện thoại không hợp lệ',
-                ]"
               />
             </div>
           </div>
@@ -86,9 +76,6 @@
                 dense
                 v-model="authStore.user.address"
                 label="Địa chỉ"
-                :rules="[
-                  (val) => !!val.trim() || 'Địa chỉ không được bỏ trống!',
-                ]"
               />
             </div>
           </div>
@@ -102,7 +89,6 @@
                 v-model="authStore.user.dob"
                 label="Ngày sinh"
                 :rules="[
-                  (val) => !!val.trim() || 'Ngày sinh không được bỏ trống',
                   (val) =>
                     new Date(val) <= new Date() || 'Ngày sinh không hợp lệ',
                 ]"
@@ -120,12 +106,6 @@
                 dense
                 v-model="companyNameModel"
                 label="Tên công ty"
-                :rules="[
-                  (val) => !!val.trim() || 'Tên công ty không được bỏ trống!',
-                  (val) =>
-                    (val && val.length <= 256) ||
-                    'Tên công ty không được có nhiều hơn 256 kí tự',
-                ]"
               />
             </div>
           </div>
@@ -140,10 +120,6 @@
                 dense
                 v-model="companyAddressModel"
                 label="Địa chỉ công ty"
-                :rules="[
-                  (val) =>
-                    !!val.trim() || 'Địa chỉ công ty không được bỏ trống!',
-                ]"
               />
             </div>
           </div>
@@ -158,10 +134,6 @@
                 dense
                 v-model="companyContactModel"
                 label="Liên hệ của công ty"
-                :rules="[
-                  (val) =>
-                    !!val.trim() || 'Liên hệ của công ty không được bỏ trống!',
-                ]"
               />
             </div>
           </div>
@@ -186,7 +158,7 @@
 import { ref, computed, watch } from "vue";
 import useNotify from "@/utils/notify";
 import { useAuthStore } from "@/store/auth";
-
+const env = import.meta.env;
 const authStore = useAuthStore();
 const notify = useNotify();
 const errors = ref({});
@@ -200,7 +172,7 @@ const imageSrc = computed(() => {
   if (file.value) {
     return URL.createObjectURL(file.value);
   }
-  return authStore.user.avatar;
+  return env.VITE_APP_URL + '/' + authStore.user.avatar;
 });
 async function updateProfile() {
   try {

@@ -67,8 +67,7 @@ onMounted(() => {
 });
 
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "numeric", day: "numeric" };
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", options);
+  const date = dayjs(dateString);
+  return date.format('DD/MM/YYYY');
 };
 </script>

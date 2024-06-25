@@ -27,21 +27,6 @@
               </div>
             </div>
           </div>
-          <div class="row justify-center">
-            <div class="col">
-              <div class="row">
-                <div class="col-6">
-                  <CommonInput
-                    v-model:model-value="value"
-                    type="text"
-                    width-common="col-12 q-ml-lg"
-                    width-label="col-1"
-                    label="Giá trị khuyến mại"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="row justify-center q-mt-md">
             <q-btn
               type="reset"
@@ -105,15 +90,20 @@
                     />
                   </q-td>
                 </template>
-                <template v-slot:body-cell-start_date="props">
+                <template v-slot:body-cell-start="props">
                   <q-td :props="props">{{
-                    formatDate(props.row.start_date)
+                    formatDate(props.row.start)
                   }}</q-td>
                 </template>
-                <template v-slot:body-cell-expiration_date="props">
+                <template v-slot:body-cell-end="props">
                   <q-td :props="props">{{
-                    formatDate(props.row.expiration_date)
+                    formatDate(props.row.end)
                   }}</q-td>
+                </template>
+                <template v-slot:body-cell-image="props">
+                  <q-td :props="props">
+                    <img style="height: 50px" :src="getImageUrl(props.row.image)" />
+                  </q-td>
                 </template>
               </q-table>
             </q-markup-table>
@@ -152,7 +142,8 @@ import useNotify from "@/utils/notify";
 import { useDiscountStore } from "@/store/discount";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
-
+import dayjs from 'dayjs'
+const env = import.meta.env;
 const router = useRouter();
 const discountStore = useDiscountStore();
 const separator = ref("vertical");
@@ -187,24 +178,24 @@ const columns = ref([
     sortable: true,
   },
   {
-    name: "value",
-    align: "center",
-    label: "Giá trị khuyến mại (%)",
-    field: "value",
-    sortable: true,
-  },
-  {
-    name: "start_date",
+    name: "start",
     align: "center",
     label: "Thời gian bắt đầu",
-    field: "start_date",
+    field: "start",
     sortable: true,
   },
   {
-    name: "expiration_date",
+    name: "end",
     align: "center",
     label: "Thời gian hết hạn",
-    field: "expiration_date",
+    field: "end",
+    sortable: true,
+  },
+  {
+    name: "image",
+    align: "center",
+    label: "Ảnh",
+    field: "image",
     sortable: true,
   },
   {
@@ -235,17 +226,19 @@ const columns = ref([
   },
 ]);
 
+const getImageUrl = (path) => {
+  return path ? `${env.VITE_APP_URL}/${path}` : "";
+};
+
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "numeric", day: "numeric" };
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", options);
+  const date = dayjs(dateString);
+  return date.format('DD/MM/YYYY HH:mm');
 };
 
 const onRequest = async ({ pagination }) => {
   await discountStore.getDiscounts({
     name: name.value,
     code: code.value,
-    value: value.value,
     page: pagination.page,
     per_page: pagination.rowsPerPage,
   });
@@ -254,7 +247,6 @@ const onRequest = async ({ pagination }) => {
 const resetSearch = () => {
   name.value = "";
   code.value = "";
-  value.value = "";
   discountStore.getDiscounts();
 };
 
@@ -283,7 +275,6 @@ const onSubmit = async () => {
   await discountStore.getDiscounts({
     name: name.value,
     code: code.value,
-    value: value.value,
     page: pagination.value.page,
     per_page: pagination.value.rowsPerPage,
   });

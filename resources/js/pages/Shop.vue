@@ -112,7 +112,7 @@
                 <template v-slot:body-cell-image="props">
                   <q-td :props="props">
                     <img
-                      :src="props.row.image"
+                      :src="getUrl(props.row.image)"
                       alt="Ảnh"
                       style="width: 50px; height: auto"
                     />
@@ -136,7 +136,7 @@ import CommonSelectBox from "../components/common/CommonSelectBox.vue";
 import CommonInput from "../components/common/CommonInput.vue";
 import useNotify from "@/utils/notify";
 import { useAuthStore } from "@/store/auth";
-
+const env = import.meta.env;
 const notify = useNotify();
 const errors = ref({});
 const storeStore = useStoreStore();
@@ -160,7 +160,9 @@ const selectedProduct = ref(null);
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 const isAdmin = ref(user.value.role == "ADMIN");
-
+const getUrl = (path) => {
+  return path ? `${env.VITE_APP_URL}/${path}` : "";
+};
 const form = reactive({
   store_id: store.value.value,
   product_code: "",
