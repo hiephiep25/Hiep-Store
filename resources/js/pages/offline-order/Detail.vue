@@ -41,7 +41,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useOfflineOrderStore } from "@/store/offline-order";
 import html2pdf from "html2pdf.js";
-
+import dayjs from "dayjs";
 const router = useRouter();
 const offlineOrderStore = useOfflineOrderStore();
 const offlineOrder = ref({});

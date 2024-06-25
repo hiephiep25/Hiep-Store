@@ -48,6 +48,11 @@ class ProductService
         })->orderBy('id', 'asc')->paginate($perPage);
     }
 
+    public function getAllAvailable()
+    {
+        return Product::available()->orderBy('id', 'asc')->get();
+    }
+
     public function getCategories()
     {
         return Category::all();

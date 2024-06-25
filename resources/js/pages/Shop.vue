@@ -233,7 +233,7 @@ const onUpdate = async () => {
 
 const availableProductOptions = computed(() =>
   availableProducts.value.map((product) => ({
-    label: product.name + " - " + product.code,
+    label: `${product.name} - ${product.code}`,
     value: product.code,
   }))
 );
@@ -243,7 +243,7 @@ const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
 };
 
 storeStore.getProductStores({ store_id: store.value.value });
-productStore.getAvailableProducts();
+productStore.getAllAvailableProducts();
 </script>
 
 <style lang="scss" scoped>

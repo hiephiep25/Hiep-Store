@@ -108,7 +108,7 @@ import { useOfflineOrderStore } from "@/store/offline-order";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
 import { useAuthStore } from "@/store/auth";
-
+import dayjs from "dayjs";
 const router = useRouter();
 const offlineOrderStore = useOfflineOrderStore();
 const separator = ref("vertical");

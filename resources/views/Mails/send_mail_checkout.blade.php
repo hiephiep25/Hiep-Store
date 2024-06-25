@@ -55,7 +55,7 @@
                             <span>{{ $request['phone'] }}</span>
                         </div>
                         <div class="col-6" style="flex: 0 0 50%; width: 50%; box-sizing: border-box;">
-                            <b>Ngày mua hàng:</b> {{ date('d/m/yy H:i', strtotime($order->created_at)) }}
+                            <b>Ngày mua hàng:</b> {{ date('d/m/y H:i', strtotime($order->created_at)) }}
                             <br>
                             <b>Địa chỉ:</b> {{ $request['address'] }}
                         </div>

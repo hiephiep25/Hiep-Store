@@ -108,6 +108,7 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
         Route::prefix('products')->group(function () {
             Route::get('/', [Admin\ProductController::class, 'index']);
             Route::get('/available', [Admin\ProductController::class, 'getAvailable']);
+            Route::get('/all-available', [Admin\ProductController::class, 'getAllAvailable']);
             Route::post('/create', [Admin\ProductController::class, 'create']);
             Route::get('/{id}', [Admin\ProductController::class, 'show']);
             Route::post('/{id}', [Admin\ProductController::class, 'update']);
