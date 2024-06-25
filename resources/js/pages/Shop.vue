@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-pa-md">
       <q-card v-if="isAdmin" class="my-card bg-white text-white q-pa-md">
-        <q-form @submit="onSubmit">
+        <q-form @submit.prevent="onSubmit">
           <div class="row justify-center">
             <div class="col">
               <div class="row">
@@ -32,7 +32,7 @@
         v-if="isAdmin"
         class="my-card bg-white text-white q-pa-sm q-mt-lg"
       >
-        <q-form @submit="onUpdate">
+        <q-form @submit.prevent="onUpdate">
           <div class="row justify-center">
             <div class="col">
               <div class="row justify-center">
@@ -128,7 +128,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watchEffect } from "vue";
 import { useStoreStore } from "@/store/store";
 import { useProductStore } from "@/store/product";
 import { storeToRefs } from "pinia";
@@ -145,10 +145,16 @@ const separator = ref("vertical");
 const { stores, productStores, pagination } = storeToRefs(storeStore);
 const { availableProducts } = storeToRefs(productStore);
 const store = ref({ value: 1, label: 1 });
-const storeOptions = stores.value.map((store) => ({
-  label: store.id,
-  value: store.id,
-}));
+storeStore.getStores();
+const storeOptions = ref([]);
+
+watchEffect(() => {
+  storeOptions.value = stores.value.map((store) => ({
+    label: store.id,
+    value: store.id,
+  }));
+});
+
 const selectedProduct = ref(null);
 
 const authStore = useAuthStore();
@@ -234,7 +240,6 @@ const getPaginationLabel = (firstRowIndex, endRowIndex, totalRowsNumber) => {
   return `${firstRowIndex}-${endRowIndex} of ${totalRowsNumber}`;
 };
 
-storeStore.getStores();
 storeStore.getProductStores({ store_id: store.value.value });
 productStore.getAvailableProducts();
 </script>

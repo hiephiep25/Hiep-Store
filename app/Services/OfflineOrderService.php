@@ -139,12 +139,12 @@ class OfflineOrderService
                     }
                     OrderProduct::create([
                         'order_id' => $order->id,
-                        'product_id' => $product->id,
+                        'product_id' => $prod->id,
                         'product_code' => $prod->code,
                         'qty' => $productData['qty'],
                     ]);
 
-                    $this->decreaseProductQuantity($product->code, $productData['qty']);
+                    $this->decreaseProductQuantity($prod->code, $productData['qty']);
                 }
             }
 
