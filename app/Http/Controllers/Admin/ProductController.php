@@ -32,6 +32,12 @@ class ProductController extends Controller
         return JsonResource::collection($products);
     }
 
+    public function getAllAvailable(Request $request)
+    {
+        $products = $this->productService->getAllAvailable();
+        return JsonResource::collection($products);
+    }
+
     public function getCategories()
     {
         $categories = $this->productService->getCategories();

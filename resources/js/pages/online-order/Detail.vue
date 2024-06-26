@@ -23,11 +23,11 @@
             </div>
             <div>
               <strong>Địa chỉ:</strong>
-              {{ onlineOrder.online_order.customer_address }}
+              {{ onlineOrder?.online_order?.customer_address }}
             </div>
             <div>
               <strong>Liên hệ:</strong>
-              {{ onlineOrder.online_order.customer_phone }}
+              {{ onlineOrder?.online_order?.customer_phone }}
             </div>
             <h5>Các sản phẩm</h5>
             <div v-for="product in onlineOrder.products" :key="product.id">
@@ -45,7 +45,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useOnlineOrderStore } from "@/store/online-order";
-
+import dayjs from "dayjs";
 const router = useRouter();
 const onlineOrderStore = useOnlineOrderStore();
 const onlineOrder = ref({});
@@ -67,8 +67,7 @@ onMounted(() => {
 });
 
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "numeric", day: "numeric" };
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", options);
+  const date = dayjs(dateString);
+  return date.format('DD/MM/YYYY');
 };
 </script>

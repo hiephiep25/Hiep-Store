@@ -1,19 +1,21 @@
 <template>
   <q-page>
     <div class="center-text">Chào mừng đến với trang chủ</div>
-    <div>
-      <RevenueChartMonth />
-    </div>
-    <q-card-section>
-      <div class="row">
-        <q-card class="q-mx-sm">
-          <OnlineRevenueChartMonth />
-        </q-card>
-        <q-card class="q-mx-sm">
-          <OfflineRevenueChartMonth />
-        </q-card>
+    <div v-if="authStore.user.role === 'ADMIN'">
+      <div>
+        <RevenueChartMonth />
       </div>
-    </q-card-section>
+      <q-card-section>
+        <div class="row">
+          <q-card class="q-mx-sm">
+            <OnlineRevenueChartMonth />
+          </q-card>
+          <q-card class="q-mx-sm">
+            <OfflineRevenueChartMonth />
+          </q-card>
+        </div>
+      </q-card-section>
+    </div>
   </q-page>
 </template>
 
@@ -21,6 +23,8 @@
 import RevenueChartMonth from "@/components/charts/RevenueChartMonth.vue";
 import OnlineRevenueChartMonth from "@/components/charts/OnlineRevenueChartMonth.vue";
 import OfflineRevenueChartMonth from "@/components/charts/OfflineRevenueChartMonth.vue";
+import { useAuthStore } from "@/store/auth";
+const authStore = useAuthStore();
 </script>
 
 <style scoped>

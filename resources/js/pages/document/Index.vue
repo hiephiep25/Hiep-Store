@@ -65,7 +65,7 @@
                 <template v-slot:body-cell-image="props">
                   <q-td :props="props">
                     <img
-                      :src="props.row.image"
+                      :src="getImageUrl(props.row.image)"
                       alt="Ảnh"
                       style="width: 50px; height: auto"
                     />
@@ -129,6 +129,7 @@ import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
 import CommonSelectBox from "../../components/common/CommonSelectBox.vue";
 
+const env = import.meta.env;
 const router = useRouter();
 const documentStore = useDocumentStore();
 const authStore = useAuthStore();
@@ -214,13 +215,17 @@ const statusOptions = [
   { label: "Bị từ chối", value: "DENIED" },
 ];
 
+const getImageUrl = (path) => {
+  return path ? `${env.VITE_APP_URL}/${path}` : "";
+};
+
 const onRequest = async ({ pagination }) => {
   await documentStore.getMyDocuments({
     status: status.value.label,
     page: pagination.page,
     per_page: pagination.rowsPerPage,
   });
-};
+};  
 
 const resetSearch = () => {
   status.value = "";

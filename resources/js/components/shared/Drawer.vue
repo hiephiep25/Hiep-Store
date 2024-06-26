@@ -79,7 +79,7 @@
       >
         <q-avatar size="64px">
           <template v-if="user.avatar">
-            <img :src="user.avatar" alt="User Avatar" />
+            <img :src="avatarUrl" alt="User Avatar" />
           </template>
           <template v-else>
             <img src="@/public/images/avatar.jpg" alt="Default Avatar" />
@@ -96,7 +96,7 @@ import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAuthStore } from "@/store/auth";
 import { storeToRefs } from "pinia";
-
+const env = import.meta.env;
 const headerHeight = "75px";
 
 const authStore = useAuthStore();
@@ -120,6 +120,12 @@ const drawer = computed({
   set(value) {
     emit("update:drawer", value);
   },
+});
+
+const avatarUrl = computed(() => {
+  if (user.value.avatar) {
+    return `${env.VITE_APP_URL}/${user.value.avatar}`;
+  }
 });
 
 const drawerContent = computed(() => {

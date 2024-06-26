@@ -41,13 +41,14 @@ class ProfileService
         $user = Auth::user();
         if (!empty($userData['avatar'])) {
             if ($user->avatar) {
-                $avatarPath = public_path(str_replace(url('/'), '', $user->avatar));
-                if (file_exists($avatarPath)) {
-                    unlink($avatarPath);
-                }
+                unlink($user->avatar);
             }
+
             $name = $userData['avatar']->getClientOriginalName();
-            $userData['avatar'] = url(Storage::url(Storage::putFileAs("/public/avatars/{$user->id}", $userData['avatar'], $name)));
+            $directory = "public/avatars/{$user->id}";
+            $path = Storage::putFileAs($directory, $userData['avatar'], $name);
+
+            $userData['avatar'] = str_replace('public/', 'storage/', $path);
         }
         $user->update($userData);
 

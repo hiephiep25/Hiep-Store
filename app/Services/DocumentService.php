@@ -62,21 +62,19 @@ class DocumentService
         $image = '/public/documents/product_image/' . Str::slug($user->id);
         $name1 = $data['image']->getClientOriginalName();
         $path1 = Storage::putFileAs($image, $data['image'], $name1);
-        $data['image'] = url(Storage::url($path1));
+        $data['image'] = str_replace('public/', 'storage/', $path1);
 
         $licenseCompany = '/public/documents/license_company/' . Str::slug($user->id);
         $name = $data['license_company']->getClientOriginalName();
         $path = Storage::putFileAs($licenseCompany, $data['license_company'], $name);
-        $data['license_company'] = url(Storage::url($path));
+        $data['license_company'] =  str_replace('public/', 'storage/', $path);
 
         $licenseProduct = '/public/documents/license_product/' . Str::slug($user->id);
         $name2 = $data['license_product']->getClientOriginalName();
         $path2 = Storage::putFileAs($licenseProduct, $data['license_product'], $name2);
-        $data['license_product'] = url(Storage::url($path2));
+        $data['license_product'] = str_replace('public/', 'storage/', $path2);
 
-        $document = Document::create([
-            ...$data,
-        ]);
+        $document = Document::create($data);
         $this->notificationService->createNotification(1, 'create-document');
 
         return $document;
@@ -84,7 +82,6 @@ class DocumentService
 
     public function update(array $data, $id): Document
     {
-
         $document = $this->findDocumentById($id);
 
         if ($document->status == Document::APPROVED || $document->status == Document::DENIED) {
@@ -94,6 +91,10 @@ class DocumentService
         $createdAtDiff = Carbon::now()->diffInDays($document->created_at);
         if ($createdAtDiff > 1) {
             throw new Exception("Không thể chỉnh sửa tài liệu đã tạo được hơn 1 ngày");
+        }
+
+        if (isset($data['image'])) {
+            $data['image'] = $this->updateImage($document->image, $data['image'], 'product_image');
         }
 
         if (isset($data['license_company'])) {
@@ -111,13 +112,13 @@ class DocumentService
 
     protected function updateImage($oldImageUrl, $newImage, $folder): string
     {
+        $directory = '/public/documents/' . $folder . '/' . Str::slug(Auth::id());
         $this->deleteImage($oldImageUrl);
 
-        $directory = '/public/documents/' . $folder . '/' . Str::slug(Auth::id());
         $name = $newImage->getClientOriginalName();
         $path = Storage::putFileAs($directory, $newImage, $name);
 
-        return url(Storage::url($path));
+        return str_replace('public/', 'storage/', $path);
     }
 
     public function findDocumentById(int $id)
@@ -133,11 +134,8 @@ class DocumentService
 
     protected function deleteImage($imageUrl): void
     {
-        $imagePath = str_replace(url('/storage'), '', $imageUrl);
-        $image = public_path('storage' . $imagePath);
-
-        if (file_exists($image)) {
-            unlink($image);
+        if (file_exists($imageUrl)) {
+            unlink($imageUrl);
         }
     }
 
@@ -147,6 +145,7 @@ class DocumentService
         if ($document->status == Document::APPROVED) {
             throw new Exception("Không thể xóa tài liệu đã được phê duyệt");
         }
+        $this->deleteImage($document->image);
         $this->deleteImage($document->license_company);
         $this->deleteImage($document->license_product);
         $document->delete();

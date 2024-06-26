@@ -129,7 +129,8 @@ import useNotify from "@/utils/notify";
 import Input from "../../components/common/Input.vue";
 import SelectBox from "../../components/common/SelectBox.vue";
 import FileInput from "../../components/common/FileInput.vue";
-
+import dayjs from "dayjs";
+const env = import.meta.env;
 const categories = ref([]);
 const categoryOptions = computed(() => {
   return categories.value.map((category) => ({
@@ -150,7 +151,7 @@ const form = reactive({
   expiry_day: "",
   image: null,
 });
-var oldImageSrc = null;
+var oldImageSrc = ref(null);
 
 const { params } = useRoute();
 const id = params.id;
@@ -189,22 +190,16 @@ const getProduct = async () => {
     form.qty = product.qty;
     form.price_per_qty = product.price_per_qty;
     if (product.manufacture_day) {
-      const manufactureDate = new Date(product.manufacture_day);
-      const formattedManufactureDay = manufactureDate
-        .toISOString()
-        .split("T")[0];
-      form.manufacture_day = formattedManufactureDay;
+      form.manufacture_day = dayjs(product.manufacture_day).format('YYYY-MM-DD');
     } else {
       form.manufacture_day = "";
     }
     if (product.expiry_day) {
-      const expiryDate = new Date(product.expiry_day);
-      const formattedExpiryDay = expiryDate.toISOString().split("T")[0];
-      form.expiry_day = formattedExpiryDay;
+      form.expiry_day = dayjs(product.expiry_day).format('YYYY-MM-DD');
     } else {
       form.expiry_day = "";
     }
-    oldImageSrc = product.image;
+    oldImageSrc.value = `${env.VITE_APP_URL}/${product.image}`
   } catch (error) {
     throw error;
   }
@@ -217,7 +212,7 @@ async function update() {
     formData.append("code", form.code);
     formData.append("brand", form.brand);
     formData.append("category_id", form.category_id);
-    formData.append("description", form.description);
+    formData.append("description", form.description || '');
     formData.append("qty", form.qty);
     formData.append("price_per_qty", form.price_per_qty);
     formData.append("manufacture_day", form.manufacture_day);

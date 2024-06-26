@@ -103,11 +103,14 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::get('/{id}', [Admin\DiscountController::class, 'show']);
             Route::post('/{id}', [Admin\DiscountController::class, 'update']);
             Route::delete('/{id}', [Admin\DiscountController::class, 'delete']);
+            Route::post('/{id}/update-products', [Admin\DiscountController::class, 'updateDiscountProducts']);
+            Route::get('/{id}/send-mail', [Admin\DiscountController::class, 'sendDiscountEmail']);
         });
 
         Route::prefix('products')->group(function () {
             Route::get('/', [Admin\ProductController::class, 'index']);
             Route::get('/available', [Admin\ProductController::class, 'getAvailable']);
+            Route::get('/all-available', [Admin\ProductController::class, 'getAllAvailable']);
             Route::post('/create', [Admin\ProductController::class, 'create']);
             Route::get('/{id}', [Admin\ProductController::class, 'show']);
             Route::post('/{id}', [Admin\ProductController::class, 'update']);

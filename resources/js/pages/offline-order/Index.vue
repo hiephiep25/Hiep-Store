@@ -108,7 +108,7 @@ import { useOfflineOrderStore } from "@/store/offline-order";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
 import { useAuthStore } from "@/store/auth";
-
+import dayjs from "dayjs";
 const router = useRouter();
 const offlineOrderStore = useOfflineOrderStore();
 const separator = ref("vertical");
@@ -176,9 +176,8 @@ const columns = ref([
 ]);
 
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "numeric", day: "numeric" };
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", options);
+  const date = dayjs(dateString);
+  return date.format('DD/MM/YYYY');
 };
 
 const onRequest = async ({ pagination }) => {

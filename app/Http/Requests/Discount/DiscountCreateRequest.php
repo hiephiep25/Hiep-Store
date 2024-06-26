@@ -25,9 +25,9 @@ class DiscountCreateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'code' => ['required', 'string', 'max:32', 'unique:discounts,code'],
-            'value' => ['required', 'string', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'start_date' => ['required', 'date', 'after_or_equal:today' ],
-            'expiration_date' => ['required', 'date', 'after_or_equal:today' ],
+            'start' => ['required', 'date', 'after_or_equal:today' ],
+            'end' => ['required', 'date', 'after_or_equal:today' ],
+            'image' => ['required', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
         ];
     }
 
@@ -39,14 +39,16 @@ class DiscountCreateRequest extends FormRequest
             'code.required' => 'Vui lòng nhập mã code của discount',
             'code.max' => 'Mã code không được vượt quá 32 ký tự',
             'code.unique' => 'Mã code đã tồn tại trong hệ thống',
-            'value.required' => 'Giá trị là trường bắt buộc',
-            'value.regex' => 'Giá trị không hợp lệ',
-            'start_date.required' => 'Vui lòng nhập ngày bắt đầu',
-            'start_date.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
-            'start_date.after_or_equal' => 'Ngày bắt đầu phải sau hoặc bằng ngày hiện tại',
-            'expiration_date.required' => 'Ngày hết hạn là trường bắt buộc',
-            'expiration_date.date' => 'Ngày hết hạn phải là một ngày hợp lệ',
-            'expiration_date.after_or_equal' => 'Ngày hết hạn phải sau hoặc bằng ngày hiện tại'
+            'start.required' => 'Vui lòng nhập ngày bắt đầu',
+            'start.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
+            'start.after_or_equal' => 'Ngày bắt đầu phải sau hoặc bằng ngày hiện tại',
+            'end.required' => 'Ngày hết hạn là trường bắt buộc',
+            'end.date' => 'Ngày hết hạn phải là một ngày hợp lệ',
+            'end.after_or_equal' => 'Ngày hết hạn phải sau hoặc bằng ngày hiện tại',
+            'image.required' => 'Vui lòng chọn một hình ảnh cho discount.',
+            'image.file' => 'File phải là hình ảnh.',
+            'image.mimes' => 'File ảnh phải có định dạng: jpeg, jpg, png hoặc gif.',
+            'image.max' => 'Kích thước file ảnh không được vượt quá :max KB.',
         ];
     }
 }

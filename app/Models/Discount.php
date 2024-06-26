@@ -11,7 +11,7 @@ class Discount extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code', 'name', 'value', 'description', 'start_date', 'expiration_date'
+        'code', 'name', 'description', 'start', 'end', 'image'
     ];
 
     protected $appends = ['availability'];
@@ -20,6 +20,12 @@ class Discount extends Model
     {
         $today = Carbon::now();
 
-        return $this->expiration_date > $today;
+        return $this->end > $today && $this->start <= $today;
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'discount_products')
+                    ->withPivot('value', 'qty');
     }
 }

@@ -28,9 +28,9 @@ class DocumentRequest extends FormRequest
             'price' => ['required', 'numeric', 'min:0'],
             'manufacture_day' => ['nullable', 'date', 'before:expiry_day'],
             'expiry_day' => ['nullable', 'date', 'after_or_equal:today' ],
-            'image' => ['required', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
-            'license_company' => ['required', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
-            'license_product' => ['required', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
+            'image' => ['nullable', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
+            'license_company' => ['nullable', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
+            'license_product' => ['nullable', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
         ];
     }
     public function messages(): array

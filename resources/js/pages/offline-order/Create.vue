@@ -48,7 +48,7 @@
               <q-item v-for="(product, index) in selectedProducts" :key="index">
                 <q-item-section avatar>
                   <q-img
-                    :src="product.image"
+                    :src="getUrl(product.image)"
                     alt="Product Image"
                     style="width: 50px; height: 50px"
                   ></q-img>
@@ -88,6 +88,11 @@ import { useRouter, useRoute } from "vue-router";
 import useNotify from "@/utils/notify";
 import Input from "../../components/common/Input.vue";
 import SelectBox from "../../components/common/SelectBox.vue";
+
+const env = import.meta.env;
+const getUrl = (path) => {
+  return path ? `${env.VITE_APP_URL}/${path}` : "";
+};
 
 const form = reactive({
   payment_type: "",

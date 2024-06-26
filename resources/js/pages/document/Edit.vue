@@ -153,7 +153,8 @@ import Input from "../../components/common/Input.vue";
 import SelectBox from "../../components/common/SelectBox.vue";
 import FileInput from "../../components/common/FileInput.vue";
 import { useAuthStore } from "@/store/auth";
-
+import dayjs from "dayjs"
+const env = import.meta.env;
 const authStore = useAuthStore();
 const categories = ref([]);
 const categoryOptions = computed(() => {
@@ -177,9 +178,9 @@ const form = reactive({
   license_product: null,
 });
 
-var oldImageSrc = null;
-var oldLicenseCompanySrc = null;
-var oldLicenseProductSrc = null;
+var oldImageSrc = ref(null);
+var oldLicenseCompanySrc = ref(null);
+var oldLicenseProductSrc = ref(null);
 
 const { params } = useRoute();
 const id = params.id;
@@ -227,24 +228,18 @@ const getDocument = async () => {
     form.qty = document.qty;
     form.price = document.price;
     if (document.manufacture_day) {
-      const manufactureDate = new Date(document.manufacture_day);
-      const formattedManufactureDay = manufactureDate
-        .toISOString()
-        .split("T")[0];
-      form.manufacture_day = formattedManufactureDay;
+      form.manufacture_day = dayjs(document.manufacture_day).format('YYYY-MM-DD');;
     } else {
       form.manufacture_day = "";
     }
     if (document.expiry_day) {
-      const expiryDate = new Date(document.expiry_day);
-      const formattedExpiryDay = expiryDate.toISOString().split("T")[0];
-      form.expiry_day = formattedExpiryDay;
+      form.expiry_day = dayjs(document.expiry_day).format('YYYY-MM-DD');
     } else {
       form.expiry_day = "";
     }
-    oldImageSrc = document.image;
-    oldLicenseCompanySrc = document.license_company;
-    oldLicenseProductSrc = document.license_product;
+    oldImageSrc.value = `${env.VITE_APP_URL}/${document.image}`
+    oldLicenseCompanySrc.value = `${env.VITE_APP_URL}/${document.license_company}` 
+    oldLicenseProductSrc.value = `${env.VITE_APP_URL}/${document.license_product}`
   } catch (error) {
     throw error;
   }
@@ -256,7 +251,7 @@ async function update() {
     formData.append("supplier_id", authStore.user.id);
     formData.append("product_name", form.product_name);
     formData.append("category", form.category);
-    formData.append("description", form.description);
+    formData.append("description", form.description || '');
     formData.append("qty", form.qty);
     formData.append("price", form.price);
     formData.append("manufacture_day", form.manufacture_day);

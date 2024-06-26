@@ -198,7 +198,7 @@ const create = async () => {
     formData.append("supplier_id", authStore.user.id);
     formData.append("product_name", form.product_name);
     formData.append("category_id", form.category_id);
-    formData.append("description", form.description);
+    formData.append("description", form.description || '');
     formData.append("qty", form.qty);
     formData.append("price", form.price);
     formData.append("manufacture_day", form.manufacture_day);

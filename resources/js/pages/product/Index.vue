@@ -99,7 +99,7 @@
                 <template v-slot:body-cell-image="props">
                   <q-td :props="props">
                     <img
-                      :src="props.row.image"
+                      :src="getUrl(props.row.image)"
                       alt="Ảnh"
                       style="width: 50px; height: auto"
                     />
@@ -161,7 +161,7 @@ import { useProductStore } from "@/store/product";
 import { storeToRefs } from "pinia";
 import CommonInput from "../../components/common/CommonInput.vue";
 import CommonSelectBox from "../../components/common/CommonSelectBox.vue";
-
+const env = import.meta.env;
 const router = useRouter();
 const productStore = useProductStore();
 const separator = ref("vertical");
@@ -173,6 +173,9 @@ const { products, pagination } = storeToRefs(productStore);
 const productDelete = ref({});
 const confirm = ref(false);
 const notify = useNotify();
+const getUrl = (path) => {
+  return path ? `${env.VITE_APP_URL}/${path}` : "";
+};
 const columns = ref([
   {
     name: "id",

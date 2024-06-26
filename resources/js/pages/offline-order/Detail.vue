@@ -41,7 +41,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useOfflineOrderStore } from "@/store/offline-order";
 import html2pdf from "html2pdf.js";
-
+import dayjs from "dayjs";
 const router = useRouter();
 const offlineOrderStore = useOfflineOrderStore();
 const offlineOrder = ref({});
@@ -61,9 +61,8 @@ onMounted(() => {
 });
 
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "numeric", day: "numeric" };
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", options);
+  const date = dayjs(dateString);
+  return date.format('DD/MM/YYYY');
 };
 
 const exportToPdf = () => {

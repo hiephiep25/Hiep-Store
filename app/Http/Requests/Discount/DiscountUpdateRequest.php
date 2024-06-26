@@ -24,9 +24,9 @@ class DiscountUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'code' => 'required', 'string', 'max:32', 'unique:discounts,code' . $this->id,
-            'value' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'start_date' => ['required', 'date', 'after_or_equal:today' ],
-            'expiration_date' => ['required', 'date', 'after_or_equal:today' ],
+            'start' => ['required', 'date', 'after_or_equal:today' ],
+            'end' => ['required', 'date', 'after_or_equal:today' ],
+            'image' => ['nullable', 'file', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
         ];
     }
 
@@ -40,12 +40,12 @@ class DiscountUpdateRequest extends FormRequest
             'code.unique' => 'Mã code đã tồn tại trong hệ thống',
             'value.required' => 'Giá trị là trường bắt buộc',
             'value.regex' => 'Giá trị không hợp lệ',
-            'start_date.required' => 'Vui lòng nhập ngày bắt đầu',
-            'start_date.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
-            'start_date.after_or_equal' => 'Ngày bắt đầu phải sau hoặc bằng ngày hiện tại',
-            'expiration_date.required' => 'Vui lòng nhập ngày hết hạn',
-            'expiration_date.date' => 'Ngày hết hạn phải là một ngày hợp lệ',
-            'expiration_date.after_or_equal' => 'Ngày hết hạn phải sau hoặc bằng ngày hiện tại'
+            'start.required' => 'Vui lòng nhập ngày bắt đầu',
+            'start.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
+            'start.after_or_equal' => 'Ngày bắt đầu phải sau hoặc bằng ngày hiện tại',
+            'end.required' => 'Vui lòng nhập ngày hết hạn',
+            'end.date' => 'Ngày hết hạn phải là một ngày hợp lệ',
+            'end.after_or_equal' => 'Ngày hết hạn phải sau hoặc bằng ngày hiện tại'
         ];
     }
 }

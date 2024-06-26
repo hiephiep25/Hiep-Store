@@ -25,15 +25,6 @@
               />
               <Input
                 v-model:model-value="form"
-                name="value"
-                type="text"
-                width-common="col-8 q-ml-lg"
-                width-label="col-2"
-                label="Giá trị khuyến mãi"
-                :errors="errors"
-              />
-              <Input
-                v-model:model-value="form"
                 name="description"
                 type="text"
                 width-common="col-8 q-ml-lg"
@@ -43,8 +34,8 @@
               />
               <Input
                 v-model:model-value="form"
-                name="start_date"
-                type="date"
+                name="start"
+                type="datetime-local"
                 width-common="col-8 q-ml-lg"
                 width-label="col-2"
                 label="Ngày bắt đầu"
@@ -52,13 +43,33 @@
               />
               <Input
                 v-model:model-value="form"
-                name="expiration_date"
-                type="date"
+                name="end"
+                type="datetime-local"
                 width-common="col-8 q-ml-lg"
                 width-label="col-2"
                 label="Hạn sử dụng"
                 :errors="errors"
               />
+              <FileInput
+                v-model:model-value="form"
+                name="image"
+                label="Ảnh"
+                :errors="errors"
+              />
+              <div class="row justify-center" v-if="form.image">
+                <img
+                  :src="imageSrc"
+                  alt="Ảnh"
+                  style="max-width: 100%; max-height: 100px"
+                />
+              </div>
+              <div class="row justify-center" v-if="!form.image">
+                <img
+                  :src="oldImageSrc"
+                  alt="Ảnh"
+                  style="max-width: 100%; max-height: 100px"
+                />
+              </div>
             </div>
           </div>
           <div class="row justify-center">
@@ -71,19 +82,21 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, computed } from "vue";
 import { useDiscountStore } from "@/store/discount";
 import { useRouter, useRoute } from "vue-router";
 import useNotify from "@/utils/notify";
 import Input from "../../components/common/Input.vue";
+import FileInput from "../../components/common/FileInput.vue";
+const env = import.meta.env;
 
 const form = reactive({
   name: "",
   code: "",
-  value: "",
   description: "",
-  start_date: "",
-  expiration_date: "",
+  start: "",
+  end: "",
+  image: null,
 });
 
 const { params } = useRoute();
@@ -93,16 +106,22 @@ const errors = ref({});
 const router = useRouter();
 const discountStore = useDiscountStore();
 const notify = useNotify();
+var oldImageSrc = ref(null);
 
+const imageSrc = computed(() => {
+  if (form.image) {
+    return URL.createObjectURL(form.image);
+  }
+});
 const getDiscount = async () => {
   try {
     const discount = await discountStore.getDiscount(id);
     form.name = discount.name;
     form.code = discount.code;
-    form.value = discount.value;
     form.description = discount.description;
-    form.start_date = discount.start_date;
-    form.expiration_date = discount.expiration_date;
+    form.start= discount.start;
+    form.end = discount.end;
+    oldImageSrc.value = `${env.VITE_APP_URL}/${discount.image}`
   } catch (error) {
     throw error;
   }
@@ -110,7 +129,16 @@ const getDiscount = async () => {
 
 async function update() {
   try {
-    await discountStore.updateDiscount(id, form);
+    const formData = new FormData();
+    if (form.image) {
+      formData.append("image", form.image);
+    }
+    formData.append("name", form.name);
+    formData.append("code", form.code);
+    formData.append("description", form.description || '');
+    formData.append("start", form.start);
+    formData.append("end", form.end);
+    await discountStore.updateDiscount(id, formData);
     errors.value = {};
     notify.success("Chỉnh sửa dữ liệu thành công");
     router.push({ name: "discount.index" });

@@ -53,4 +53,10 @@ class Product extends Model
         return $query->where('expiry_day', '>', $today)
                      ->where('qty', '>', 0);
     }
+
+    public function discounts()
+    {
+        return $this->belongsToMany(Discount::class, 'discount_products')
+                    ->withPivot('value', 'qty');
+    }
 }

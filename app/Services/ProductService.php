@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\Category;
@@ -49,6 +48,11 @@ class ProductService
         })->orderBy('id', 'asc')->paginate($perPage);
     }
 
+    public function getAllAvailable()
+    {
+        return Product::available()->orderBy('id', 'asc')->get();
+    }
+
     public function getCategories()
     {
         return Category::all();
@@ -56,14 +60,14 @@ class ProductService
 
     public function create(array $data): Product
     {
-        $directory = '/public/products/' . Str::slug($data['code']);
+        $directory = 'public/products/' . Str::slug($data['code']);
         $name = $data['image']->getClientOriginalName();
         $path = Storage::putFileAs($directory, $data['image'], $name);
 
-        $data['image'] = url(Storage::url($path));
+        $data['image'] = str_replace('public/', 'storage/', $path);
 
         $product = Product::create([
-            ...$data,
+            ...$data
         ]);
 
         return $product;
@@ -82,17 +86,15 @@ class ProductService
             throw new \Exception('Không thể chỉnh sửa sản phẩm đã tạo cách đây 1 ngày');
         }
         if (!empty($productData['image'])) {
-            $imagePath = str_replace(url('/storage'), '', $product->image);
-            $image = public_path('storage' . $imagePath);
-            if (file_exists($image)) {
-                unlink($image);
+            if ($product->image) {
+                unlink( $product->image);
             }
 
-            $directory = '/public/products/' . Str::slug($productData['code']);
+            $directory = 'public/products/' . Str::slug($productData['code']);
             $name = $productData['image']->getClientOriginalName();
             $path = Storage::putFileAs($directory, $productData['image'], $name);
 
-            $productData['image'] = url(Storage::url($path));
+            $productData['image'] = str_replace('public/', 'storage/', $path);
         }
 
         $product->update($productData);
@@ -103,10 +105,8 @@ class ProductService
     public function delete(int $id)
     {
         $product = $this->findProductById($id);
-        $imagePath = str_replace(url('/storage'), '', $product->image);
-        $image = public_path('storage' . $imagePath);
-        if (file_exists($image)) {
-            unlink($image);
+        if ($product->image) {
+            unlink($product->image);
         }
         $product->delete();
     }

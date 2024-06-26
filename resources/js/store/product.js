@@ -39,6 +39,14 @@ export const useProductStore = defineStore("product", {
         throw error;
       }
     },
+    async getAllAvailableProducts() {
+      try {
+        const { data } = await request.get("/products/all-available");
+        this.availableProducts = data;
+      } catch (error) {
+        throw error;
+      }
+    },
     async getCategories() {
       return request.get("/products/categories");
     },
