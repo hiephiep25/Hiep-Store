@@ -39,8 +39,12 @@
                             <input type="text" id="phone" name="phone" value="{{Auth::user()->phone ?? ''}}" required>
                         </div>
                         <div class="col-lg-6">
-                            <label for="phone"> Địa chỉ <span>*</span></label>
+                            <label for="address"> Địa chỉ <span>*</span></label>
                             <input type="text" id="address" name="address" value="{{Auth::user()->address ?? ''}}" required>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="discount"> Mã giảm giá <span></span></label>
+                            <input type="text" id="address" name="discount" value="">
                         </div>
                     </div>
                 </div>

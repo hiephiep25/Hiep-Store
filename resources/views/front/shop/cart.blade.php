@@ -61,13 +61,6 @@
                             <a href="./shop" class="primary-btn continue-shop">Tiếp tục mua hàng</a>
                             <a href="#" class="primary-btn up-cart">Cập nhật giỏ hàng</a>
                         </div>
-                        <div class="discount-coupon">
-                            <h6>Mã giảm giá</h6>
-                            <form action="#" class="coupon-form">
-                                <input type="text" placeholder="Nhập mã">
-                                <button type="submit" class="site-btn coupon-btn">Áp dụng</button>
-                            </form>
-                        </div>
                     </div>
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
