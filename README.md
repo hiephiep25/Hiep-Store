@@ -1,4 +1,9 @@
 # Hiep-Store
+
+### Nguồn tham khảo
+#### tích hợp chatbot: https://github.com/patrickloeber/chatbot-deployment
+#### giao diện mua hàng cho customer: https://www.youtube.com/playlist?list=PLsVJaIeVT78ozIMPtEbPHnXKNfC4UhZlW
+
 ## Hệ thống quản lí cửa hàng thực phẩm
 
 ### version:
@@ -44,5 +49,6 @@
         ở môi trường venv
             python train.py
             pip install flask-cors
-            python app.py
+            pip install pyvi
+            python app.py để chạy api chatbot
 
