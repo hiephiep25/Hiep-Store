@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 use App\Models\Discount;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMailDiscount;
 
 class DiscountController extends Controller
 {
@@ -57,6 +60,9 @@ class DiscountController extends Controller
     public function updateDiscountProducts(Request $request, $id)
     {
         $discount = Discount::findOrFail($id);
+        if($discount->start < Carbon::now()->subDays(1)) {
+            throw new \Exception('Không thể chỉnh sửa discount này nữa');
+        }
         $products = $request->all();
 
         $syncData = [];
@@ -72,5 +78,19 @@ class DiscountController extends Controller
         $discount->products()->sync($syncData);
 
         return response()->json(['message' => 'Cập nhật thành công']);
+    }
+
+    public function sendDiscountEmail($id) {
+        $discount = Discount::with('products')->findOrFail($id);
+        if($discount->end < Carbon::now()) {
+            throw new \Exception('Discount đã quá hạn');
+        }
+        $users = User::where('role', User::ROLE_CUSTOMER)->get();
+
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new SendMailDiscount($discount));
+        }
+
+        return response()->json(['message' => 'Email đã được gửi thành công']);
     }
 }

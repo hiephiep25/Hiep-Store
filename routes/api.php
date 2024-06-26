@@ -104,6 +104,7 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
             Route::post('/{id}', [Admin\DiscountController::class, 'update']);
             Route::delete('/{id}', [Admin\DiscountController::class, 'delete']);
             Route::post('/{id}/update-products', [Admin\DiscountController::class, 'updateDiscountProducts']);
+            Route::get('/{id}/send-mail', [Admin\DiscountController::class, 'sendDiscountEmail']);
         });
 
         Route::prefix('products')->group(function () {

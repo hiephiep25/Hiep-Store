@@ -64,5 +64,13 @@ export const useDiscountStore = defineStore("discount", {
         throw error;
       }
     },
+
+    async sendMail(id) {
+      try {
+        await request.get(`/discounts/${id}/send-mail`);
+      } catch (error) {
+        throw error;
+      }
+    },
   },
 });

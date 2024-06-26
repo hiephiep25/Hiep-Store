@@ -38,6 +38,8 @@
                   <q-td :props="props">
                     <q-btn class="q-ml-sm" icon="playlist_add_check" color="primary" size="sm"
                       @click="editProducts(props.row)" />
+                    <q-btn class="q-ml-sm" icon="email" color="info" size="sm"
+                      @click="handleSendEmail(props.row)" />
                     <q-btn class="q-ml-sm" icon="edit" color="primary" size="sm" @click="handleEdit(props.row)" />
                     <q-btn class="q-ml-sm" icon="delete" color="red" size="sm" @click="handleDelete(props.row)" />
                   </q-td>
@@ -102,7 +104,8 @@
               <q-select v-model="newProduct" :options="productOptions" label="Thêm sản phẩm" outlined dense />
             </div>
             <div class="col-12 col-md-3">
-              <q-input v-model="newProductValue" label="Value" type="number" min="5" max="80" outlined dense />
+              <q-input v-model="newProductValue" label="Value" type="number" outlined dense 
+              :rules="[val => (val >= 5 && val <= 80) || 'Giá trị value phải trong khoảng từ 5 đến 80']"/>
             </div>
             <div class="col-12 col-md-3">
               <q-input v-model="newProductQty" label="Số lượng" type="number" outlined dense />
@@ -119,6 +122,19 @@
       </q-card>
     </q-dialog>
   </div>
+
+  <q-dialog v-model="emailConfirmationDialog" persistent>
+    <q-card>
+      <q-card-section class="row items-center">
+        <span class="q-ml-sm">Bạn có muốn gửi email khuyến mại cho tất cả khách hàng không?</span>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn flat label="Hủy" color="primary" v-close-popup />
+        <q-btn flat label="Xác nhận" color="negative" @click="confirmSendEmail" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script setup>
@@ -338,6 +354,24 @@ const saveEditedProducts = () => {
   );
   editProductsDialog.value = false;
   notify.success("Cập nhật thành công");
+};
+
+const handleSendEmail = (discount) => {
+  selectedDiscount.value = discount;
+  emailConfirmationDialog.value = true;
+};
+
+const emailConfirmationDialog = ref(false);
+
+const confirmSendEmail = async () => {
+  try {
+    await discountStore.sendMail(selectedDiscount.value.id);
+    notify.success("Email đã được gửi thành công");
+  } catch (error) {
+    notify.error("Gửi email thất bại");
+  } finally {
+    emailConfirmationDialog.value = false;
+  }
 };
 
 discountStore.getDiscounts({});
