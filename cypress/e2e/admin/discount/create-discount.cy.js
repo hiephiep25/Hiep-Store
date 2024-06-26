@@ -26,10 +26,10 @@ Cypress.Commands.add("forceLogout", () => {
       // Fill in the product creation form
       cy.get("#name").type("Test Discount");
       cy.get("#code").type("TEST123");
-      cy.get("#value").type("50");
       cy.get("#description").type("This is a test discount.");
-      cy.get("#start_date").type("2024-01-01");
-      cy.get("#expiration_date").type("2024-01-02");
+      cy.get("#start").type("2024-01-01T08:30");
+      cy.get("#end").type("2024-01-02T10:30");
+      cy.get("#image").attachFile("kei.png");
   
       // Submit the form
       cy.get("#submit").click();
