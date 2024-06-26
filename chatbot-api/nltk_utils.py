@@ -3,6 +3,7 @@ import nltk
 # nltk.download('punkt')
 from nltk.stem.porter import PorterStemmer
 stemmer = PorterStemmer()
+from pyvi import ViTokenizer
 
 
 def tokenize(sentence):
@@ -10,7 +11,7 @@ def tokenize(sentence):
     split sentence into array of words/tokens
     a token can be a word or punctuation character, or number
     """
-    return nltk.word_tokenize(sentence)
+    return ViTokenizer.tokenize(sentence).split()
 
 
 def stem(word):

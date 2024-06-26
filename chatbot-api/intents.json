@@ -1,83 +1,98 @@
 {
   "intents": [
     {
-      "tag": "greeting",
+      "tag": "chào",
       "patterns": [
-        "Hi",
-        "Hey",
-        "How are you",
-        "Is anyone there?",
+        "Chào",
+        "Xin chào",
+        "Bạn khỏe không",
+        "Có ai ở đó không?",
         "Hello",
-        "Good day"
+        "Chào buổi sáng",
+        "Chào buổi tối"
       ],
       "responses": [
-        "Hey :-)",
-        "Hello, thanks for visiting",
-        "Hi there, what can I do for you?",
-        "Hi there, how can I help?"
+        "Chào bạn 🙂",
+        "Xin chào, cảm ơn bạn đã ghé thăm",
+        "Chào bạn, tôi có thể giúp gì cho bạn?",
+        "Chào bạn, tôi có thể giúp gì không?"
       ]
     },
     {
-      "tag": "goodbye",
-      "patterns": ["Bye", "See you later", "Goodbye"],
+      "tag": "tạm biệt",
+      "patterns": ["Tạm biệt", "Hẹn gặp lại", "Chào tạm biệt"],
       "responses": [
-        "See you later, thanks for visiting",
-        "Have a nice day",
-        "Bye! Come back again soon."
+        "Hẹn gặp lại, cảm ơn bạn đã ghé thăm",
+        "Chúc bạn một ngày tốt lành",
+        "Tạm biệt! Hẹn gặp lại bạn sớm."
       ]
     },
     {
-      "tag": "thanks",
-      "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!"],
-      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+      "tag": "cảm ơn",
+      "patterns": ["Cảm ơn", "Cảm ơn bạn", "Điều đó thật hữu ích", "Cảm ơn rất nhiều!"],
+      "responses": ["Rất vui được giúp bạn!", "Bất cứ lúc nào!", "Rất hân hạnh"]
     },
     {
-      "tag": "items",
+      "tag": "thực phẩm",
       "patterns": [
-        "Which items do you have?",
-        "What kinds of items are there?",
-        "What do you sell?"
+        "Cửa hàng có những thực phẩm nào?",
+        "Có những loại thực phẩm nào?",
+        "Cửa hàng bán những loại thực phẩm nào bán gì?",
+        "Cửa hàng bán gì"
       ],
       "responses": [
-        "We sell coffee and tea",
-        "We have coffee and tea"
+        "Chúng tôi có bán những loại thực phẩm sạch",
+        "Chúng tôi có thịt, rau củ quả, hải sản,... các loại thực phẩm sạch",
+        "Chúng tôi có những thực phẩm sạch và nhiều dinh dưỡng"
       ]
     },
     {
-      "tag": "payments",
+      "tag": "thanh toán",
       "patterns": [
-        "Do you take credit cards?",
-        "Do you accept Mastercard?",
-        "Can I pay with Paypal?",
-        "Are you cash only?"
+        "Bạn có chấp nhận thẻ tín dụng không?",
+        "Tôi có thể thanh toán bằng Paypal không?",
+        "Bạn chỉ nhận tiền mặt phải không?",
+        "Thanh toán bằng gì?"
       ],
       "responses": [
-        "We accept VISA, Mastercard and Paypal",
-        "We accept most major credit cards, and Paypal"
+        "Chúng tôi chấp nhận thanh toán qua VNPay hoặc trả sau khi nhận được hàng",
+        "Chúng tôi chấp nhận thanh toán bằng internet banking"
       ]
     },
     {
-      "tag": "delivery",
+      "tag": "vận chuyển",
       "patterns": [
-        "How long does delivery take?",
-        "How long does shipping take?",
-        "When do I get my delivery?"
+        "Giao hàng mất bao lâu?",
+        "Vận chuyển mất bao lâu?",
+        "Khi nào tôi nhận được hàng?"
       ],
       "responses": [
-        "Delivery takes 2-4 days",
-        "Shipping takes 2-4 days"
+        "Giao hàng mất dưới 2 tiếng",
+        "Vận chuyển mất dưới 2 tiếng"
       ]
     },
     {
-      "tag": "funny",
+      "tag": "địa điểm",
       "patterns": [
-        "Tell me a joke!",
-        "Tell me something funny!",
-        "Do you know a joke?"
+        "Cửa hàng giao hàng tới những địa điểm nào",
+        "Cửa hàng giao tới địa chỉ nào",
+        "Địa chỉ nhận hàng có thể ở đâu"
       ],
       "responses": [
-        "Why did the hipster burn his mouth? He drank the coffee before it was cool.",
-        "What did the buffalo say when his son left for college? Bison."
+        "Trong địa bàn trung tâm thành phố Hà Nội",
+        "Ở quanh trung tâm Hà Nội"
+      ]
+    },
+    {
+      "tag": "mua hàng",
+      "patterns": [
+        "Tôi muốn mua hàng",
+        "Tôi muốn mua thực phẩm",
+        "Mua hàng như thế nào"
+      ],
+      "responses": [
+        "Bạn có thể ghé phần cửa hàng ở trang web",
+        "Bạn có thể mua hàng trực tuyến hoặc mua hàng tại quầy"
       ]
     }
   ]
