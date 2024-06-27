@@ -1,0 +1,99 @@
+{
+  "intents": [
+    {
+      "tag": "chào",
+      "patterns": [
+        "Chào",
+        "Xin chào",
+        "Bạn khỏe không",
+        "Có ai ở đó không?",
+        "Hello",
+        "Chào buổi sáng",
+        "Chào buổi tối"
+      ],
+      "responses": [
+        "Chào bạn 🙂",
+        "Xin chào, cảm ơn bạn đã ghé thăm",
+        "Chào bạn, tôi có thể giúp gì cho bạn?",
+        "Chào bạn, tôi có thể giúp gì không?"
+      ]
+    },
+    {
+      "tag": "tạm biệt",
+      "patterns": ["Tạm biệt", "Hẹn gặp lại", "Chào tạm biệt"],
+      "responses": [
+        "Hẹn gặp lại, cảm ơn bạn đã ghé thăm",
+        "Chúc bạn một ngày tốt lành",
+        "Tạm biệt! Hẹn gặp lại bạn sớm."
+      ]
+    },
+    {
+      "tag": "cảm ơn",
+      "patterns": ["Cảm ơn", "Cảm ơn bạn", "Điều đó thật hữu ích", "Cảm ơn rất nhiều!"],
+      "responses": ["Rất vui được giúp bạn!", "Bất cứ lúc nào!", "Rất hân hạnh"]
+    },
+    {
+      "tag": "thực phẩm",
+      "patterns": [
+        "Cửa hàng có những thực phẩm nào?",
+        "Có những loại thực phẩm nào?",
+        "Cửa hàng bán những loại thực phẩm nào bán gì?",
+        "Cửa hàng bán gì"
+      ],
+      "responses": [
+        "Chúng tôi có bán những loại thực phẩm sạch",
+        "Chúng tôi có thịt, rau củ quả, hải sản,... các loại thực phẩm sạch",
+        "Chúng tôi có những thực phẩm sạch và nhiều dinh dưỡng"
+      ]
+    },
+    {
+      "tag": "thanh toán",
+      "patterns": [
+        "Bạn có chấp nhận thẻ tín dụng không?",
+        "Tôi có thể thanh toán bằng Paypal không?",
+        "Bạn chỉ nhận tiền mặt phải không?",
+        "Thanh toán bằng gì?"
+      ],
+      "responses": [
+        "Chúng tôi chấp nhận thanh toán qua VNPay hoặc trả sau khi nhận được hàng",
+        "Chúng tôi chấp nhận thanh toán bằng internet banking"
+      ]
+    },
+    {
+      "tag": "vận chuyển",
+      "patterns": [
+        "Giao hàng mất bao lâu?",
+        "Vận chuyển mất bao lâu?",
+        "Khi nào tôi nhận được hàng?"
+      ],
+      "responses": [
+        "Giao hàng mất dưới 2 tiếng",
+        "Vận chuyển mất dưới 2 tiếng"
+      ]
+    },
+    {
+      "tag": "địa điểm",
+      "patterns": [
+        "Cửa hàng giao hàng tới những địa điểm nào",
+        "Cửa hàng giao tới địa chỉ nào",
+        "Địa chỉ nhận hàng có thể ở đâu"
+      ],
+      "responses": [
+        "Trong địa bàn trung tâm thành phố Hà Nội",
+        "Ở quanh trung tâm Hà Nội"
+      ]
+    },
+    {
+      "tag": "mua hàng",
+      "patterns": [
+        "Tôi muốn mua hàng",
+        "Tôi muốn mua thực phẩm",
+        "Mua hàng như thế nào"
+      ],
+      "responses": [
+        "Bạn có thể ghé phần cửa hàng ở trang web",
+        "Bạn có thể mua hàng trực tuyến hoặc mua hàng tại quầy"
+      ]
+    }
+  ]
+}
