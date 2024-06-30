@@ -37,7 +37,7 @@ class SendDiscountEmails extends Command
     public function handle()
     {
         $now = Carbon::now();
-        $futureDate = $now->addDays(2);
+        $futureDate = $now->copy()->addDays(2);
 
         $discounts = Discount::with('products')
                              ->where('start', '>=', $now)
