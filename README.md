@@ -21,7 +21,7 @@
 ### IDE: vscode
 
 ### cách cài đặt:
-    clone src code
+    clone src code : https://github.com/hiephiep25/Hiep-Store.git
     mở src code bằng vscode
 
     * ở trong thư mục laravel (cài đặt dự án laravel vuejs):
@@ -31,15 +31,17 @@
             npm install
             cp .env.example .env (sau đó cấu hình lại file .env)
             mở laragon, hoặc dbevaer, xampp, tạo connection như trong file .env 
-            vào file app/Providers/AppServiceProvider.php, bỏ đoạn comment trong function boot
             php artisan key:generate
             php artisan migrate --seed (tạo db và seed dữ liệu)
-            php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="config"
-            (sau đó vào /laravel/config/cart.php chỉnh tax => 0 để loại bỏ thuế khi tính giá tiền cho giỏ hàng)
+            vào file app/Providers/AppServiceProvider.php, bỏ đoạn comment trong function boot
             php artisan optimize:clear (clear cache)
+            php artisan storage:link
             npm run dev
         - tạo terminal thứ hai
             php artisan serve
+
+        -tài khoản: 
+            admin@gmail.com - 25052002
 
     * ở trong thư mục chatbot-api (cài đặt api cho chatbot):
         tạo terminal thứ ba
