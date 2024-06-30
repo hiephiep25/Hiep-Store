@@ -8,6 +8,8 @@
 
 ### version:
 
+#### composer 2.5.1
+#### node 18
 #### php 8.1
 #### laravel 10.10
 #### vue 3.2.37
@@ -29,6 +31,7 @@
             npm install
             cp .env.example .env (sau đó cấu hình lại file .env)
             mở laragon, hoặc dbevaer, xampp, tạo connection như trong file .env 
+            vào file app/Providers/AppServiceProvider.php, bỏ đoạn comment trong function boot
             php artisan key:generate
             php artisan migrate --seed (tạo db và seed dữ liệu)
             php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="config"

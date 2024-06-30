@@ -19,10 +19,12 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+
+    
     public function boot(): void
     {
-        JsonResource::withoutWrapping();
-        $categories = Category::all();
-        View::share('categories', $categories);
+        // JsonResource::withoutWrapping();
+        // $categories = Category::all();
+        // View::share('categories', $categories);
     }
 }
