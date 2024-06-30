@@ -38,6 +38,11 @@ class CheckProductExpiry extends Command
         $threshold = $today->copy()->addDays(3);
 
         $products = Product::where('expiry_day', '<', $threshold)->get();
+        
+        if ($products->isEmpty()) {
+            $this->info('No products will expiry in 3 days next.');
+            return;
+        }
 
         foreach ($products as $product) {
             $daysLeft = Carbon::parse($product->expiry_day)->diffInDays($today);

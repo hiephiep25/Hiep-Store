@@ -31,6 +31,9 @@
             mở laragon, hoặc dbevaer, xampp, tạo connection như trong file .env 
             php artisan key:generate
             php artisan migrate --seed (tạo db và seed dữ liệu)
+            php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="config"
+            (sau đó vào /laravel/config/cart.php chỉnh tax => 0 để loại bỏ thuế khi tính giá tiền cho giỏ hàng)
+            php artisan optimize:clear (clear cache)
             npm run dev
         - tạo terminal thứ hai
             php artisan serve

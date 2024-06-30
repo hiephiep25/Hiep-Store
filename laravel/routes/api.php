@@ -77,10 +77,10 @@ Route::middleware('auth:sanctum', 'have-permission')->group(function () {
 
         Route::prefix('categories')->group(function () {
             Route::get('/', [Admin\CategoryController::class, 'index']);
-            Route::post('/create', [Admin\CategoryController::class, 'create']);
-            Route::get('/{id}', [Admin\CategoryController::class, 'show']);
-            Route::post('/{id}', [Admin\CategoryController::class, 'update']);
-            Route::delete('/{id}', [Admin\CategoryController::class, 'delete']);
+            // Route::post('/create', [Admin\CategoryController::class, 'create']);
+            // Route::get('/{id}', [Admin\CategoryController::class, 'show']);
+            // Route::post('/{id}', [Admin\CategoryController::class, 'update']);
+            // Route::delete('/{id}', [Admin\CategoryController::class, 'delete']);
         });
 
         Route::prefix('process')->group(function () {

@@ -62,7 +62,7 @@
                 v-model:pagination="pagination"
                 @request="onRequest"
               >
-                <template v-slot:body-cell-actions="props">
+                <!-- <template v-slot:body-cell-actions="props">
                   <q-td :props="props">
                     <q-btn
                       class="q-ml-sm"
@@ -79,7 +79,7 @@
                       @click="handleDelete(props.row)"
                     />
                   </q-td>
-                </template>
+                </template> -->
               </q-table>
             </q-markup-table>
           </div>
@@ -131,7 +131,7 @@ const columns = ref([
     name: "id",
     required: true,
     label: "ID",
-    align: "left",
+    align: "center",
     field: "id",
     sortable: true,
   },
@@ -142,26 +142,26 @@ const columns = ref([
     field: "name",
     sortable: true,
   },
-  {
-    name: "actions",
-    label: "Hành động",
-    field: "actions",
-    align: "center",
-    format: (val, row) => {
-      return [
-        {
-          label: "Chỉnh sửa",
-          onClick: () => handleEdit(row),
-          icon: "edit_square",
-        },
-        {
-          label: "Xóa",
-          onClick: () => handleDelete(row),
-          icon: "delete",
-        },
-      ];
-    },
-  },
+  // {
+  //   name: "actions",
+  //   label: "Hành động",
+  //   field: "actions",
+  //   align: "center",
+  //   format: (val, row) => {
+  //     return [
+  //       {
+  //         label: "Chỉnh sửa",
+  //         onClick: () => handleEdit(row),
+  //         icon: "edit_square",
+  //       },
+  //       {
+  //         label: "Xóa",
+  //         onClick: () => handleDelete(row),
+  //         icon: "delete",
+  //       },
+  //     ];
+  //   },
+  // },
 ]);
 
 const onRequest = async ({ pagination }) => {
