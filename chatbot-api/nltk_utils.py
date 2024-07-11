@@ -4,6 +4,7 @@ import nltk
 from nltk.stem.porter import PorterStemmer
 stemmer = PorterStemmer()
 from pyvi import ViTokenizer
+from sklearn.feature_extraction.text import CountVectorizer
 
 
 def tokenize(sentence):
@@ -22,7 +23,7 @@ def stem(word):
     words = [stem(w) for w in words]
     -> ["organ", "organ", "organ"]
     """
-    return stemmer.stem(word.lower())
+    return word.lower()
 
 
 def bag_of_words(tokenized_sentence, words):
@@ -35,11 +36,16 @@ def bag_of_words(tokenized_sentence, words):
     bog   = [  0 ,    1 ,    0 ,   1 ,    0 ,    0 ,      0]
     """
     # stem each word
-    sentence_words = [stem(word) for word in tokenized_sentence]
+    # sentence_words = [stem(word) for word in tokenized_sentence]
     # initialize bag with 0 for each word
-    bag = np.zeros(len(words), dtype=np.float32)
-    for idx, w in enumerate(words):
-        if w in sentence_words: 
-            bag[idx] = 1
+    # bag = np.zeros(len(words), dtype=np.float32)
+    # for idx, w in enumerate(words):
+    #     if w in sentence_words: 
+    #         bag[idx] = 1
 
-    return bag
+    # return bag
+
+    vectorizer = CountVectorizer(vocabulary=words, tokenizer=lambda x: x, preprocessor=lambda x: x)
+    X = vectorizer.transform([tokenized_sentence]).toarray().flatten()
+
+    return X.astype(np.float32)

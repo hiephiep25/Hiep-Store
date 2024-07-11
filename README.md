@@ -55,8 +55,8 @@
             >>> nltk.download('punkt')
             >>> quit() 
         ở môi trường venv
-            python train.py
             pip install flask-cors
             pip install pyvi
+            python train.py
             python app.py để chạy api chatbot
 

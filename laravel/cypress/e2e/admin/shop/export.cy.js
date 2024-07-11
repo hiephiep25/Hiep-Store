@@ -25,7 +25,7 @@ Cypress.Commands.add("forceLogout", () => {
       // Fill in the product creation form
       cy.get('#code').click();
       cy.get('.q-item').first().click();
-      cy.get("#add").type("10");
+      cy.get("#add").type("1");
       cy.get("#export").click();
     });
   });
